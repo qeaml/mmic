@@ -1,0 +1,10 @@
+{
+	"other.mmic.toggled_grid": "Grid %s: %s",
+	"other.mmic.on": "On",
+	"other.mmic.off": "Off",
+	"other.mmic.grid.halves": "Halves",
+	"other.mmic.grid.thirds": "Thirds",
+	"key.categories.mmic.grids": "Grid Toggles",
+	"key.mmic.grid.halves": "Halves",
+	"key.mmic.grid.thirds": "Thirds"
+}
