@@ -13,7 +13,12 @@ public enum Grid {
 		Rect.line(2f/3f, true)),
 	HALVES("halves", GLFW.GLFW_KEY_N,
 		Rect.line(1f/2f, false),
-		Rect.line(1f/2f, true));
+		Rect.line(1f/2f, true)),
+	NINTHS("ninths", GLFW.GLFW_KEY_M,
+		Rect.line(1f/9f, false),
+		Rect.line(8f/9f, false),
+		Rect.line(1f/9f, true),
+		Rect.line(8f/9f, true));
 
 	public String name;
 	public Rect[] rects;

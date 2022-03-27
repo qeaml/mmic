@@ -101,9 +101,7 @@ public class Client implements ClientModInitializer {
 	public static Text onOff(boolean on) {
 		var tkey = "other.mmic." + (on ? "on" : "off");
 		var color = on ? Formatting.GREEN : Formatting.RED;
-		var style = Style.EMPTY
-			.withColor(color)
-			.withBold(on);
+		var style = Style.EMPTY.withColor(color);
 		return new TranslatableText(tkey).setStyle(style);
 	}
 
