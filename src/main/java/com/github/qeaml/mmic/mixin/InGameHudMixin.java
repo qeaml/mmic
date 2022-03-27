@@ -2,8 +2,6 @@ package com.github.qeaml.mmic.mixin;
 
 import com.github.qeaml.mmic.Client;
 import com.github.qeaml.mmic.Grid;
-import com.github.qeaml.mmic.Rect;
-
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -32,7 +30,7 @@ public class InGameHudMixin {
 	}
 
 	private void drawGrid(MatrixStack matrices, Grid g) {
-		for(Rect r: g.rects) {
+		for(Grid.Rect r: g.rects) {
 			int w = this.client.getWindow().getScaledWidth();
 			int h = this.client.getWindow().getScaledHeight();
 			int ax = (int)((float)w * r.a().x())-1;
