@@ -30,7 +30,7 @@ public class Client implements ClientModInitializer {
 		loadConfig();
 	}
 
-	private void loadConfig() {
+	private static void loadConfig() {
 		if(!cfg.exists()) {
 			log.warn("Config does not exist.");
 			cfg.getParentFile().mkdirs();
@@ -77,7 +77,7 @@ public class Client implements ClientModInitializer {
 		}
 	}
 
-	private void saveConfig() {
+	public static void saveConfig() {
 		try(var fw = new FileOutputStream(cfg)) {
 			// magic
 			fw.write(new byte[]{'M', 'M', 'I', 'C'});

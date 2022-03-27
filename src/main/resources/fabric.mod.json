@@ -9,18 +9,20 @@
     "qeaml"
   ],
   "contact": {
-    "homepage": "https://linktr.ee/qeaml",
     "sources": "https://github.com/qeaml/mmic"
   },
 
   "license": "CC0-1.0",
   "icon": "assets/modid/icon.png",
 
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
     "client": [
       "com.github.qeaml.mmic.Client"
-    ]
+    ],
+		"modmenu": [
+			"com.github.qeaml.mmic.ConfigScreen"
+		]
   },
   "mixins": [
     "mmic.mixins.json"
@@ -31,5 +33,11 @@
     "fabric": "*",
     "minecraft": "1.18.x",
     "java": ">=17"
-  }
+  },
+	"recommends": {
+		"cloth-config2": ">=5.1.40"
+	},
+	"suggests": {
+		"modmenu": ">=3.1.0"
+	}
 }
