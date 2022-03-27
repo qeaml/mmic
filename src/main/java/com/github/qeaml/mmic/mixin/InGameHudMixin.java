@@ -23,9 +23,23 @@ public class InGameHudMixin {
 
 	@Inject(at = @At("HEAD"), method = "render(LMatrixStack;F)V")
 	private void injectRender(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
+		handleGammaKey();
 		for(Grid g: Grid.values()) {
-			handleKeyBind(g);
+			handleGridKey(g);
 			if(g.show) drawGrid(matrices, g);
+		}
+	}
+
+	private void handleGammaKey() {
+		if(Client.gammaIncKey.wasJustPressed() && client.options.gamma <= 3.0) {
+			client.options.gamma += Client.gammaStep;
+			client.player.sendMessage(new TranslatableText("other.mmic.changed_gamma", Math.round(client.options.gamma * 100)), true);
+			Client.playClick();
+		}
+		if(Client.gammaDecKey.wasJustPressed() && client.options.gamma >= -1.0) {
+			client.options.gamma -= Client.gammaStep;
+			client.player.sendMessage(new TranslatableText("other.mmic.changed_gamma", Math.round(client.options.gamma * 100)), true);
+			Client.playClick();
 		}
 	}
 
@@ -41,7 +55,7 @@ public class InGameHudMixin {
 		}
 	}
 
-	private void handleKeyBind(Grid g) {
+	private void handleGridKey(Grid g) {
 		if(g.toggle.isPressed() && !g.togglePrev) {
 			g.show = !g.show;
 			client.player.sendMessage(

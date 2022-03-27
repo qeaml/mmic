@@ -5,11 +5,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -22,6 +24,9 @@ public class Client implements ClientModInitializer {
 	public static File cfg = new File(MinecraftClient.getInstance().runDirectory, "config.mmic");
 	public static byte cfgVer = 1;
 	public static int gridColor = 0xFF000000;
+	public static double gammaStep = 0.2;
+	public static Bind gammaIncKey = new Bind("key.mmic.gammaInc", GLFW.GLFW_KEY_RIGHT_BRACKET, KeyBinding.GAMEPLAY_CATEGORY);
+	public static Bind gammaDecKey = new Bind("key.mmic.gammaDec", GLFW.GLFW_KEY_LEFT_BRACKET, KeyBinding.GAMEPLAY_CATEGORY);
 	public static final Logger log = LoggerFactory.getLogger("mmic");
 
 	@Override
@@ -67,9 +72,9 @@ public class Client implements ClientModInitializer {
 			// gridColor
 			var gridColorRaw = fr.readNBytes(4);
 			gridColor = (gridColorRaw[0] << 24 |
-									 gridColorRaw[1] << 16 |
-									 gridColorRaw[2] <<  8 |
-									 gridColorRaw[3]);
+			             gridColorRaw[1] << 16 |
+			             gridColorRaw[2] <<  8 |
+			             gridColorRaw[3]);
 		} catch(IOException e) {
 			log.warn("Could not load config: "+e.getMessage());
 		} finally {
@@ -86,11 +91,12 @@ public class Client implements ClientModInitializer {
 			fw.write(new byte[]{cfgVer});
 
 			// gridColor
-			byte a = (byte)(gridColor >> 24 & 0xFF);
-			byte r = (byte)(gridColor >> 16 & 0xFF);
-			byte g = (byte)(gridColor >>  8 & 0xFF);
-			byte b = (byte)(gridColor       & 0xFF);
-			fw.write(new byte[]{a, r, g, b});
+			fw.write(new byte[]{
+				(byte)(gridColor >> 24 & 0xFF),
+				(byte)(gridColor >> 16 & 0xFF),
+				(byte)(gridColor >>  8 & 0xFF),
+				(byte)(gridColor       & 0xFF)
+			});
 		} catch(IOException e) {
 			log.warn("Could not save config: "+e.getMessage());
 		} finally {
@@ -110,7 +116,7 @@ public class Client implements ClientModInitializer {
 			new PositionedSoundInstance(
 				SoundEvents.UI_BUTTON_CLICK,
 				SoundCategory.BLOCKS,
-				.25f, .5f,
+				.25f, 1f,
 				0, 0, 0));
 	}
 }
