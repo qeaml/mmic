@@ -56,7 +56,7 @@ public class InGameHudMixin {
 	}
 
 	private void handleGridKey(Grid g) {
-		if(g.toggle.isPressed() && !g.togglePrev) {
+		if(g.toggle.wasJustPressed()) {
 			g.show = !g.show;
 			client.player.sendMessage(
 				new TranslatableText("other.mmic.toggled_grid",
@@ -65,6 +65,5 @@ public class InGameHudMixin {
 				true);
 			Client.playClick();
 		}
-		g.togglePrev = g.toggle.isPressed();
 	}
 }
