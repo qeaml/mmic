@@ -4,7 +4,7 @@
   "version": "1.0.0",
 
   "name": "MMIC",
-  "description": "Minecraft Mod for Imaghe Composition",
+  "description": "Minecraft Mod for Image Composition",
   "authors": [
     "qeaml"
   ],
@@ -12,7 +12,7 @@
     "sources": "https://github.com/qeaml/mmic"
   },
 
-  "license": "CC0-1.0",
+  "license": "BSD-3-Clause",
   "icon": "assets/modid/icon.png",
 
   "environment": "client",
