@@ -5,13 +5,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -25,8 +23,6 @@ public class Client implements ClientModInitializer {
 	public static byte cfgVer = 1;
 	public static int gridColor = 0xFF000000;
 	public static double gammaStep = 0.2;
-	public static Bind gammaIncKey = new Bind("key.mmic.gammaInc", GLFW.GLFW_KEY_RIGHT_BRACKET, KeyBinding.GAMEPLAY_CATEGORY);
-	public static Bind gammaDecKey = new Bind("key.mmic.gammaDec", GLFW.GLFW_KEY_LEFT_BRACKET, KeyBinding.GAMEPLAY_CATEGORY);
 	public static final Logger log = LoggerFactory.getLogger("mmic");
 
 	@Override
@@ -118,5 +114,10 @@ public class Client implements ClientModInitializer {
 				SoundCategory.BLOCKS,
 				.25f, 1f,
 				0, 0, 0));
+	}
+
+	public static void sendNote(Text text) {
+		MinecraftClient.getInstance().player.sendMessage(text, true);
+		playClick();
 	}
 }
