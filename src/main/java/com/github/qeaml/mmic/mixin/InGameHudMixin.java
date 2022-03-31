@@ -44,18 +44,18 @@ public class InGameHudMixin {
 			} else {
 				client.options.gamma = oldGamma;
 			}
-			Client.sendNote(new TranslatableText("other.mmic.toggled_fullbright", Client.onOff(fullbright)));
+			Client.notify(new TranslatableText("other.mmic.toggled_fullbright", Client.onOff(fullbright)));
 		}
 
 		if(fullbright) return; // the keys below do not matter to us in fullbright
 
 		if(Keys.gammaIncKey.wasJustPressed() && client.options.gamma <= 3.0) {
 			client.options.gamma += Client.gammaStep;
-			Client.sendNote(new TranslatableText("other.mmic.changed_gamma", Math.round(client.options.gamma * 100)));
+			Client.notify(new TranslatableText("other.mmic.changed_gamma", Math.round(client.options.gamma * 100)));
 		}
 		if(Keys.gammaDecKey.wasJustPressed() && client.options.gamma >= -1.0) {
 			client.options.gamma -= Client.gammaStep;
-			Client.sendNote(new TranslatableText("other.mmic.changed_gamma", Math.round(client.options.gamma * 100)));
+			Client.notify(new TranslatableText("other.mmic.changed_gamma", Math.round(client.options.gamma * 100)));
 		}
 	}
 
@@ -74,7 +74,7 @@ public class InGameHudMixin {
 	private void handleGridKey(Grid g) {
 		if(g.toggle.wasJustPressed()) {
 			g.show = !g.show;
-			Client.sendNote(new TranslatableText("other.mmic.toggled_grid",
+			Client.notify(new TranslatableText("other.mmic.toggled_grid",
 				new TranslatableText("other.mmic.grid."+g.name),
 				Client.onOff(g.show)));
 		}

@@ -116,8 +116,12 @@ public class Client implements ClientModInitializer {
 				0, 0, 0));
 	}
 
-	public static void sendNote(Text text) {
+	public static void notifySilently(Text text) {
 		MinecraftClient.getInstance().player.sendMessage(text, true);
+	}
+
+	public static void notify(Text text) {
+		notifySilently(text);
 		playClick();
 	}
 }
