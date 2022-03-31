@@ -21,11 +21,12 @@ public enum Grid {
 	public Rect[] rects;
 	public boolean show = false;
 	public Bind toggle;
+	public int key;
 
 	private Grid(String n, int key, Rect ...r) {
 		rects = r;
 		name = n;
-		toggle = new Bind("key.mmic.grid." + n, key, "key.categories.mmic.grids");
+		this.key = key;
 	}
 
 	public record Rect(Point a, Point b) {

@@ -36,7 +36,7 @@ public class InGameHudMixin {
 	}
 
 	private void handleGammaKeys() {
-		if(Keys.fullbrightKey.wasJustPressed()) {
+		if(Keys.fullbright.wasJustPressed()) {
 			fullbright = !fullbright;
 			if(fullbright) {
 				oldGamma = client.options.gamma;
@@ -49,11 +49,11 @@ public class InGameHudMixin {
 
 		if(fullbright) return; // the keys below do not matter to us in fullbright
 
-		if(Keys.gammaIncKey.wasJustPressed() && client.options.gamma <= 3.0) {
+		if(Keys.gammaInc.wasJustPressed() && client.options.gamma <= 3.0) {
 			client.options.gamma += Client.gammaStep;
 			Client.notify(new TranslatableText("other.mmic.changed_gamma", Math.round(client.options.gamma * 100)));
 		}
-		if(Keys.gammaDecKey.wasJustPressed() && client.options.gamma >= -1.0) {
+		if(Keys.gammaDec.wasJustPressed() && client.options.gamma >= -1.0) {
 			client.options.gamma -= Client.gammaStep;
 			Client.notify(new TranslatableText("other.mmic.changed_gamma", Math.round(client.options.gamma * 100)));
 		}

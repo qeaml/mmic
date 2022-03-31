@@ -10,13 +10,10 @@
 	"other.mmic.toggled_fullbright": "Toggled Fullbright %s",
 
 	"key.categories.mmic.grids": "Grid Toggles",
-	"key.mmic.grid.halves": "Halves",
-	"key.mmic.grid.thirds": "Thirds",
-	"key.mmic.grid.ninths": "Ninths",
-	"other.mmic.toggled_grid": "Toggled Grid %s %s",
 	"other.mmic.grid.halves": "Halves",
 	"other.mmic.grid.thirds": "Thirds",
 	"other.mmic.grid.ninths": "Ninths",
+	"other.mmic.toggled_grid": "Toggled Grid %s %s",
 
 	"config.mmic.title": "MMIC",
 	"config.mmic.general": "General",

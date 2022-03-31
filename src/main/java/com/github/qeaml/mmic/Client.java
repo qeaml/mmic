@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +30,15 @@ public class Client implements ClientModInitializer {
 	public void onInitializeClient() {
 		log.info("Hello world");
 		loadConfig();
+
+		var visuals = "key.categories.mmic.visuals";
+		Keys.gammaInc = new Bind("key.mmic.gammaInc", GLFW.GLFW_KEY_RIGHT_BRACKET, visuals);
+		Keys.gammaDec = new Bind("key.mmic.gammaDec", GLFW.GLFW_KEY_LEFT_BRACKET, visuals);
+		Keys.fullbright = new Bind("key.mmic.fullbright", GLFW.GLFW_KEY_APOSTROPHE, visuals);
+
+		for(Grid g: Grid.values()) {
+			g.toggle = new Bind("other.mmic.grid."+g.name, g.key, "key.categories.mmic.grids");
+		}
 	}
 
 	private static void loadConfig() {
