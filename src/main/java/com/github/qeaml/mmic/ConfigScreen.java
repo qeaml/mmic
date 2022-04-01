@@ -22,13 +22,20 @@ public class ConfigScreen implements ModMenuApi {
 
 			general.addEntry(entry.startAlphaColorField(
 				new TranslatableText("config.mmic.gridColor"),
-				Client.gridColor)
+				Config.gridColor)
 				.setDefaultValue(0xFF000000)
 				.setTooltip(new TranslatableText("config.mmic.gridColor.tip"))
-				.setSaveConsumer(i -> Client.gridColor = i)
+				.setSaveConsumer(i -> Config.gridColor = i)
+				.build());
+			general.addEntry(entry.startDoubleField(
+				new TranslatableText("config.mmic.gammaStep"),
+				Config.gammaStep * 100)
+				.setDefaultValue(20)
+				.setTooltip(new TranslatableText("config.mmic.gammaStep.tip"))
+				.setSaveConsumer(d -> Config.gammaStep = d / 100)
 				.build());
 
-			builder.setSavingRunnable(Client::saveConfig);
+			builder.setSavingRunnable(Config::save);
 
 			return builder.build();
 		};

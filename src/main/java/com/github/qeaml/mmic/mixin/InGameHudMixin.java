@@ -1,6 +1,7 @@
 package com.github.qeaml.mmic.mixin;
 
 import com.github.qeaml.mmic.Client;
+import com.github.qeaml.mmic.Config;
 import com.github.qeaml.mmic.Grid;
 import com.github.qeaml.mmic.Keys;
 
@@ -49,7 +50,7 @@ public class InGameHudMixin {
 				int ay = (int)((float)scaledHeight * r.a().y())-1;
 				int bx = (int)((float)scaledWidth * r.b().x())+1;
 				int by = (int)((float)scaledHeight * r.b().y())+1;
-				DrawableHelper.fill(matrices, ax, ay, bx, by, Client.gridColor);
+				DrawableHelper.fill(matrices, ax, ay, bx, by, Config.gridColor);
 			}
 		}
 
@@ -89,11 +90,13 @@ public class InGameHudMixin {
 		if(fullbright) return; // the keys below do not matter to us in fullbright
 
 		if(Keys.gammaInc.wasJustPressed() && client.options.gamma <= 3.0) {
-			client.options.gamma += Client.gammaStep;
+			client.options.gamma += Config.gammaStep;
+			client.options.gamma = Math.min(client.options.gamma, 3.0);
 			notify(new TranslatableText("other.mmic.changed_gamma", Math.round(client.options.gamma * 100)));
 		}
 		if(Keys.gammaDec.wasJustPressed() && client.options.gamma >= -1.0) {
-			client.options.gamma -= Client.gammaStep;
+			client.options.gamma -= Config.gammaStep;
+			client.options.gamma = Math.max(client.options.gamma, -1.0);
 			notify(new TranslatableText("other.mmic.changed_gamma", Math.round(client.options.gamma * 100)));
 		}
 	}
