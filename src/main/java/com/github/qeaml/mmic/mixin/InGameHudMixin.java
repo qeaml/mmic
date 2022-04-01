@@ -38,7 +38,6 @@ public class InGameHudMixin {
 
 	public final String fullbrightText = "FULLBRIGHT";
 	private @Unique boolean fullbright;
-	private @Unique boolean paused;
 	private @Unique double oldGamma;
 
 	@Inject(at = @At("HEAD"), method = "render(Lnet/minecraft/client/util/math/MatrixStack;F)V")
@@ -54,15 +53,10 @@ public class InGameHudMixin {
 			}
 		}
 
-		if(fullbright && !paused) {
+		if(fullbright) {
 			int y = scaledHeight - client.textRenderer.fontHeight - 5;
 			client.textRenderer.drawWithShadow(matrices, fullbrightText, 5, y, 0x80FFFFFF);
 		}
-	}
-
-	@Inject(at = @At("HEAD"), method = "tick(Z)V")
-	private void onTick(boolean paused, CallbackInfo ci) {
-		this.paused = paused;
 	}
 
 	@Inject(at = @At("TAIL"), method = "tick()V")
@@ -90,13 +84,11 @@ public class InGameHudMixin {
 		if(fullbright) return; // the keys below do not matter to us in fullbright
 
 		if(Keys.gammaInc.wasJustPressed() && client.options.gamma <= 3.0) {
-			client.options.gamma += Config.gammaStep;
-			client.options.gamma = Math.min(client.options.gamma, 3.0);
+			client.options.gamma = Math.min(client.options.gamma + Config.gammaStep, 3.0);
 			notify(new TranslatableText("other.mmic.changed_gamma", Math.round(client.options.gamma * 100)));
 		}
 		if(Keys.gammaDec.wasJustPressed() && client.options.gamma >= -1.0) {
-			client.options.gamma -= Config.gammaStep;
-			client.options.gamma = Math.max(client.options.gamma, -1.0);
+			client.options.gamma = Math.max(client.options.gamma - Config.gammaStep, -1.0);
 			notify(new TranslatableText("other.mmic.changed_gamma", Math.round(client.options.gamma * 100)));
 		}
 	}
