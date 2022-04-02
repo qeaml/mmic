@@ -81,6 +81,11 @@ public class InGameHudMixin {
 			notify(new TranslatableText("other.mmic.toggled_fullbright", Client.onOff(fullbright)));
 		}
 
+		if(fullbright && client.options.gamma != 10.0) {
+			fullbright = false;
+			client.options.gamma = oldGamma;
+		}
+
 		if(fullbright) return; // the keys below do not matter to us in fullbright
 
 		if(Keys.gammaInc.wasJustPressed() && client.options.gamma <= 3.0) {

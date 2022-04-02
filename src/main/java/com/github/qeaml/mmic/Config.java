@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Date;
 import java.util.Properties;
 
 import net.minecraft.client.MinecraftClient;
@@ -41,7 +40,7 @@ public class Config {
 		try(var fw = new FileOutputStream(source)) {
 			props.setProperty("gridColor", Integer.toString(gridColor));
 			props.setProperty("gammaStep", Double.toString(gammaStep));
-			props.store(fw, new Date().toString());
+			props.store(fw, "MMIC Configuration");
 		} catch(IOException e) {
 			Client.log.warn("Could not save config: "+e.getMessage());
 		}
