@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "id": "mmic",
-  "version": "1.0.0",
+  "version": "1.0.1",
 
   "name": "MMIC",
-  "description": "Minecraft Mod for Image Composition",
+  "description": "There's too many car batteries in the ocean",
   "authors": [
     "qeaml"
   ],
