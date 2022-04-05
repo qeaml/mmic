@@ -17,10 +17,8 @@ import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3i;
 
 public class Client implements ClientModInitializer {
 	public static final Logger log = LoggerFactory.getLogger("mmic");
@@ -43,20 +41,9 @@ public class Client implements ClientModInitializer {
 		ClientPickBlockGatherCallback.EVENT.register((player, hitResult) -> {
 			if(hitResult.getType() != HitResult.Type.BLOCK)
 				return ItemStack.EMPTY;
-			var hit = hitResult.getPos();
-			var pos = new BlockPos(hit.x, hit.y, hit.z);
-			if(player.getHorizontalFacing() == Direction.WEST)
-				pos = pos.subtract(new Vec3i(1, 0, 0));
-			if(player.getHorizontalFacing() == Direction.NORTH)
-				pos = pos.subtract(new Vec3i(0, 0, 1));
-			// if(hit.y == Math.floor(hit.y)) {
-			// 	if(player.getPitch() > 0)
-			// 		pos = pos.subtract(new Vec3i(0, 1, 0));
-			// 	if(player.getPitch() < 0)
-			// 		pos = pos.add(new Vec3i(0, 1, 0));
-			// }
+			var pos = ((BlockHitResult)hitResult).getBlockPos();
 			var block = player.world.getBlockState(pos);
-			log.info("Hit "+block.toString()+" at "+pos.toShortString()+", exact "+hit.toString());
+			log.info("Hit "+block.toString()+" at "+pos.toShortString());
 			MinecraftServer server = MinecraftClient.getInstance().getServer();
 			if(server == null)
 				server = player.getServer();
