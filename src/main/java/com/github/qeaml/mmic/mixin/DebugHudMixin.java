@@ -46,6 +46,8 @@ public class DebugHudMixin extends DrawableHelper {
 		method = "render(Lnet/minecraft/client/util/math/MatrixStack;)V",
 		cancellable = true)
 	private void hijackRender(MatrixStack matrices, CallbackInfo ci) {
+		if(!client.options.reducedDebugInfo) return;
+
 		framecount++;
 		var cam = client.getCameraEntity();
 
@@ -64,6 +66,18 @@ public class DebugHudMixin extends DrawableHelper {
 			framecount = 0;
 			lastInfo = System.currentTimeMillis();
 		}
+		var perf = 0xFF00FF00;
+		if(fps < 20)
+			perf = 0xFFFF0000;
+		else if(fps < 30)
+			perf = 0xFFFF8000;
+		else if(fps < 60)
+			perf = 0xFFFFFF00;
+		fill(
+			matrices,
+			50*n+n+n+n, n,
+			50*n+n+n+n+n, 9*textRenderer.fontHeight+n,
+			perf);
 		line(matrices, 0, "FPS: %d (%d ms)", fps, frametime);
 
 		var r = Runtime.getRuntime();
