@@ -47,6 +47,8 @@ public class Client implements ClientModInitializer {
 			MinecraftServer server = MinecraftClient.getInstance().getServer();
 			if(server == null)
 				server = player.getServer();
+			if(server == null)
+				return ItemStack.EMPTY;
 			var stax = Block.getDroppedStacks(block, server.getWorld(player.world.getRegistryKey()), pos, null);
 			for(ItemStack i: stax)
 				if(player.getInventory().contains(i))
