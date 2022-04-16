@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.ClientBrandRetriever;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -20,6 +21,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.server.integrated.IntegratedServer;
+import net.minecraft.tag.TagKey;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -118,26 +120,33 @@ public class DebugHudMixin extends DrawableHelper {
 			var pos = ((BlockHitResult)client.crosshairTarget).getBlockPos();
 			var state = client.player.getWorld().getBlockState(pos);
 			var info = String.format("%s at %s", Registry.BLOCK.getId(state.getBlock()), pos.toShortString());
-			var infowidth = textRenderer.getWidth(info);
+			var bgwidth = textRenderer.getWidth(info);
 			var sw = client.getWindow().getScaledWidth();
 			var sh = client.getWindow().getScaledHeight();
 			var props = state.getProperties();
+			var tags = state.streamTags().toList();
+			for(TagKey<Block> tag: tags)
+			{
+				int w = textRenderer.getWidth("#"+tag.id().toString());
+				if(w > bgwidth)
+					bgwidth = w;
+			}
 			fillGradient
 			(
 				matrices,
 				sw/2
-					-infowidth/2
+					-bgwidth/2
 					-n,
 				sh/2
 					+textRenderer.fontHeight
 					+n,
 				sw/2
-					+infowidth/2
+					+bgwidth/2
 					+n,
 				sh/2
 					+textRenderer.fontHeight
 					+textRenderer.fontHeight
-					+props.size()*textRenderer.fontHeight
+					+(props.size()+tags.size())*textRenderer.fontHeight
 					+textRenderer.fontHeight
 					+n,
 				0x801F1F1f, 0x800F0F0F
@@ -145,6 +154,7 @@ public class DebugHudMixin extends DrawableHelper {
 			centerLines = 0;
 			centerLine(matrices, info);
 			props.forEach(prop -> centerLine(matrices, "%s=%s", prop.getName(), state.get(prop)));
+			tags.forEach(tag -> centerLine(matrices, "#%s", tag.id()));
 		}
 		else if(client.crosshairTarget.getType() == HitResult.Type.ENTITY)
 		{
@@ -155,6 +165,7 @@ public class DebugHudMixin extends DrawableHelper {
 			var infowidth = textRenderer.getWidth(info);
 			var sw = client.getWindow().getScaledWidth();
 			var sh = client.getWindow().getScaledHeight();
+			//TODO: tags here too?
 			int lines = 0;
 			if(ent instanceof LivingEntity)
 				lines = 1;
