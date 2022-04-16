@@ -17,8 +17,11 @@ import net.minecraft.client.gui.hud.DebugHud;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
@@ -142,6 +145,44 @@ public class DebugHudMixin extends DrawableHelper {
 			centerLines = 0;
 			centerLine(matrices, info);
 			props.forEach(prop -> centerLine(matrices, "%s=%s", prop.getName(), state.get(prop)));
+		}
+		else if(client.crosshairTarget.getType() == HitResult.Type.ENTITY)
+		{
+			var ent = ((EntityHitResult)client.crosshairTarget).getEntity();
+			var info = String.format("%s at %.2f, %.2f, %.2f",
+				Registry.ENTITY_TYPE.getId(ent.getType()),
+				ent.getPos().x, ent.getPos().y, ent.getPos().z);
+			var infowidth = textRenderer.getWidth(info);
+			var sw = client.getWindow().getScaledWidth();
+			var sh = client.getWindow().getScaledHeight();
+			int lines = 0;
+			if(ent instanceof LivingEntity)
+				lines = 1;
+			fillGradient
+			(
+				matrices,
+				sw/2
+					-infowidth/2
+					-n,
+				sh/2
+					+textRenderer.fontHeight
+					+n,
+				sw/2
+					+infowidth/2
+					+n,
+				sh/2
+					+textRenderer.fontHeight
+					+textRenderer.fontHeight
+					+lines*textRenderer.fontHeight
+					+textRenderer.fontHeight
+					+n,
+				0x801F1F1f, 0x800F0F0F
+			);
+			centerLines = 0;
+			centerLine(matrices, info);
+			if(ent instanceof LivingEntity lent)
+				centerLine(matrices, "Health: %.2f/%.2f",
+					lent.getHealth(), lent.getAttributeValue(EntityAttributes.GENERIC_MAX_HEALTH));
 		}
 
 		ci.cancel();
