@@ -18,6 +18,9 @@ import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.server.integrated.IntegratedServer;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.biome.Biome;
 
@@ -78,43 +81,81 @@ public class DebugHudMixin extends DrawableHelper {
 			50*n+n+n+n, n,
 			50*n+n+n+n+n, 9*textRenderer.fontHeight+n,
 			perf);
-		line(matrices, 0, "FPS: %d (%d ms)", fps, frametime);
+
+		leftLines = 0;
+		leftLine(matrices, "FPS: %d (%d ms)", fps, frametime);
 
 		var r = Runtime.getRuntime();
-		line(matrices, 1, "Memory: %.02f/%.02fMiB",
+		leftLine(matrices, "Memory: %.02f/%.02fMiB",
 			toMiB(r.totalMemory() - r.freeMemory()),
 			toMiB(r.maxMemory()));
 
-		line(matrices, 2, "Client: %s %s (%s)",
+		leftLine(matrices, "Client: %s %s (%s)",
 			ClientBrandRetriever.getClientModName(),
 			client.getGameVersion(),
 			client.getVersionType());
 
 		IntegratedServer is;
 		if((is = client.getServer()) != null)
-			line(matrices, 3, "Server: Integrated @ %.2fms", is.getTickTime());
+			leftLine(matrices, "Server: Integrated @ %.2fms", is.getTickTime());
 		else
-			line(matrices, 3, "Server: %s", client.player.getServerBrand());
+			leftLine(matrices, "Server: %s", client.player.getServerBrand());
 
-		line(matrices, 4, "XYZ: %.2f/%.2f/%.2f", cam.getX(), cam.getY(), cam.getZ());
-		line(matrices, 5, "Rotation: %.2f/%.2f (%s)", cam.getYaw(), cam.getPitch(), cam.getHorizontalFacing());
-		line(matrices, 6, "Chunk: %d/%d", (int)(cam.getX() / 16.0), (int)(cam.getZ() / 16.0));
+		leftLine(matrices, "XYZ: %.2f/%.2f/%.2f", cam.getX(), cam.getY(), cam.getZ());
+		leftLine(matrices, "Rotation: %.2f/%.2f (%s)", cam.getYaw(), cam.getPitch(), cam.getHorizontalFacing());
+		leftLine(matrices, "Chunk: %d/%d", (int)(cam.getX() / 16.0), (int)(cam.getZ() / 16.0));
 
 		if(cam.getY() >= client.world.getBottomY() && cam.getY() < client.world.getTopY())
-			line(matrices, 7, "Biome: %s", getBiomeString(client.world.getBiome(cam.getBlockPos())));
+			leftLine(matrices, "Biome: %s", getBiomeString(client.world.getBiome(cam.getBlockPos())));
 		else
-			line(matrices, 7, "Out of world.");
+			leftLine(matrices, "Out of world.");
+
+		if(client.crosshairTarget.getType() == HitResult.Type.BLOCK)
+		{
+			var pos = ((BlockHitResult)client.crosshairTarget).getBlockPos();
+			var state = client.player.getWorld().getBlockState(pos);
+			var info = String.format("%s at %s", Registry.BLOCK.getId(state.getBlock()), pos.toShortString());
+			var infowidth = textRenderer.getWidth(info);
+			var sw = client.getWindow().getScaledWidth();
+			var sh = client.getWindow().getScaledHeight();
+			var props = state.getProperties();
+			fillGradient
+			(
+				matrices,
+				sw/2
+					-infowidth/2
+					-n,
+				sh/2
+					+textRenderer.fontHeight
+					+n,
+				sw/2
+					+infowidth/2
+					+n,
+				sh/2
+					+textRenderer.fontHeight
+					+textRenderer.fontHeight
+					+props.size()*textRenderer.fontHeight
+					+textRenderer.fontHeight
+					+n,
+				0x801F1F1f, 0x800F0F0F
+			);
+			centerLines = 0;
+			centerLine(matrices, info);
+			props.forEach(prop -> centerLine(matrices, "%s=%s", prop.getName(), state.get(prop)));
+		}
 
 		ci.cancel();
 	}
 
+	private @Unique int leftLines = 0;
+
 	@Unique
-	private void line(MatrixStack matrices, int line, String format, Object... args) {
+	private void leftLine(MatrixStack matrices, String format, Object... args) {
 		var immediate = VertexConsumerProvider.immediate(Tessellator.getInstance().getBuffer());
 		((TextRendererAccessor)textRenderer).internalDraw(
 			String.format(format, args),
 			textRenderer.fontHeight,
-			textRenderer.fontHeight*line+textRenderer.fontHeight,
+			textRenderer.fontHeight*leftLines+textRenderer.fontHeight,
 			0xFFFFFFFF,
 			false,
 			matrices.peek().getPositionMatrix(),
@@ -124,6 +165,32 @@ public class DebugHudMixin extends DrawableHelper {
 			15728880,
 			false);
 		immediate.draw();
+		leftLines++;
+	}
+
+	private @Unique int centerLines = 0;
+
+	@Unique
+	private void centerLine(MatrixStack matrices, String format, Object... args)
+	{
+		var immediate = VertexConsumerProvider.immediate(Tessellator.getInstance().getBuffer());
+		var text = String.format(format, args);
+		((TextRendererAccessor)textRenderer).internalDraw(
+			text,
+			client.getWindow().getScaledWidth()/2
+				-textRenderer.getWidth(text)/2,
+			client.getWindow().getScaledHeight()/2
+				+textRenderer.fontHeight*centerLines+textRenderer.fontHeight+textRenderer.fontHeight,
+			0xFFFFFFFF,
+			false,
+			matrices.peek().getPositionMatrix(),
+			immediate,
+			false,
+			0x00000000,
+			15728880,
+			false);
+		immediate.draw();
+		centerLines++;
 	}
 
 	@Unique
