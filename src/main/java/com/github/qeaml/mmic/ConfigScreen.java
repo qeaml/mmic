@@ -34,6 +34,13 @@ public class ConfigScreen implements ModMenuApi {
 				.setTooltip(new TranslatableText("config.mmic.gammaStep.tip"))
 				.setSaveConsumer(d -> Config.gammaStep = d / 100)
 				.build());
+			general.addEntry(entry.startBooleanToggle(
+				new TranslatableText("config.mmic.miniF3"),
+				Config.miniF3)
+				.setDefaultValue(false)
+				.setTooltip(new TranslatableText("config.mmic.miniF3.tip"))
+				.setSaveConsumer(b -> Config.miniF3 = b)
+				.build());
 
 			builder.setSavingRunnable(Config::save);
 

@@ -2,6 +2,8 @@ package com.github.qeaml.mmic.mixin;
 
 import java.util.LinkedList;
 
+import com.github.qeaml.mmic.Config;
+
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -11,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.minecraft.client.ClientBrandRetriever;
+//// import net.minecraft.client.ClientBrandRetriever;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
@@ -54,7 +56,7 @@ public class DebugHudMixin extends DrawableHelper {
 		method = "render(Lnet/minecraft/client/util/math/MatrixStack;)V",
 		cancellable = true)
 	private void hijackRender(MatrixStack matrices, CallbackInfo ci) {
-		if(!client.options.reducedDebugInfo) return;
+		if(!Config.miniF3) return;
 
 		var ll = new LinkedList<String>();
 
@@ -73,10 +75,10 @@ public class DebugHudMixin extends DrawableHelper {
 			toMiB(r.totalMemory() - r.freeMemory()),
 			toMiB(r.maxMemory())));
 
-		ll.add(String.format("Client: %s %s (%s)",
-			ClientBrandRetriever.getClientModName(),
-			client.getGameVersion(),
-			client.getVersionType()));
+		////ll.add(String.format("Client: %s %s (%s)",
+		////	ClientBrandRetriever.getClientModName(),
+		////	client.getGameVersion(),
+		////	client.getVersionType()));
 
 		IntegratedServer is;
 		if((is = client.getServer()) != null)
@@ -173,7 +175,7 @@ public class DebugHudMixin extends DrawableHelper {
 			if(ent instanceof LivingEntity lent)
 				cl.add(String.format("Health: %.2f/%.2f",
 					lent.getHealth(), lent.getAttributeValue(EntityAttributes.GENERIC_MAX_HEALTH)));
-			//TODO: tags here too?
+			ent.getScoreboardTags().forEach(tag -> cl.add("#"+tag)); // FIXME: why doesn't this work?
 			int cbgw = 0;
 			for(String s: cl)
 			{
