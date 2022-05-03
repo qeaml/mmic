@@ -3,6 +3,7 @@ package com.github.qeaml.mmic.mixin;
 import com.github.qeaml.mmic.Client;
 import com.github.qeaml.mmic.Config;
 import com.github.qeaml.mmic.Grid;
+import com.github.qeaml.mmic.ItemPickups;
 import com.github.qeaml.mmic.Keys;
 
 import org.spongepowered.asm.mixin.Final;
@@ -57,10 +58,14 @@ public class InGameHudMixin {
 			int y = scaledHeight - client.textRenderer.fontHeight - 5;
 			client.textRenderer.drawWithShadow(matrices, fullbrightText, 5, y, 0x80FFFFFF);
 		}
+
+		ItemPickups.draw(matrices);
 	}
 
 	@Inject(at = @At("TAIL"), method = "tick()V")
 	private void onTick(CallbackInfo ci) {
+		ItemPickups.tick();
+
 		for(Grid g: Grid.values()) {
 			if(g.toggle.wasJustPressed()) {
 				g.show = !g.show;

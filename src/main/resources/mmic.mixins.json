@@ -6,6 +6,7 @@
   "client": [
 		"InGameHudMixin",
 		"DebugHudMixin",
+		"PlayerInventoryMixin",
 		"TextRendererAccessor"
   ],
   "injectors": {
