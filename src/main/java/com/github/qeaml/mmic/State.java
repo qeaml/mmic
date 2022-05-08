@@ -102,7 +102,7 @@ public class State {
 	private static Language cachedLang = Language.getInstance();
 	public static void drawPickups(MatrixStack matrices)
 	{
-		var tr = MinecraftClient.getInstance().textRenderer;
+		var tr = mc.textRenderer;
 		int y = tr.fontHeight;
 		for(var ip: List.copyOf(pickups))
 		{

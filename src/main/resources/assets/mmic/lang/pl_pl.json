@@ -1,0 +1,35 @@
+{
+	"other.mmic.on": "Wł.",
+	"other.mmic.off": "Wył.",
+
+	"key.categories.mmic.visuals": "Graficzne",
+	"key.mmic.gammaInc": "Zwiększ Jasność",
+	"key.mmic.gammaDec": "Zmniejsz Jasność",
+	"key.mmic.fullbright": "Wł./Wył. Noktowizję",
+	"other.mmic.changed_gamma": "Zmieniono jasność na %s%%",
+	"other.mmic.toggled_fullbright": "Notkowizja %s",
+
+	"key.categories.mmic.grids": "Załączniki Siatek",
+	"other.mmic.grid.halves": "Połówki",
+	"other.mmic.grid.thirds": "Trójpodział",
+	"other.mmic.grid.ninths": "Dziewiątki",
+	"other.mmic.toggled_grid": "Toggled Grid %s %s",
+
+	"key.mmic.lagSwitch": "Lag",
+	"other.mmic.lag_switched": "Lag %s",
+
+	"config.mmic.title": "MMIC",
+	"config.mmic.general": "Ogólne",
+	"config.mmic.gridColor": "Kolor siatek",
+	"config.mmic.gridColor.tip": "Zmienia kolor siatek (trójpodział itd.)",
+	"config.mmic.gammaStep": "Zmienna jasności",
+	"config.mmic.gammaStep.tip": "Ilość, w procentach, o jaką jasność się zmieni przy użyciu przycisków manipulacji jasnością",
+	"config.mmic.miniF3": "Małe F3",
+	"config.mmic.miniF3.tip": "Zamienia domyślne menu F3 na nowe, mniejsze, wyświetlające tylko najważniejsze informacje",
+	"config.mmic.staticHand": "Nieruchoma ręka",
+	"config.mmic.staticHand.tip": "Wyłącza animację machania ręką",
+	"config.mmic.pickupDisplayTime": "Pickup Display Time",
+	"config.mmic.pickupDisplayTime.tip": "Time (in seconds) before item pickup notifications disappear",
+	"config.mmic.pickupDisplayEnable": "Pickup Display",
+	"config.mmic.pickupDipplayEnable.tip": "Toggles item pickup/drop notifications"
+}
