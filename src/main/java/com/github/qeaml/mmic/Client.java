@@ -8,7 +8,9 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.event.client.player.ClientPickBlockGatherCallback;
 import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.sound.PositionedSoundInstance;
+import net.minecraft.client.toast.SystemToast;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.sound.SoundCategory;
@@ -22,6 +24,7 @@ import net.minecraft.util.hit.HitResult;
 
 public class Client implements ClientModInitializer {
 	public static final Logger log = LoggerFactory.getLogger("mmic");
+	public static boolean lag = false;
 
 	@Override
 	public void onInitializeClient() {
@@ -33,6 +36,7 @@ public class Client implements ClientModInitializer {
 		Keys.gammaInc = new Bind("key.mmic.gammaInc", GLFW.GLFW_KEY_RIGHT_BRACKET, visuals);
 		Keys.gammaDec = new Bind("key.mmic.gammaDec", GLFW.GLFW_KEY_LEFT_BRACKET, visuals);
 		Keys.fullbright = new Bind("key.mmic.fullbright", GLFW.GLFW_KEY_APOSTROPHE, visuals);
+		Keys.lagSwitch = new Bind("key.mmic.lagSwitch", GLFW.GLFW_KEY_BACKSLASH, KeyBinding.GAMEPLAY_CATEGORY);
 
 		for(Grid g: Grid.values()) {
 			g.toggle = new Bind("other.mmic.grid."+g.name, g.key, "key.categories.mmic.grids");
@@ -46,8 +50,6 @@ public class Client implements ClientModInitializer {
 			log.info("Hit "+block.toString()+" at "+pos.toShortString());
 			MinecraftServer server = MinecraftClient.getInstance().getServer();
 			if(server == null)
-				server = player.getServer();
-			if(server == null)
 				return ItemStack.EMPTY;
 			var stax = Block.getDroppedStacks(block, server.getWorld(player.world.getRegistryKey()), pos, null);
 			for(ItemStack i: stax)
@@ -55,6 +57,27 @@ public class Client implements ClientModInitializer {
 					return i;
 			return ItemStack.EMPTY;
 		});
+	}
+
+	public static void tick()
+	{
+		var mc = MinecraftClient.getInstance();
+		var p = mc.getProfiler();
+		p.swap("mmicTick");
+		if(Keys.lagSwitch.wasJustPressed())
+		{
+			playClick();
+			lag = !lag;
+			var txt = new TranslatableText("other.mmic.lag_switched", onOff(lag));
+			if(mc.player != null)
+				mc.player.sendMessage(txt, true);
+			else
+				SystemToast.show(mc.getToastManager(),
+					SystemToast.Type.PERIODIC_NOTIFICATION,
+					new TranslatableText("key.mmic.lagSwitch"),
+					txt);
+		}
+		p.pop();
 	}
 
 	public static Text onOff(boolean on) {

@@ -15,8 +15,15 @@
 	"other.mmic.grid.ninths": "Ninths",
 	"other.mmic.toggled_grid": "Toggled Grid %s %s",
 
+	"key.mmic.lagSwitch": "Lag Switch",
+	"other.mmic.lag_switched": "Switched Lag %s",
+
 	"config.mmic.title": "MMIC",
 	"config.mmic.general": "General",
 	"config.mmic.gridColor": "Grid Color",
-	"config.mmic.gridColor.tip": "Changes the color of the togglable grids (thirds, halves etc.)"
+	"config.mmic.gridColor.tip": "Changes the color of the togglable grids (thirds, halves etc.)",
+	"config.mmic.gammaStep": "Brightness Step",
+	"config.mmic.gammaStep.tip": "Changes by how much % the brigthness will change when using the brightness buttons",
+	"config.mmic.miniF3": "Minimized Debug HUD",
+	"config.mmic.miniF3.tip": "Replaces the default Debug HUD (F3 menu) with a new, smaller one which displays only the most important information."
 }

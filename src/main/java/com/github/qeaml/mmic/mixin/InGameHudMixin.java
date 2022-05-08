@@ -37,7 +37,6 @@ public class InGameHudMixin {
 	@Shadow
 	private boolean overlayTinted;
 
-	public final String fullbrightText = "FULLBRIGHT";
 	private @Unique boolean fullbright;
 	private @Unique double oldGamma;
 
@@ -54,9 +53,15 @@ public class InGameHudMixin {
 			}
 		}
 
+		int y = scaledHeight - client.textRenderer.fontHeight - 5;
 		if(fullbright) {
-			int y = scaledHeight - client.textRenderer.fontHeight - 5;
-			client.textRenderer.drawWithShadow(matrices, fullbrightText, 5, y, 0x80FFFFFF);
+			client.textRenderer.drawWithShadow(matrices, "FULLBRIGHT", 5, y, 0x80FFFFFF);
+			y -= client.textRenderer.fontHeight;
+		}
+		if(Client.lag)
+		{
+			client.textRenderer.drawWithShadow(matrices, "LAGGING", 5, y, 0x80FFFFFF);
+			y -= client.textRenderer.fontHeight;
 		}
 
 		ItemPickups.draw(matrices);
