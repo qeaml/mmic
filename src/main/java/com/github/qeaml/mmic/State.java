@@ -2,12 +2,16 @@ package com.github.qeaml.mmic;
 
 import java.util.List;
 
+import com.github.qeaml.mmic.Config.LagType;
+
+import java.util.Deque;
 import java.util.LinkedList;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.Packet;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Language;
 
@@ -30,10 +34,16 @@ public class State {
 	}
 
 	public static boolean lagging = false;
+	public static Deque<Packet<?>> packets = new LinkedList<>();
 
 	public static void toggleLag()
 	{
 		lagging = !lagging;
+		if(!lagging && Config.lagType == LagType.CLOG)
+		{
+			packets.forEach(mc.getNetworkHandler()::sendPacket);
+			packets.clear();
+		}
 		Client.notify(new TranslatableText("other.mmic.lag_switched", Client.onOff(lagging)));
 	}
 

@@ -31,5 +31,7 @@
 	"config.mmic.pickupDisplayTime": "Pickup Display Time",
 	"config.mmic.pickupDisplayTime.tip": "Time (in seconds) before item pickup notifications disappear",
 	"config.mmic.pickupDisplayEnable": "Pickup Display",
-	"config.mmic.pickupDipplayEnable.tip": "Toggles item pickup/drop notifications"
+	"config.mmic.pickupDipplayEnable.tip": "Toggles item pickup/drop notifications",
+	"config.mmic.lagType": "Typ lag'u",
+	"config.mmic.lagType.tip": "Zmiena typ lag'u powodowanego przez MMIC\nBLOCK powoduje że wszystkie pakiety wysłane przez klienta są całkowicie zignorowane\nCLOG blokuje wszystkie pakiety, wysyłając je wszystkie na raz gdy lag jest wyłączony"
 }

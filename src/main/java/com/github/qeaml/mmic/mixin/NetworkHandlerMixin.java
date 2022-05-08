@@ -1,6 +1,8 @@
 package com.github.qeaml.mmic.mixin;
 
+import com.github.qeaml.mmic.Config;
 import com.github.qeaml.mmic.State;
+import com.github.qeaml.mmic.Config.LagType;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,6 +21,11 @@ public class NetworkHandlerMixin {
 	)
 	private void onSendPacket(Packet<?> packet, CallbackInfo ci)
 	{
-		if(State.lagging) ci.cancel();
+		if(State.lagging)
+		{
+			if(Config.lagType == LagType.CLOG)
+				State.packets.add(packet);
+			ci.cancel();
+		}
 	}
 }
