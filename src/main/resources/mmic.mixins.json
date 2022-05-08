@@ -9,7 +9,8 @@
 		"PlayerInventoryMixin",
 		"TextRendererAccessor",
 		"NetworkHandlerMixin",
-		"ClientMixin"
+		"ClientMixin",
+		"PlayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

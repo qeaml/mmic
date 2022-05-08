@@ -15,6 +15,7 @@ public class Config {
 	public static int gridColor = 0xFF000000;
 	public static double gammaStep = 0.2;
 	public static boolean miniF3 = false;
+	public static boolean staticHand = false;
 
 	public static void load() {
 		if(!source.exists()) {
@@ -33,6 +34,7 @@ public class Config {
 			gridColor = Integer.parseInt((String)props.getOrDefault("gridColor", "-16777216"));
 			gammaStep = Double.parseDouble((String)props.getOrDefault("gammaStep", "0.2"));
 			miniF3 = Boolean.parseBoolean((String)props.getOrDefault("miniF3", "false"));
+			staticHand = Boolean.parseBoolean((String)props.getOrDefault("staticHand", "false"));
 		} catch(IOException e) {
 			Client.log.warn("Could not load config: "+e.getMessage());
 		}
@@ -43,6 +45,7 @@ public class Config {
 			props.setProperty("gridColor", Integer.toString(gridColor));
 			props.setProperty("gammaStep", Double.toString(gammaStep));
 			props.setProperty("miniF3", Boolean.toString(miniF3));
+			props.setProperty("staticHand", Boolean.toString(staticHand));
 			props.store(fw, "MMIC Configuration");
 		} catch(IOException e) {
 			Client.log.warn("Could not save config: "+e.getMessage());
