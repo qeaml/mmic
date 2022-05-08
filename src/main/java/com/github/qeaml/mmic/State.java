@@ -40,7 +40,7 @@ public class State {
 	record ItemPickup(int amount, Item item, int ttl) {
 		public static ItemPickup of(ItemStack stack)
 		{
-			return new ItemPickup(stack.getCount(), stack.getItem(), 100);
+			return new ItemPickup(stack.getCount(), stack.getItem(), Config.pickupDisplayTime);
 		}
 		public ItemPickup negate()
 		{
@@ -52,6 +52,7 @@ public class State {
 		}
 	}
 	private static List<ItemPickup> pickups = new LinkedList<>();
+	private static Object pickupLock = new Object();
 
 	public static void itemPickup(ItemStack stack)
 	{
@@ -60,9 +61,12 @@ public class State {
 			var ip = tmpPickups.get(i);
 			if(ip.item == stack.getItem() && ip.amount > 0)
 			{
-				pickups.set(i,
-					new ItemPickup(ip.amount+stack.getCount(), ip.item, 100));
-				return;
+				synchronized(pickupLock)
+				{
+					pickups.set(i,
+						new ItemPickup(ip.amount+stack.getCount(), ip.item, Config.pickupDisplayTime));
+					return;
+				}
 			}
 		}
 		pickups.add(ItemPickup.of(stack));
@@ -75,9 +79,12 @@ public class State {
 			var ip = tmpPickups.get(i);
 			if(ip.item == stack.getItem() && ip.amount < 0)
 			{
-				pickups.set(i,
-					new ItemPickup(ip.amount-stack.getCount(), ip.item, 100));
-				return;
+				synchronized(pickupLock)
+				{
+					pickups.set(i,
+						new ItemPickup(ip.amount-stack.getCount(), ip.item, Config.pickupDisplayTime));
+					return;
+				}
 			}
 		}
 		pickups.add(ItemPickup.of(stack).negate());
@@ -85,8 +92,11 @@ public class State {
 
 	public static void tickPickups()
 	{
-		pickups.clear();
-		pickups.stream().map(ItemPickup::tick).forEach(pickups::add);
+		synchronized(pickupLock)
+		{
+			pickups.clear();
+			pickups.stream().map(ItemPickup::tick).forEach(pickups::add);
+		}
 	}
 
 	private static Language cachedLang = Language.getInstance();

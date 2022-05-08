@@ -25,5 +25,11 @@
 	"config.mmic.gammaStep": "Brightness Step",
 	"config.mmic.gammaStep.tip": "Changes by how much % the brigthness will change when using the brightness buttons",
 	"config.mmic.miniF3": "Minimized Debug HUD",
-	"config.mmic.miniF3.tip": "Replaces the default Debug HUD (F3 menu) with a new, smaller one which displays only the most important information."
+	"config.mmic.miniF3.tip": "Replaces the default Debug HUD (F3 menu) with a new, smaller one which displays only the most important information.",
+	"config.mmic.staticHand": "Static Hand",
+	"config.mmic.staticHand.tip": "Disables the hand swinging animation",
+	"config.mmic.pickupDisplayTime": "Pickup Display Time",
+	"config.mmic.pickupDisplayTime.tip": "Time (in seconds) before item pickup notifications disappear",
+	"config.mmic.pickupDisplayEnable": "Pickup Display",
+	"config.mmic.pickupDipplayEnable.tip": "Toggles item pickup/drop notifications"
 }

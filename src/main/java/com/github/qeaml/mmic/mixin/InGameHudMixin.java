@@ -33,7 +33,10 @@ public class InGameHudMixin {
 	@Shadow
 	private boolean overlayTinted;
 
-	@Inject(at = @At("HEAD"), method = "render(Lnet/minecraft/client/util/math/MatrixStack;F)V")
+	@Inject(
+		at = @At("HEAD"),
+		method = "render(Lnet/minecraft/client/util/math/MatrixStack;F)V"
+	)
 	private void onRender(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
 		for(Grid g: Grid.values()) {
 			if(!g.show) continue;
@@ -57,6 +60,19 @@ public class InGameHudMixin {
 			y -= client.textRenderer.fontHeight;
 		}
 
-		State.drawPickups(matrices);
+		if(Config.pickupDisplayEnable)
+			State.drawPickups(matrices);
+	}
+
+	@Inject(
+		at = @At("HEAD"),
+		method = "tick()V"
+	)
+	private void onTick(CallbackInfo ci)
+	{
+		// moved this from Client::tick because this does not need to execute
+		// whilst not in-game (+ doing it here prevents some timing issues)
+		if(Config.pickupDisplayEnable)
+			State.tickPickups();
 	}
 }

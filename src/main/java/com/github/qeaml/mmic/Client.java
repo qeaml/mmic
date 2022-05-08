@@ -63,7 +63,6 @@ public class Client implements ClientModInitializer {
 	{
 		var p = mc.getProfiler();
 		p.swap("mmicTick");
-		State.tickPickups();
 		if(Keys.lagSwitch.wasJustPressed())
 			State.toggleLag();
 		if(Keys.fullbright.wasJustPressed())

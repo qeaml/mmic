@@ -12,12 +12,11 @@ import net.minecraft.client.MinecraftClient;
 @Mixin(MinecraftClient.class)
 public class ClientMixin {
 	@Inject(
-		method = "render(Z)V",
+		method = "tick()V",
 		at = @At("HEAD")
 	)
-	private void onRender(boolean tick, CallbackInfo ci)
+	private void onTick(CallbackInfo ci)
 	{
-		if(tick)
-			Client.tick();
+		Client.tick();
 	}
 }
