@@ -21,7 +21,7 @@
       "com.github.qeaml.mmic.Client"
     ],
 		"modmenu": [
-			"com.github.qeaml.mmic.ConfigScreen"
+			"com.github.qeaml.mmic.Config"
 		]
   },
   "mixins": [

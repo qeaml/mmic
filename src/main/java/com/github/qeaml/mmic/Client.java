@@ -24,7 +24,7 @@ import net.minecraft.util.hit.HitResult;
 
 public class Client implements ClientModInitializer {
 	public static final Logger log = LoggerFactory.getLogger("mmic");
-	public static boolean lag = false;
+	private static MinecraftClient mc = MinecraftClient.getInstance();
 
 	@Override
 	public void onInitializeClient() {
@@ -61,22 +61,33 @@ public class Client implements ClientModInitializer {
 
 	public static void tick()
 	{
-		var mc = MinecraftClient.getInstance();
 		var p = mc.getProfiler();
 		p.swap("mmicTick");
+		State.tickPickups();
 		if(Keys.lagSwitch.wasJustPressed())
+			State.toggleLag();
+		if(Keys.fullbright.wasJustPressed())
+			State.toggleFullbright();
+		if(State.fullbright && mc.options.gamma != 10.0)
+			State.toggleFullbright();
+		if(!State.fullbright)
 		{
-			playClick();
-			lag = !lag;
-			var txt = new TranslatableText("other.mmic.lag_switched", onOff(lag));
-			if(mc.player != null)
-				mc.player.sendMessage(txt, true);
-			else
-				SystemToast.show(mc.getToastManager(),
-					SystemToast.Type.PERIODIC_NOTIFICATION,
-					new TranslatableText("key.mmic.lagSwitch"),
-					txt);
+			if(Keys.gammaInc.wasJustPressed() && mc.options.gamma <= 3.0) {
+				mc.options.gamma = Math.min(mc.options.gamma + Config.gammaStep, 3.0);
+				notify(new TranslatableText("other.mmic.changed_gamma", Math.round(mc.options.gamma * 100)));
+			}
+			if(Keys.gammaDec.wasJustPressed() && mc.options.gamma >= -1.0) {
+				mc.options.gamma = Math.max(mc.options.gamma - Config.gammaStep, -1.0);
+				notify(new TranslatableText("other.mmic.changed_gamma", Math.round(mc.options.gamma * 100)));
+			}
 		}
+		for(var g: Grid.values())
+			if(g.toggle.wasJustPressed())
+			{
+				g.show = !g.show;
+				notify(new TranslatableText("other.mmic.toggled_grid",
+					new TranslatableText("other.mmic.grid."+g.name), onOff(g.show)));
+			}
 		p.pop();
 	}
 
@@ -88,11 +99,24 @@ public class Client implements ClientModInitializer {
 	}
 
 	public static void playClick() {
-		MinecraftClient.getInstance().getSoundManager().play(
+		mc.getSoundManager().play(
 			new PositionedSoundInstance(
 				SoundEvents.UI_BUTTON_CLICK,
 				SoundCategory.BLOCKS,
 				.25f, 1f,
 				0, 0, 0));
+	}
+
+	public static void notify(Text message)
+	{
+		playClick();
+		if(mc.currentScreen == null)
+			mc.player.sendMessage(message, true);
+		else
+			SystemToast.show(mc.getToastManager(),
+				SystemToast.Type.PERIODIC_NOTIFICATION,
+				Text.of("MMIC"),
+				message);
+		log.info(message.getString());
 	}
 }

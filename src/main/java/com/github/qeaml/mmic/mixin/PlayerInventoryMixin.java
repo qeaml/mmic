@@ -1,6 +1,6 @@
 package com.github.qeaml.mmic.mixin;
 
-import com.github.qeaml.mmic.ItemPickups;
+import com.github.qeaml.mmic.State;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -22,7 +22,7 @@ public class PlayerInventoryMixin {
 	{
 		// FIXME: moving items within inventory does not add to pickups map
 		if(!stack.isEmpty())
-			ItemPickups.add(stack);
+			State.itemPickup(stack);
 	}
 
 	private @Unique boolean dropConfirm = false;
@@ -36,7 +36,7 @@ public class PlayerInventoryMixin {
 		// FIXME: this method always gets called twice (why???)
 		var stack = ci.getReturnValue();
 		if(!stack.isEmpty())
-			ItemPickups.drop(stack);
+			State.itemDrop(stack);
 		dropConfirm = true;
 	}
 
@@ -48,7 +48,7 @@ public class PlayerInventoryMixin {
 	{
 		var stack = ci.getReturnValue();
 		if(!stack.isEmpty())
-			ItemPickups.drop(stack);
+			State.itemDrop(stack);
 	}
 
 	@Inject(
@@ -58,6 +58,6 @@ public class PlayerInventoryMixin {
 	private void injectRemoveOne(ItemStack stack, CallbackInfo ci)
 	{
 		if(!stack.isEmpty())
-			ItemPickups.drop(stack);
+			State.itemDrop(stack);
 	}
 }
