@@ -10,7 +10,8 @@
 		"TextRendererAccessor",
 		"NetworkHandlerMixin",
 		"ClientMixin",
-		"PlayerMixin"
+		"PlayerMixin",
+    "GammaAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

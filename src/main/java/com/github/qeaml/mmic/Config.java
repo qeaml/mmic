@@ -12,7 +12,7 @@ import com.terraformersmc.modmenu.api.ModMenuApi;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class Config implements ModMenuApi {
@@ -80,59 +80,59 @@ public class Config implements ModMenuApi {
 		return parent -> {
 			var builder = ConfigBuilder.create()
 				.setParentScreen(parent)
-				.setTitle(new TranslatableText("config.mmic.title"))
+				.setTitle(Text.translatable("config.mmic.title"))
 				.setDefaultBackgroundTexture(new Identifier("minecraft", "textures/block/lapis_block.png"));
 			var entry = builder.entryBuilder();
-			var general = builder.getOrCreateCategory(new TranslatableText("config.mmic.general"));
+			var general = builder.getOrCreateCategory(Text.translatable("config.mmic.general"));
 
 			general.addEntry(entry.startAlphaColorField(
-				new TranslatableText("config.mmic.gridColor"),
+				Text.translatable("config.mmic.gridColor"),
 				gridColor)
 				.setDefaultValue(0xFF000000)
-				.setTooltip(new TranslatableText("config.mmic.gridColor.tip"))
+				.setTooltip(Text.translatable("config.mmic.gridColor.tip"))
 				.setSaveConsumer(i -> gridColor = i)
 				.build());
 			general.addEntry(entry.startDoubleField(
-				new TranslatableText("config.mmic.gammaStep"),
+				Text.translatable("config.mmic.gammaStep"),
 				gammaStep * 100)
 				.setDefaultValue(20)
-				.setTooltip(new TranslatableText("config.mmic.gammaStep.tip"))
+				.setTooltip(Text.translatable("config.mmic.gammaStep.tip"))
 				.setSaveConsumer(d -> gammaStep = d / 100)
 				.build());
 			general.addEntry(entry.startBooleanToggle(
-				new TranslatableText("config.mmic.miniF3"),
+				Text.translatable("config.mmic.miniF3"),
 				miniF3)
 				.setDefaultValue(false)
-				.setTooltip(new TranslatableText("config.mmic.miniF3.tip"))
+				.setTooltip(Text.translatable("config.mmic.miniF3.tip"))
 				.setSaveConsumer(b -> miniF3 = b)
 				.build());
 			general.addEntry(entry.startBooleanToggle(
-				new TranslatableText("config.mmic.staticHand"),
+				Text.translatable("config.mmic.staticHand"),
 				staticHand)
 				.setDefaultValue(false)
-				.setTooltip(new TranslatableText("config.mmic.staticHand.tip"))
+				.setTooltip(Text.translatable("config.mmic.staticHand.tip"))
 				.setSaveConsumer(b -> staticHand = b)
 				.build());
 			// general.addEntry(entry.startDoubleField(
-			// 	new TranslatableText("config.mmic.pickupDisplayTime"),
+			// 	Text.translatable("config.mmic.pickupDisplayTime"),
 			// 	pickupDisplayTime/20)
 			// 	.setDefaultValue(5)
-			// 	.setTooltip(new TranslatableText("config.mmic.pickupDisplayTime.tip"))
+			// 	.setTooltip(Text.translatable("config.mmic.pickupDisplayTime.tip"))
 			// 	.setSaveConsumer(d -> pickupDisplayTime = (int)d.doubleValue()*20)
 			// 	.build());
 			// general.addEntry(entry.startBooleanToggle(
-			// 	new TranslatableText("config.mmic.pickupDisplayEnable"),
+			// 	Text.translatable("config.mmic.pickupDisplayEnable"),
 			// 	pickupDisplayEnable)
 			// 	.setDefaultValue(false)
-			// 	.setTooltip(new TranslatableText("config.mmic.pickupDisplayEnable"))
+			// 	.setTooltip(Text.translatable("config.mmic.pickupDisplayEnable"))
 			// 	.setSaveConsumer(b -> pickupDisplayEnable = b)
 			// 	.build());
 			general.addEntry(entry.startEnumSelector(
-				new TranslatableText("config.mmic.lagType"),
+				Text.translatable("config.mmic.lagType"),
 				LagType.class,
 				lagType)
 				.setDefaultValue(LagType.BLOCK)
-				.setTooltip(new TranslatableText("config.mmic.lagType.tip"))
+				.setTooltip(Text.translatable("config.mmic.lagType.tip"))
 				.setSaveConsumer(l -> lagType = l)
 				.build());
 

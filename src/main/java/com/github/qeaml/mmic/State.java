@@ -3,6 +3,7 @@ package com.github.qeaml.mmic;
 import java.util.List;
 
 import com.github.qeaml.mmic.Config.LagType;
+import com.github.qeaml.mmic.mixin.GammaAccessor;
 
 import java.util.Deque;
 import java.util.LinkedList;
@@ -12,7 +13,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Language;
 
 public class State {
@@ -25,12 +26,14 @@ public class State {
 	{
 		fullbright = !fullbright;
 		if(fullbright) {
-			oldGamma = mc.options.gamma;
-			mc.options.gamma = 10.0;
+			oldGamma = mc.options.getGamma().getValue();
+      var acc = (GammaAccessor)(Object)mc.options.getGamma();
+			acc.setValueBypass(10.0);
+      acc.getCallback().accept(10.0);
 		} else {
-			mc.options.gamma = oldGamma;
+			mc.options.getGamma().setValue(oldGamma);
 		}
-		Client.notify(new TranslatableText("other.mmic.toggled_fullbright", Client.onOff(fullbright)));
+		Client.notify(Text.translatable("other.mmic.toggled_fullbright", Client.onOff(fullbright)));
 	}
 
 	public static boolean lagging = false;
@@ -44,7 +47,7 @@ public class State {
 			packets.forEach(mc.getNetworkHandler()::sendPacket);
 			packets.clear();
 		}
-		Client.notify(new TranslatableText("other.mmic.lag_switched", Client.onOff(lagging)));
+		Client.notify(Text.translatable("other.mmic.lag_switched", Client.onOff(lagging)));
 	}
 
 	record ItemPickup(int amount, Item item, int ttl) {

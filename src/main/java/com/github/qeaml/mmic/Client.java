@@ -17,10 +17,12 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.random.Random;
+
+import com.github.qeaml.mmic.mixin.GammaAccessor;
 
 public class Client implements ClientModInitializer {
 	public static final Logger log = LoggerFactory.getLogger("mmic");
@@ -62,30 +64,28 @@ public class Client implements ClientModInitializer {
 	public static void tick()
 	{
 		var p = mc.getProfiler();
-		p.swap("mmicTick");
+		p.push("mmicTick");
 		if(Keys.lagSwitch.wasJustPressed())
 			State.toggleLag();
 		if(Keys.fullbright.wasJustPressed())
 			State.toggleFullbright();
-		if(State.fullbright && mc.options.gamma != 10.0)
+		if(State.fullbright && mc.options.getGamma().getValue() != 10.0)
 			State.toggleFullbright();
 		if(!State.fullbright)
 		{
-			if(Keys.gammaInc.wasJustPressed() && mc.options.gamma <= 3.0) {
-				mc.options.gamma = Math.min(mc.options.gamma + Config.gammaStep, 3.0);
-				notify(new TranslatableText("other.mmic.changed_gamma", Math.round(mc.options.gamma * 100)));
+			if(Keys.gammaInc.wasJustPressed() && mc.options.getGamma().getValue() < 3.0) {
+				changeGamma(Config.gammaStep);
 			}
-			if(Keys.gammaDec.wasJustPressed() && mc.options.gamma >= -1.0) {
-				mc.options.gamma = Math.max(mc.options.gamma - Config.gammaStep, -1.0);
-				notify(new TranslatableText("other.mmic.changed_gamma", Math.round(mc.options.gamma * 100)));
-			}
+			if(Keys.gammaDec.wasJustPressed() && mc.options.getGamma().getValue() > 0.0) {
+				changeGamma(-Config.gammaStep);
+      }
 		}
 		for(var g: Grid.values())
 			if(g.toggle.wasJustPressed())
 			{
 				g.show = !g.show;
-				notify(new TranslatableText("other.mmic.toggled_grid",
-					new TranslatableText("other.mmic.grid."+g.name), onOff(g.show)));
+				notify(Text.translatable("other.mmic.toggled_grid",
+					Text.translatable("other.mmic.grid."+g.name), onOff(g.show)));
 			}
 		p.pop();
 	}
@@ -94,7 +94,7 @@ public class Client implements ClientModInitializer {
 		var tkey = "other.mmic." + (on ? "on" : "off");
 		var color = on ? Formatting.GREEN : Formatting.RED;
 		var style = Style.EMPTY.withColor(color);
-		return new TranslatableText(tkey).setStyle(style);
+		return Text.translatable(tkey).setStyle(style);
 	}
 
 	public static void playClick() {
@@ -103,7 +103,8 @@ public class Client implements ClientModInitializer {
 				SoundEvents.UI_BUTTON_CLICK,
 				SoundCategory.BLOCKS,
 				.25f, 1f,
-				0, 0, 0));
+				Random.create(),
+        0, 0, 0));
 	}
 
 	public static void notify(Text message)
@@ -118,4 +119,13 @@ public class Client implements ClientModInitializer {
 				message);
 		log.info(message.getString());
 	}
+
+  private static void changeGamma(double amt) {
+    var opt = mc.options.getGamma();
+    var gamma = opt.getValue() + amt;
+    var acc = (GammaAccessor)(Object)opt;
+    acc.setValueBypass(gamma);
+    acc.getCallback().accept(gamma);
+    notify(Text.translatable("other.mmic.changed_gamma", Math.round(gamma * 100)));
+  }
 }
