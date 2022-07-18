@@ -47,15 +47,21 @@ public class DebugHudMixin extends DrawableHelper {
 	@Unique private int framecount;
 	@Unique private int frametime;
 	@Unique private long fps;
+	@Unique private int chunkX;
+	@Unique private int chunkZ;
+	@Unique private WorldChunk chunk;
 
 	@Invoker("getBiomeString")
 	private static String getBiomeString(RegistryEntry<Biome> biome) {
 		return null;
 	}
 
-	@Invoker("getClientChunk")
+	@Unique
 	private WorldChunk getClientChunk() {
-		return null;
+		if(chunk == null) {
+			chunk = client.world.getChunk(chunkX, chunkZ);
+		}
+		return chunk;
 	}
 
 	@Inject(
@@ -97,7 +103,11 @@ public class DebugHudMixin extends DrawableHelper {
 		var yaw = cam.getYaw() % 360.0f;
 		ll.add(String.format("XYZ: %.2f/%.2f/%.2f", cam.getX(), cam.getY(), cam.getZ()));
 		ll.add(String.format("Rotation: %.2f/%.2f (%s)", yaw, cam.getPitch(), cam.getHorizontalFacing().getName()));
-		ll.add(String.format("Chunk: %d/%d", (int)(cam.getX() / 16.0), (int)(cam.getZ() / 16.0)));
+		
+		var pos = client.player.getBlockPos();
+		chunkX = pos.getX() >> 4;
+		chunkZ = pos.getZ() >> 4;
+		ll.add(String.format("Chunk: %d/%d", chunkX, chunkZ));
 
 		if(cam.getY() >= client.world.getBottomY() && cam.getY() < client.world.getTopY())
 			ll.add(String.format("Biome: %s", getBiomeString(client.world.getBiome(cam.getBlockPos()))));
@@ -145,7 +155,7 @@ public class DebugHudMixin extends DrawableHelper {
 		if(client.crosshairTarget.getType() == HitResult.Type.BLOCK)
 		{
 			var cl = new LinkedList<String>();
-			var pos = ((BlockHitResult)client.crosshairTarget).getBlockPos();
+			pos = ((BlockHitResult)client.crosshairTarget).getBlockPos();
 			var state = client.player.getWorld().getBlockState(pos);
 			cl.add(String.format("%s at %s", Registry.BLOCK.getId(state.getBlock()), pos.toShortString()));
 			state.getProperties().forEach(prop -> cl.add(prop.getName()+"="+String.valueOf(state.get(prop))));
