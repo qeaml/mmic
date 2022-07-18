@@ -29,7 +29,9 @@ public class Config implements ModMenuApi {
 	public enum LagType
 	{
 		BLOCK,
-		CLOG
+		CLOG,
+		LOSSY_BLOCK,
+		LOSSY_CLOG
 	}
 	public static LagType lagType = LagType.BLOCK;
 

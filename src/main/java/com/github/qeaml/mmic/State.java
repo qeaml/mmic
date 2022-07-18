@@ -43,7 +43,7 @@ public class State {
 	public static void toggleLag()
 	{
 		lagging = !lagging;
-		if(!lagging && Config.lagType == LagType.CLOG)
+		if(!lagging && (Config.lagType == LagType.CLOG || Config.lagType == LagType.LOSSY_CLOG))
 		{
 			packets.forEach(mc.getNetworkHandler()::sendPacket);
 			packets.clear();

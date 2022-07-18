@@ -33,5 +33,5 @@
 	"config.mmic.pickupDisplayEnable": "Pickup Display",
 	"config.mmic.pickupDipplayEnable.tip": "Toggles item pickup/drop notifications",
 	"config.mmic.lagType": "Lag Type",
-	"config.mmic.lagType.tip": "Changes the type of lag caused by the lag switch\nBLOCK causes all packets sent by the client to be completely ignored\nCLOG blocks all packets and sends them all at once when the lag switch is disabled"
+	"config.mmic.lagType.tip": "Changes the type of lag caused by the lag switch\nBLOCK causes all packets sent by the client to be completely ignored\nCLOG blocks all packets and sends them all at once when the lag switch is disabled\nLOSSY_BLOCK causes a randomly chosen 25% of all packets to be blocked\nLOSSY_CLOG causes a randomly chosen 25% of all packets to be blocked and sent when lag is toggled off"
 }
