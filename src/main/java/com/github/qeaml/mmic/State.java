@@ -25,13 +25,14 @@ public class State {
 	public static void toggleFullbright()
 	{
 		fullbright = !fullbright;
+		var acc = (GammaAccessor)(Object)mc.options.getGamma();
 		if(fullbright) {
 			oldGamma = mc.options.getGamma().getValue();
-      var acc = (GammaAccessor)(Object)mc.options.getGamma();
 			acc.setValueBypass(10.0);
       acc.getCallback().accept(10.0);
 		} else {
-			mc.options.getGamma().setValue(oldGamma);
+			acc.setValueBypass(oldGamma);
+      acc.getCallback().accept(oldGamma);
 		}
 		Client.notify(Text.translatable("other.mmic.toggled_fullbright", Client.onOff(fullbright)));
 	}
