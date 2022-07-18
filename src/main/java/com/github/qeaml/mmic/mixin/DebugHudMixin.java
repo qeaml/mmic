@@ -29,7 +29,9 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.world.LightType;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.chunk.WorldChunk;
 
 @Mixin(DebugHud.class)
 public class DebugHudMixin extends DrawableHelper {
@@ -48,6 +50,11 @@ public class DebugHudMixin extends DrawableHelper {
 
 	@Invoker("getBiomeString")
 	private static String getBiomeString(RegistryEntry<Biome> biome) {
+		return null;
+	}
+
+	@Invoker("getClientChunk")
+	private WorldChunk getClientChunk() {
 		return null;
 	}
 
@@ -87,14 +94,23 @@ public class DebugHudMixin extends DrawableHelper {
 			ll.add(String.format("Server: %s", client.player.getServerBrand()));
 
 		var cam = client.getCameraEntity();
+		var yaw = cam.getYaw() % 360.0f;
 		ll.add(String.format("XYZ: %.2f/%.2f/%.2f", cam.getX(), cam.getY(), cam.getZ()));
-		ll.add(String.format("Rotation: %.2f/%.2f (%s)", cam.getYaw(), cam.getPitch(), cam.getHorizontalFacing()));
+		ll.add(String.format("Rotation: %.2f/%.2f (%s)", yaw, cam.getPitch(), cam.getHorizontalFacing().getName()));
 		ll.add(String.format("Chunk: %d/%d", (int)(cam.getX() / 16.0), (int)(cam.getZ() / 16.0)));
 
 		if(cam.getY() >= client.world.getBottomY() && cam.getY() < client.world.getTopY())
 			ll.add(String.format("Biome: %s", getBiomeString(client.world.getBiome(cam.getBlockPos()))));
 		else
 			ll.add("Out of world.");
+		
+		if(!getClientChunk().isEmpty()) {
+			var blockPos = client.player.getBlockPos();
+			ll.add(String.format("Light: %d block, %d sky = %d total",
+				client.world.getLightLevel(LightType.BLOCK, blockPos),
+				client.world.getLightLevel(LightType.SKY, blockPos),
+				client.world.getChunkManager().getLightingProvider().getLight(blockPos, 0)));
+		}
 
 		int lbgw = 0;
 		for(String s: ll)
