@@ -13,7 +13,7 @@
 	"other.mmic.grid.halves": "Połówki",
 	"other.mmic.grid.thirds": "Trójpodział",
 	"other.mmic.grid.ninths": "Dziewiątki",
-	"other.mmic.toggled_grid": "Toggled Grid %s %s",
+	"other.mmic.toggled_grid": "Siatka %s %s",
 
 	"key.mmic.lagSwitch": "Lag",
 	"other.mmic.lag_switched": "Lag %s",
@@ -33,5 +33,13 @@
 	"config.mmic.pickupDisplayEnable": "Pickup Display",
 	"config.mmic.pickupDipplayEnable.tip": "Toggles item pickup/drop notifications",
 	"config.mmic.lagType": "Typ lag'u",
-	"config.mmic.lagType.tip": "Zmiena typ lag'u powodowanego przez MMIC\nBLOCK powoduje że wszystkie pakiety wysłane przez klienta są całkowicie zignorowane\nCLOG blokuje wszystkie pakiety, wysyłając je wszystkie na raz gdy lag jest wyłączony"
+	"config.mmic.lagType.tip": "Zmiena typ lag'u powodowanego przez MMIC\nBLOCK powoduje że wszystkie pakiety wysłane przez klienta są całkowicie zignorowane\nCLOG blokuje wszystkie pakiety, wysyłając je wszystkie na raz gdy lag jest wyłączony",
+
+	"config.mmic.zoom": "Zoom",
+	"config.mmic.zoomFovDiv": "Dzielnik pola widzenia",
+	"config.mmic.zoomFovDiv.tip": "Zmiena przybliżenia zooma.\nOd 1.0 do 10.0, gdzie 1.0 oznancza brak przybliżenia.",
+	"config.mmic.zoomSensDiv": "Dzielnik czułośći myszki",
+	"config.mmic.zoomSensDiv.tip": "Zmienia spowolnienie myszki podczas zoomowania.\nOd 1.0 do 10.0, gdzie 1.0 oznacza brak spowolnienia.",
+	"config.mmic.zoomSmooth": "Gładki zoom",
+	"config.mmic.zoomSmooth.tip": "Wygładza ruch myszki podczas zoomowania."
 }

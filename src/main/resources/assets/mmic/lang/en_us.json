@@ -33,5 +33,13 @@
 	"config.mmic.pickupDisplayEnable": "Pickup Display",
 	"config.mmic.pickupDipplayEnable.tip": "Toggles item pickup/drop notifications",
 	"config.mmic.lagType": "Lag Type",
-	"config.mmic.lagType.tip": "Changes the type of lag caused by the lag switch\nBLOCK causes all packets sent by the client to be completely ignored\nCLOG blocks all packets and sends them all at once when the lag switch is disabled\nLOSSY_BLOCK causes a randomly chosen 25% of all packets to be blocked\nLOSSY_CLOG causes a randomly chosen 25% of all packets to be blocked and sent when lag is toggled off"
+	"config.mmic.lagType.tip": "Changes the type of lag caused by the lag switch\nBLOCK causes all packets sent by the client to be completely ignored\nCLOG blocks all packets and sends them all at once when the lag switch is disabled\nLOSSY_BLOCK causes a randomly chosen 25% of all packets to be blocked\nLOSSY_CLOG causes a randomly chosen 25% of all packets to be blocked and sent when lag is toggled off",
+
+	"config.mmic.zoom": "Zoom",
+	"config.mmic.zoomFovDiv": "Zoom FOV Divider",
+	"config.mmic.zoomFovDiv.tip": "Changes how much zoom is applied.\nThe range is 1.0-10.0, where 1.0 is no zoom.",
+	"config.mmic.zoomSensDiv": "Zoom Sensitivty Divider",
+	"config.mmic.zoomSensDiv.tip": "Changes how much mouse sensitivity is decreased when zooming.\nThe range is 1.0-10.0, where 1.0 is no difference.",
+	"config.mmic.zoomSmooth": "Cinematic Zoom",
+	"config.mmic.zoomSmooth.tip": "Enables cinematic camera whenever zooming."
 }
