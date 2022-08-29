@@ -135,4 +135,68 @@ public class State {
 			y += tr.fontHeight;
 		}
 	}
+
+	public static boolean zoomed = false;
+	private static int oldFOV = 90;
+	private static double oldSens = 0.5;
+	private static boolean oldSmooth = false;
+
+	private static int zoomMod = 0;
+
+	public static void zoom() {
+		applyZoom(true);
+
+		if(Config.zoomSmooth) {
+			oldSmooth = mc.options.smoothCameraEnabled;
+			mc.options.smoothCameraEnabled = true;
+		}
+
+		zoomed = true;
+	}
+	
+	public static void unzoom() {
+		zoomMod = 0;
+		mc.options.getFov().setValue(oldFOV);
+		mc.options.getMouseSensitivity().setValue(oldSens);
+		
+		if(Config.zoomSmooth) {
+			mc.options.smoothCameraEnabled = oldSmooth;
+		}
+		
+		zoomed = false;
+	}
+
+	private static void applyZoom(boolean saveOld) {
+		var fov = mc.options.getFov();
+		if(saveOld) {
+			oldFOV = fov.getValue();
+		}
+		double fovDivMod = (Config.zoomFovDiv/15)*zoomMod;
+		double fovDiv = Math.max(Config.zoomFovDiv+fovDivMod, 1.0);
+		int newFOV = (int)Math.round(oldFOV/fovDiv);
+		((GammaAccessor)(Object)fov).setValueBypass(newFOV);
+
+		var sens = mc.options.getMouseSensitivity();
+		if(saveOld) {
+			oldSens = sens.getValue();
+		}
+		double sensDivMod = (Config.zoomSensDiv/20)*zoomMod;
+		double sensDiv = Math.max(Config.zoomSensDiv+sensDivMod, 1.0);
+		double newSens = oldSens/sensDiv;
+		((GammaAccessor)(Object)sens).setValueBypass(newSens);
+	}
+
+	// TODO: figure out a max zoomMod for any given fov+divider combo
+
+	public static void zoomIn() {
+		if(zoomMod >= 10) return;
+		zoomMod++;
+		applyZoom(false);
+	}
+	
+	public static void zoomOut() {
+		if(zoomMod <= -10) return;
+		zoomMod--;
+		applyZoom(false);
+	}
 }
