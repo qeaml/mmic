@@ -39,6 +39,7 @@ public class Client implements ClientModInitializer {
 		Keys.gammaDec = new Bind("key.mmic.gammaDec", GLFW.GLFW_KEY_LEFT_BRACKET, visuals);
 		Keys.fullbright = new Bind("key.mmic.fullbright", GLFW.GLFW_KEY_APOSTROPHE, visuals);
 		Keys.lagSwitch = new Bind("key.mmic.lagSwitch", GLFW.GLFW_KEY_BACKSLASH, KeyBinding.GAMEPLAY_CATEGORY);
+		Keys.zoom = new Bind("key.mmic.zoom", GLFW.GLFW_KEY_C, KeyBinding.GAMEPLAY_CATEGORY);
 
 		for(Grid g: Grid.values()) {
 			g.toggle = new Bind("other.mmic.grid."+g.name, g.key, "key.categories.mmic.grids");
@@ -87,6 +88,12 @@ public class Client implements ClientModInitializer {
 				notify(Text.translatable("other.mmic.toggled_grid",
 					Text.translatable("other.mmic.grid."+g.name), onOff(g.show)));
 			}
+		
+		if(State.zoomed && !Keys.zoom.isPressed())
+			State.unzoom();
+		else if(!State.zoomed && Keys.zoom.isPressed())
+			State.zoom();
+
 		p.pop();
 	}
 
