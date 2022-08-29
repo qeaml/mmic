@@ -10,8 +10,6 @@ on/off in the mod config.
 
 ![Minimised Debug HUD](f3mini.png) ![Default Debug HUD](f3default.png)
 
-*The minimised debug HUD (left) vs the default debug HUD (right)*
-
 ## Brightness
 
 Adds keybinds for increasing and decreasing the brightness options mid-game
