@@ -10,6 +10,10 @@ on/off in the mod config.
 
 ![Minimised Debug HUD](f3mini.png) ![Default Debug HUD](f3default.png)
 
+## Static Hand
+
+Removes the hand swing animation.
+
 ## Brightness
 
 Adds keybinds for increasing and decreasing the brightness options mid-game
