@@ -27,7 +27,7 @@
 	"config.mmic.miniF3": "Minimized Debug HUD",
 	"config.mmic.miniF3.tip": "Replaces the default Debug HUD (F3 menu) with a new, smaller one which displays only the most important information.",
 	"config.mmic.staticHand": "Static Hand",
-	"config.mmic.staticHand.tip": "Disables the hand swinging animation",
+	"config.mmic.staticHand.tip": "Disables most hand animations",
 	"config.mmic.pickupDisplayTime": "Pickup Display Time",
 	"config.mmic.pickupDisplayTime.tip": "Time (in seconds) before item pickup notifications disappear",
 	"config.mmic.pickupDisplayEnable": "Pickup Display",

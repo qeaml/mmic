@@ -11,8 +11,9 @@
 		"NetworkHandlerMixin",
 		"ClientMixin",
 		"PlayerMixin",
-    "GammaAccessor",
-    "MouseMixin"
+    "OptionAccessor",
+    "MouseMixin",
+    "HeldItemRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

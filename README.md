@@ -12,7 +12,8 @@ on/off in the mod config.
 
 ## Static Hand
 
-Removes the hand swing animation.
+Disables the hand swing animation and the item equip/use animation. This does
+not affect eating animations or bow/crossbow/trident draw animations.
 
 ## Brightness
 
