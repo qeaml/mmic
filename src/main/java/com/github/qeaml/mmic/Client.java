@@ -22,7 +22,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.random.Random;
 
-import com.github.qeaml.mmic.mixin.GammaAccessor;
+import com.github.qeaml.mmic.mixin.OptionAccessor;
 
 public class Client implements ClientModInitializer {
 	public static final Logger log = LoggerFactory.getLogger("mmic");
@@ -130,7 +130,7 @@ public class Client implements ClientModInitializer {
   private static void changeGamma(double amt) {
     var opt = mc.options.getGamma();
     var gamma = opt.getValue() + amt;
-    var acc = (GammaAccessor)(Object)opt;
+    var acc = (OptionAccessor)(Object)opt;
     acc.setValueBypass(gamma);
     acc.getCallback().accept(gamma);
     notify(Text.translatable("other.mmic.changed_gamma", Math.round(gamma * 100)));

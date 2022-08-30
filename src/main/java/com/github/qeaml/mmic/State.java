@@ -3,7 +3,7 @@ package com.github.qeaml.mmic;
 import java.util.List;
 
 import com.github.qeaml.mmic.Config.LagType;
-import com.github.qeaml.mmic.mixin.GammaAccessor;
+import com.github.qeaml.mmic.mixin.OptionAccessor;
 
 import java.util.Deque;
 import java.util.LinkedList;
@@ -25,7 +25,7 @@ public class State {
 	public static void toggleFullbright()
 	{
 		fullbright = !fullbright;
-		var acc = (GammaAccessor)(Object)mc.options.getGamma();
+		var acc = (OptionAccessor)(Object)mc.options.getGamma();
 		if(fullbright) {
 			oldGamma = mc.options.getGamma().getValue();
 			acc.setValueBypass(10.0);
@@ -174,7 +174,7 @@ public class State {
 		double fovDivMod = (Config.zoomFovDiv/15)*zoomMod;
 		double fovDiv = Math.max(Config.zoomFovDiv+fovDivMod, 1.0);
 		int newFOV = (int)Math.round(oldFOV/fovDiv);
-		((GammaAccessor)(Object)fov).setValueBypass(newFOV);
+		((OptionAccessor)(Object)fov).setValueBypass(newFOV);
 
 		var sens = mc.options.getMouseSensitivity();
 		if(saveOld) {
@@ -183,7 +183,7 @@ public class State {
 		double sensDivMod = (Config.zoomSensDiv/20)*zoomMod;
 		double sensDiv = Math.max(Config.zoomSensDiv+sensDivMod, 1.0);
 		double newSens = oldSens/sensDiv;
-		((GammaAccessor)(Object)sens).setValueBypass(newSens);
+		((OptionAccessor)(Object)sens).setValueBypass(newSens);
 	}
 
 	// TODO: figure out a max zoomMod for any given fov+divider combo
