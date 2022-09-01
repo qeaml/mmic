@@ -13,7 +13,8 @@
 		"PlayerMixin",
     "OptionAccessor",
     "MouseMixin",
-    "HeldItemRendererMixin"
+    "HeldItemRendererMixin",
+    "InteractionManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -10,6 +10,15 @@ on/off in the mod config.
 
 ![Minimised Debug HUD](f3mini.png) ![Default Debug HUD](f3default.png)
 
+## Auto-Replant
+
+Whenever harvesting a crop, it will be automatically replanted. This only
+happens under the following conditions:
+
+* Auto-Replant is enabled in the MMIC config.
+* (If Sneaky Auto-Replant is enabled) The player is sneaking.
+* The player has the corresponding seed in their hotbar.
+
 ## Static Hand
 
 Disables the hand swing animation and the item equip/use animation. This does
