@@ -76,10 +76,10 @@ public class Client implements ClientModInitializer {
 		if(!State.fullbright)
 		{
 			if(Keys.gammaInc.wasJustPressed() && mc.options.getGamma().getValue() < 3.0) {
-				changeGamma(Config.gammaStep);
+				State.changeGamma(Config.gammaStep);
 			}
 			if(Keys.gammaDec.wasJustPressed() && mc.options.getGamma().getValue() > 0.0) {
-				changeGamma(-Config.gammaStep);
+				State.changeGamma(-Config.gammaStep);
 			}
 		}
 		for(var g: Grid.values())
@@ -129,14 +129,5 @@ public class Client implements ClientModInitializer {
 				Text.of("MMIC"),
 				message);
 		log.info(message.getString());
-	}
-
-	private static void changeGamma(double amt) {
-		var opt = mc.options.getGamma();
-		var gamma = opt.getValue() + amt;
-		var acc = (OptionAccessor)(Object)opt;
-		acc.setValueBypass(gamma);
-		acc.getCallback().accept(gamma);
-		notify(Text.translatable("other.mmic.changed_gamma", Math.round(gamma * 100)));
 	}
 }

@@ -22,6 +22,15 @@ public class State {
 	public static boolean fullbright = false;
 	private static double oldGamma = 0.5;
 
+	public static void changeGamma(double amt) {
+		var opt = mc.options.getGamma();
+		var gamma = opt.getValue() + amt;
+		var acc = (OptionAccessor)(Object)opt;
+		acc.setValueBypass(gamma);
+		acc.getCallback().accept(gamma);
+		Client.notify(Text.translatable("other.mmic.changed_gamma", Math.round(gamma * 100)));
+	}
+
 	public static void toggleFullbright()
 	{
 		fullbright = !fullbright;
