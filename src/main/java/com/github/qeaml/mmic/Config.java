@@ -97,37 +97,14 @@ public class Config implements ModMenuApi {
 				.setTitle(Text.translatable("config.mmic.title"))
 				.setDefaultBackgroundTexture(new Identifier("minecraft", "textures/block/lapis_block.png"));
 			var entry = builder.entryBuilder();
-			var general = builder.getOrCreateCategory(Text.translatable("config.mmic.general"));
 
-			general.addEntry(entry.startAlphaColorField(
-				Text.translatable("config.mmic.gridColor"),
-				gridColor)
-				.setDefaultValue(0xFF000000)
-				.setTooltip(Text.translatable("config.mmic.gridColor.tip"))
-				.setSaveConsumer(i -> gridColor = i)
-				.build());
-			general.addEntry(entry.startDoubleField(
-				Text.translatable("config.mmic.gammaStep"),
-				gammaStep * 100)
-				.setDefaultValue(20)
-				.setTooltip(Text.translatable("config.mmic.gammaStep.tip"))
-				.setSaveConsumer(d -> gammaStep = d / 100)
-				.build());
-			general.addEntry(entry.startBooleanToggle(
-				Text.translatable("config.mmic.miniF3"),
-				miniF3)
-				.setDefaultValue(false)
-				.setTooltip(Text.translatable("config.mmic.miniF3.tip"))
-				.setSaveConsumer(b -> miniF3 = b)
-				.build());
-			general.addEntry(entry.startBooleanToggle(
-				Text.translatable("config.mmic.staticHand"),
-				staticHand)
-				.setDefaultValue(false)
-				.setTooltip(Text.translatable("config.mmic.staticHand.tip"))
-				.setSaveConsumer(b -> staticHand = b)
-				.build());
-			general.addEntry(entry.startEnumSelector(
+			//
+			// ─── GAMEPLAY ────────────────────────────────────────────────────
+			//
+
+			var game = builder.getOrCreateCategory(Text.translatable("config.mmic.game"));
+
+			game.addEntry(entry.startEnumSelector(
 				Text.translatable("config.mmic.lagType"),
 				LagType.class,
 				lagType)
@@ -135,14 +112,14 @@ public class Config implements ModMenuApi {
 				.setTooltip(Text.translatable("config.mmic.lagType.tip"))
 				.setSaveConsumer(l -> lagType = l)
 				.build());
-			general.addEntry(entry.startBooleanToggle(
+			game.addEntry(entry.startBooleanToggle(
 				Text.translatable("config.mmic.autoplant"),
 				autoplant)
 				.setDefaultValue(false)
 				.setTooltip(Text.translatable("config.mmic.autoplant.tip"))
 				.setSaveConsumer(b -> autoplant = b)
 				.build());
-			general.addEntry(entry.startBooleanToggle(
+			game.addEntry(entry.startBooleanToggle(
 				Text.translatable("config.mmic.sneakAutoplant"),
 				sneakAutoplant)
 				.setDefaultValue(true)
@@ -150,9 +127,41 @@ public class Config implements ModMenuApi {
 				.setSaveConsumer(b -> sneakAutoplant = b)
 				.build());
 
-			var zoom = builder.getOrCreateCategory(Text.translatable("config.mmic.zoom"));
+			//
+			// ─── COSMETIC ────────────────────────────────────────────────────
+			//
 
-			zoom.addEntry(entry.startDoubleField(
+			var cosm = builder.getOrCreateCategory(Text.translatable("config.mmic.cosm"));
+
+			cosm.addEntry(entry.startAlphaColorField(
+				Text.translatable("config.mmic.gridColor"),
+				gridColor)
+				.setDefaultValue(0xFF000000)
+				.setTooltip(Text.translatable("config.mmic.gridColor.tip"))
+				.setSaveConsumer(i -> gridColor = i)
+				.build());
+			cosm.addEntry(entry.startDoubleField(
+				Text.translatable("config.mmic.gammaStep"),
+				gammaStep * 100)
+				.setDefaultValue(20)
+				.setTooltip(Text.translatable("config.mmic.gammaStep.tip"))
+				.setSaveConsumer(d -> gammaStep = d / 100)
+				.build());
+			cosm.addEntry(entry.startBooleanToggle(
+				Text.translatable("config.mmic.miniF3"),
+				miniF3)
+				.setDefaultValue(false)
+				.setTooltip(Text.translatable("config.mmic.miniF3.tip"))
+				.setSaveConsumer(b -> miniF3 = b)
+				.build());
+			cosm.addEntry(entry.startBooleanToggle(
+				Text.translatable("config.mmic.staticHand"),
+				staticHand)
+				.setDefaultValue(false)
+				.setTooltip(Text.translatable("config.mmic.staticHand.tip"))
+				.setSaveConsumer(b -> staticHand = b)
+				.build());
+			cosm.addEntry(entry.startDoubleField(
 				Text.translatable("config.mmic.zoomFovDiv"),
 				zoomFovDiv)
 				.setDefaultValue(5)
@@ -161,7 +170,7 @@ public class Config implements ModMenuApi {
 				.setMin(1.0)
 				.setMax(10.0)
 				.build());
-			zoom.addEntry(entry.startDoubleField(
+			cosm.addEntry(entry.startDoubleField(
 				Text.translatable("config.mmic.zoomSensDiv"),
 				zoomSensDiv)
 				.setDefaultValue(2)
@@ -170,7 +179,7 @@ public class Config implements ModMenuApi {
 				.setMin(1.0)
 				.setMax(10.0)
 				.build());
-			zoom.addEntry(entry.startBooleanToggle(
+			cosm.addEntry(entry.startBooleanToggle(
 				Text.translatable("config.mmic.zoomSmooth"),
 				zoomSmooth)
 				.setDefaultValue(false)
