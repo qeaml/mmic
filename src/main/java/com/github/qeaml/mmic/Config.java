@@ -24,8 +24,6 @@ public class Config implements ModMenuApi {
 	public static double gammaStep = 0.2;
 	public static boolean miniF3 = false;
 	public static boolean staticHand = false;
-	public static int pickupDisplayTime = 100;
-	public static boolean pickupDisplayEnable = false;
 	public static boolean autoplant = false;
 	public static boolean sneakAutoplant = true;
 
@@ -61,8 +59,6 @@ public class Config implements ModMenuApi {
 			gammaStep = Double.parseDouble((String)props.getOrDefault("gammaStep", "0.2"));
 			miniF3 = Boolean.parseBoolean((String)props.getOrDefault("miniF3", "false"));
 			staticHand = Boolean.parseBoolean((String)props.getOrDefault("staticHand", "false"));
-			pickupDisplayTime = Integer.parseInt((String)props.getOrDefault("pickupDisplayTime", "100"));
-			pickupDisplayEnable = Boolean.parseBoolean((String)props.getOrDefault("pickupDisplayEnable", "false"));
 			lagType = LagType.valueOf((String)props.getOrDefault("lagType", LagType.BLOCK.toString()));
 			zoomFovDiv = Double.parseDouble((String)props.getOrDefault("zoomFovDiv", "5"));
 			zoomSensDiv = Double.parseDouble((String)props.getOrDefault("zoomSensDiv", "2"));
@@ -80,8 +76,6 @@ public class Config implements ModMenuApi {
 			props.setProperty("gammaStep", Double.toString(gammaStep));
 			props.setProperty("miniF3", Boolean.toString(miniF3));
 			props.setProperty("staticHand", Boolean.toString(staticHand));
-			props.setProperty("pickupDisplayTime", Integer.toString(pickupDisplayTime));
-			props.setProperty("pickupDisplayEnable", Boolean.toString(pickupDisplayEnable));
 			props.setProperty("lagType", lagType.toString());
 			props.setProperty("zoomFovDiv", Double.toString(zoomFovDiv));
 			props.setProperty("zoomSensDiv", Double.toString(zoomSensDiv));
@@ -133,20 +127,6 @@ public class Config implements ModMenuApi {
 				.setTooltip(Text.translatable("config.mmic.staticHand.tip"))
 				.setSaveConsumer(b -> staticHand = b)
 				.build());
-			// general.addEntry(entry.startDoubleField(
-			// 	Text.translatable("config.mmic.pickupDisplayTime"),
-			// 	pickupDisplayTime/20)
-			// 	.setDefaultValue(5)
-			// 	.setTooltip(Text.translatable("config.mmic.pickupDisplayTime.tip"))
-			// 	.setSaveConsumer(d -> pickupDisplayTime = (int)d.doubleValue()*20)
-			// 	.build());
-			// general.addEntry(entry.startBooleanToggle(
-			// 	Text.translatable("config.mmic.pickupDisplayEnable"),
-			// 	pickupDisplayEnable)
-			// 	.setDefaultValue(false)
-			// 	.setTooltip(Text.translatable("config.mmic.pickupDisplayEnable"))
-			// 	.setSaveConsumer(b -> pickupDisplayEnable = b)
-			// 	.build());
 			general.addEntry(entry.startEnumSelector(
 				Text.translatable("config.mmic.lagType"),
 				LagType.class,

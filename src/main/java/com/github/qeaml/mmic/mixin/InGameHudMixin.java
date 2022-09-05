@@ -59,20 +59,5 @@ public class InGameHudMixin {
 			client.textRenderer.drawWithShadow(matrices, "LAGGING", 5, y, 0x80FFFFFF);
 			y -= client.textRenderer.fontHeight;
 		}
-
-		if(Config.pickupDisplayEnable)
-			State.drawPickups(matrices);
-	}
-
-	@Inject(
-		at = @At("HEAD"),
-		method = "tick()V"
-	)
-	private void onTick(CallbackInfo ci)
-	{
-		// moved this from Client::tick because this does not need to execute
-		// whilst not in-game (+ doing it here prevents some timing issues)
-		if(Config.pickupDisplayEnable)
-			State.tickPickups();
 	}
 }
