@@ -1,5 +1,11 @@
 # MMIC Changelog
 
+## 1.3.1
+*September 6, 2022*
+
+* Reorganised config menu.
+* Small internal cleanup.
+
 ## 1.3.0
 *September 1, 2022*
 
