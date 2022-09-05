@@ -14,6 +14,7 @@ import net.minecraft.client.toast.SystemToast;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -79,7 +80,7 @@ public class Client implements ClientModInitializer {
 			}
 			if(Keys.gammaDec.wasJustPressed() && mc.options.getGamma().getValue() > 0.0) {
 				changeGamma(-Config.gammaStep);
-      }
+			}
 		}
 		for(var g: Grid.values())
 			if(g.toggle.wasJustPressed())
@@ -97,6 +98,7 @@ public class Client implements ClientModInitializer {
 		p.pop();
 	}
 
+	
 	public static Text onOff(boolean on) {
 		var tkey = "other.mmic." + (on ? "on" : "off");
 		var color = on ? Formatting.GREEN : Formatting.RED;
@@ -104,19 +106,21 @@ public class Client implements ClientModInitializer {
 		return Text.translatable(tkey).setStyle(style);
 	}
 
-	public static void playClick() {
+	private static Random soundRandom = Random.create();
+	
+	public static void sound(SoundEvent sound, float volume, float pitch) {
 		mc.getSoundManager().play(
 			new PositionedSoundInstance(
-				SoundEvents.UI_BUTTON_CLICK,
-				SoundCategory.BLOCKS,
-				.25f, 1f,
-				Random.create(),
-        0, 0, 0));
+				sound,
+				SoundCategory.MASTER,
+				volume, pitch,
+				soundRandom,
+				0, 0, 0));
 	}
 
 	public static void notify(Text message)
 	{
-		playClick();
+		sound(SoundEvents.UI_BUTTON_CLICK, .25f, .5f);
 		if(mc.currentScreen == null)
 			mc.player.sendMessage(message, true);
 		else
@@ -127,12 +131,12 @@ public class Client implements ClientModInitializer {
 		log.info(message.getString());
 	}
 
-  private static void changeGamma(double amt) {
-    var opt = mc.options.getGamma();
-    var gamma = opt.getValue() + amt;
-    var acc = (OptionAccessor)(Object)opt;
-    acc.setValueBypass(gamma);
-    acc.getCallback().accept(gamma);
-    notify(Text.translatable("other.mmic.changed_gamma", Math.round(gamma * 100)));
-  }
+	private static void changeGamma(double amt) {
+		var opt = mc.options.getGamma();
+		var gamma = opt.getValue() + amt;
+		var acc = (OptionAccessor)(Object)opt;
+		acc.setValueBypass(gamma);
+		acc.getCallback().accept(gamma);
+		notify(Text.translatable("other.mmic.changed_gamma", Math.round(gamma * 100)));
+	}
 }
