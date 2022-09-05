@@ -38,10 +38,10 @@ public class State {
 		if(fullbright) {
 			oldGamma = mc.options.getGamma().getValue();
 			acc.setValueBypass(10.0);
-      acc.getCallback().accept(10.0);
+			acc.getCallback().accept(10.0);
 		} else {
 			acc.setValueBypass(oldGamma);
-      acc.getCallback().accept(oldGamma);
+			acc.getCallback().accept(oldGamma);
 		}
 		Client.notify(Text.translatable("other.mmic.toggled_fullbright", Client.onOff(fullbright)));
 	}
@@ -171,7 +171,7 @@ public class State {
 		if(Config.zoomSmooth) {
 			mc.options.smoothCameraEnabled = oldSmooth;
 		}
-		
+
 		zoomed = false;
 	}
 

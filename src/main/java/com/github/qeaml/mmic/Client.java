@@ -23,10 +23,10 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.random.Random;
 
-import com.github.qeaml.mmic.mixin.OptionAccessor;
-
 public class Client implements ClientModInitializer {
-	public static final Logger log = LoggerFactory.getLogger("mmic");
+	public static final String name = "MMIC";
+
+	public static final Logger log = LoggerFactory.getLogger(name);
 	private static MinecraftClient mc = MinecraftClient.getInstance();
 
 	@Override
@@ -66,7 +66,7 @@ public class Client implements ClientModInitializer {
 	public static void tick()
 	{
 		var p = mc.getProfiler();
-		p.push("mmicTick");
+		p.push(name);
 		if(Keys.lagSwitch.wasJustPressed())
 			State.toggleLag();
 		if(Keys.fullbright.wasJustPressed())
@@ -120,13 +120,13 @@ public class Client implements ClientModInitializer {
 
 	public static void notify(Text message)
 	{
-		sound(SoundEvents.UI_BUTTON_CLICK, .25f, .5f);
+		sound(SoundEvents.UI_BUTTON_CLICK, .25f, 1f);
 		if(mc.currentScreen == null)
 			mc.player.sendMessage(message, true);
 		else
 			SystemToast.show(mc.getToastManager(),
 				SystemToast.Type.PERIODIC_NOTIFICATION,
-				Text.of("MMIC"),
+				Text.of(name),
 				message);
 		log.info(message.getString());
 	}
