@@ -1,5 +1,10 @@
 # MMIC Changelog
 
+## 1.4.0
+*September 12, 2022*
+
+* Added Centered Sign Text.
+
 ## 1.3.1
 *September 6, 2022*
 

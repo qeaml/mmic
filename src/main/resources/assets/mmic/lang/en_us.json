@@ -44,5 +44,7 @@
 	"config.mmic.zoomSensDiv": "Zoom Sensitivty Divider",
 	"config.mmic.zoomSensDiv.tip": "Changes how much mouse sensitivity is decreased when zooming.\nThe range is 1.0-10.0, where 1.0 is no difference.",
 	"config.mmic.zoomSmooth": "Cinematic Zoom",
-	"config.mmic.zoomSmooth.tip": "Enables cinematic camera whenever zooming."
+	"config.mmic.zoomSmooth.tip": "Enables cinematic camera whenever zooming.",
+	"config.mmic.centeredSigns": "Centered Sign Text",
+	"config.mmic.centeredSigns.tip": "Moves sign text to be always vertically centered."
 }

@@ -13,7 +13,8 @@
     "OptionAccessor",
     "MouseMixin",
     "HeldItemRendererMixin",
-    "InteractionManagerMixin"
+    "InteractionManagerMixin",
+    "SignRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
