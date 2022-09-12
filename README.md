@@ -29,6 +29,19 @@ not affect eating animations or bow/crossbow/trident draw animations.
 Adds keybinds for increasing and decreasing the brightness options mid-game
 (without having to view the options menu) as well as a fullbright toggle.
 
+## Better Signs
+
+### Centered Sign Text
+
+This causes text on all signs to be always centered, regardless of how it is
+laid out on the actual sign.
+
+### Perfect Wall Signs
+
+Moves the wall signs closer to the block they're on. This gets rid of that
+tiny little gap between the sign and the wall. (Hitboxes are not affected by
+this)
+
 ## Fake Lag
 
 Adds a lag toggle with multiple different types of lag:
