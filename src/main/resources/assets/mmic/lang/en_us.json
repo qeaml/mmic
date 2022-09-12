@@ -46,5 +46,7 @@
 	"config.mmic.zoomSmooth": "Cinematic Zoom",
 	"config.mmic.zoomSmooth.tip": "Enables cinematic camera whenever zooming.",
 	"config.mmic.centeredSigns": "Centered Sign Text",
-	"config.mmic.centeredSigns.tip": "Moves sign text to be always vertically centered."
+	"config.mmic.centeredSigns.tip": "Moves sign text to be always vertically centered.",
+	"config.mmic.perfectSigns": "Perfect Wall Signs",
+	"config.mmic.perfectSigns.tip": "Removes the tiny gap between the sign and the wall."
 }

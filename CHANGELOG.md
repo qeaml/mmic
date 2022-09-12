@@ -4,6 +4,7 @@
 *September 12, 2022*
 
 * Added Centered Sign Text.
+* Added Prefect Wall Signs.
 
 ## 1.3.1
 *September 6, 2022*

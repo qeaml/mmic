@@ -63,7 +63,7 @@ public abstract class SignRendererMixin {
     } else {
       rotation = -blockState.get(WallSignBlock.FACING).asRotation();
       matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(rotation));
-      matrices.translate(0d, -5d/16d, -7d/16d);
+      matrices.translate(0d, -5d/16d, Config.perfectSigns ? -0.459d : -7d/16d);
       signModel.stick.visible = false;
     }
 
