@@ -144,13 +144,13 @@ public class Config implements ModMenuApi {
 				.setTooltip(Text.translatable("config.mmic.perfectSigns.tip"))
 				.setSaveConsumer(b -> perfectSigns = b)
 				.build());
-			cosm.addEntry(entry.startBooleanToggle(
-				Text.translatable("config.mmic.dotXhair"),
-				dotXhair)
-				.setDefaultValue(false)
-				.setTooltip(Text.translatable("config.mmic.dotXhair.tip"))
-				.setSaveConsumer(b -> dotXhair = b)
-				.build());
+			// cosm.addEntry(entry.startBooleanToggle(
+			// 	Text.translatable("config.mmic.dotXhair"),
+			// 	dotXhair)
+			// 	.setDefaultValue(false)
+			// 	.setTooltip(Text.translatable("config.mmic.dotXhair.tip"))
+			// 	.setSaveConsumer(b -> dotXhair = b)
+			// 	.build());
 
 			builder.setSavingRunnable(Client.cfgMan::save);
 
