@@ -201,7 +201,7 @@ public class DebugHudMixin extends DrawableHelper {
 			if(ent instanceof LivingEntity lent)
 				cl.add(String.format("Health: %.1f/%d",
 					lent.getHealth(), (int)lent.getAttributeValue(EntityAttributes.GENERIC_MAX_HEALTH)));
-			ent.getScoreboardTags().forEach(tag -> cl.add("#"+tag)); // FIXME: why doesn't this work?
+
 			int cbgw = 0;
 			for(String s: cl)
 			{
