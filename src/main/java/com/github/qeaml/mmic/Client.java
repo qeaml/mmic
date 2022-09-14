@@ -1,5 +1,8 @@
 package com.github.qeaml.mmic;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,11 +32,26 @@ public class Client implements ClientModInitializer {
 	public static final Logger log = LoggerFactory.getLogger(name);
 	private static MinecraftClient mc = MinecraftClient.getInstance();
 
+	private static final File
+	cfgFile = new File(MinecraftClient.getInstance().runDirectory, "options.mmic.txt");
+
+	public static final ConfigManager<Config>
+	cfgMan = new ConfigManager<>(new Config(), cfgFile);
+
 	@Override
 	public void onInitializeClient() {
 		log.info("Hello world");
 
-		Config.load();
+		if(!cfgFile.exists()) {
+			cfgFile.getParentFile().mkdirs();
+			try {
+				cfgFile.createNewFile();
+			} catch(IOException ioe) {
+				log.error("Could not create Config: "+ioe.getLocalizedMessage());
+			}
+		}
+
+		cfgMan.load();
 
 		var visuals = "key.categories.mmic.visuals";
 		Keys.gammaInc = new Bind("key.mmic.gammaInc", GLFW.GLFW_KEY_RIGHT_BRACKET, visuals);
@@ -98,7 +116,6 @@ public class Client implements ClientModInitializer {
 		p.pop();
 	}
 
-	
 	public static Text onOff(boolean on) {
 		var tkey = "other.mmic." + (on ? "on" : "off");
 		var color = on ? Formatting.GREEN : Formatting.RED;
@@ -107,7 +124,7 @@ public class Client implements ClientModInitializer {
 	}
 
 	private static Random soundRandom = Random.create();
-	
+
 	public static void sound(SoundEvent sound, float volume, float pitch) {
 		mc.getSoundManager().play(
 			new PositionedSoundInstance(
