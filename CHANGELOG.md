@@ -5,6 +5,8 @@
 
 * Added Centered Sign Text.
 * Added Prefect Wall Signs.
+* Added 'Owner' text to Mini F3 when hovering over a tamed entity.
+* Added Dot Crosshair.
 * Internal changes to configuration.
 
 ## 1.3.1

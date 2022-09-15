@@ -18,6 +18,7 @@ public class Config implements ModMenuApi {
 	public static Boolean centeredSigns = false;
 	public static Boolean perfectSigns = false;
 	public static Boolean dotXhair = false;
+	public static Integer dotSize = 2;
 
 	public enum LagType
 	{
@@ -144,13 +145,23 @@ public class Config implements ModMenuApi {
 				.setTooltip(Text.translatable("config.mmic.perfectSigns.tip"))
 				.setSaveConsumer(b -> perfectSigns = b)
 				.build());
-			// cosm.addEntry(entry.startBooleanToggle(
-			// 	Text.translatable("config.mmic.dotXhair"),
-			// 	dotXhair)
-			// 	.setDefaultValue(false)
-			// 	.setTooltip(Text.translatable("config.mmic.dotXhair.tip"))
-			// 	.setSaveConsumer(b -> dotXhair = b)
-			// 	.build());
+			cosm.addEntry(entry.startBooleanToggle(
+				Text.translatable("config.mmic.dotXhair"),
+				dotXhair)
+				.setDefaultValue(false)
+				.setTooltip(Text.translatable("config.mmic.dotXhair.tip"))
+				.setSaveConsumer(b -> dotXhair = b)
+				.build());
+			cosm.addEntry(entry.startIntSlider(
+				Text.translatable("config.mmic.dotSize"),
+				dotSize,
+				1, 5)
+				.setDefaultValue(2)
+				.setTooltip(Text.translatable("config.mmic.dotSize.tip"))
+				.setSaveConsumer(i -> dotSize = i)
+				// .setMax(5)
+				// .setMin(1)
+				.build());
 
 			builder.setSavingRunnable(Client.cfgMan::save);
 

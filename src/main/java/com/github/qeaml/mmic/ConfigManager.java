@@ -27,6 +27,7 @@ public class ConfigManager<Cfg> {
     deserializers.put(String.class,  s -> s);
     deserializers.put(Integer.class, s -> Integer.parseInt(s));
     deserializers.put(Double.class,  s -> Double.parseDouble(s));
+    deserializers.put(Float.class,   s -> Float.parseFloat(s));
     deserializers.put(Boolean.class, s -> Boolean.parseBoolean(s));
     deserializers.put(Config.LagType.class, s -> Config.LagType.valueOf(s));
 
@@ -34,6 +35,7 @@ public class ConfigManager<Cfg> {
     serializers.put(String.class,  s -> s.toString());
     serializers.put(Integer.class, i -> i.toString());
     serializers.put(Double.class,  d -> d.toString());
+    serializers.put(Float.class,   f -> f.toString());
     serializers.put(Boolean.class, b -> b.toString());
     serializers.put(Config.LagType.class, l -> l.toString());
   }

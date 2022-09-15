@@ -48,5 +48,9 @@
 	"config.mmic.centeredSigns": "Centered Sign Text",
 	"config.mmic.centeredSigns.tip": "Moves sign text to be always vertically centered.",
 	"config.mmic.perfectSigns": "Perfect Wall Signs",
-	"config.mmic.perfectSigns.tip": "Removes the tiny gap between the sign and the wall."
+	"config.mmic.perfectSigns.tip": "Removes the tiny gap between the sign and the wall.",
+	"config.mmic.dotXhair": "Dot Crosshair",
+	"config.mmic.dotXhair.tip": "Turns the default crosshair into a dot.",
+	"config.mmic.dotSize": "Dot Crosshair Size",
+	"config.mmic.dotSize.tip": "Changes the size of the crosshair if Dot Crosshair is enabled."
 }

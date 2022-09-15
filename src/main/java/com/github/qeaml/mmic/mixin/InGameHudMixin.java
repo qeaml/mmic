@@ -12,20 +12,25 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.github.qeaml.mmic.Config;
 import com.github.qeaml.mmic.Grid;
 import com.github.qeaml.mmic.State;
+import com.mojang.blaze3d.platform.GlStateManager.DstFactor;
+import com.mojang.blaze3d.platform.GlStateManager.SrcFactor;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.option.AttackIndicator;
 import net.minecraft.client.render.BufferRenderer;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormat.DrawMode;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3f;
+import net.minecraft.world.GameMode;
 
 @Mixin(InGameHud.class)
 public abstract class InGameHudMixin {
@@ -83,53 +88,61 @@ public abstract class InGameHudMixin {
 		   where or why. 
 	*/
 
-	//@Inject(
-	//	at = @At("HEAD"),
-	//	method = "renderCrosshair(Lnet/minecraft/client/util/math/MatrixStack;)V",
-	//	cancellable = true
-	//)
-	//private void hijackRenderCrosshair(MatrixStack matrices, CallbackInfo ci) {
-	//	if(client.options.hudHidden) return;
-	//	if(!client.options.getPerspective().isFirstPerson()) return;
-	//	if(client.interactionManager.getCurrentGameMode() == GameMode.SPECTATOR && !callShouldRenderSpectatorCrosshair(client.crosshairTarget)) return;
-	//
-	//	// -- Crosshair --
-	//	if(client.options.debugEnabled) {
-	//		renderDebugXhair();
-	//		return;
-	//	} else {
-	//		RenderSystem.blendFuncSeparate(SrcFactor.ONE_MINUS_DST_COLOR, DstFactor.ONE_MINUS_SRC_COLOR, SrcFactor.ONE, DstFactor.ZERO);
-	//		if(Config.dotXhair)
-	//			renderDotXhair(matrices);
-	//		else
-	//			renderDefaultXhair(matrices);
-	//	}
-	//
-	//	// -- Attack Indicator --
-	//	if(client.options.getAttackIndicator().getValue() != AttackIndicator.CROSSHAIR) return;
-	//
-	//	var cooldown = client.player.getAttackCooldownProgress(0f);
-	//	var opp = false;
-	//	if(client.targetedEntity != null &&
-	//		 client.targetedEntity instanceof LivingEntity &&
-	//		 cooldown >= 1f)
-	//	{
-	//		opp = client.player.getAttackCooldownProgressPerTick() > 5f
-	//		   && client.targetedEntity.isAlive();
-	//	}
-	//
-	//	int indX = scaledWidth/2-8;
-	//	int indY = scaledHeight/2+11;
-	//	if(opp)
-	//		drawTexture(matrices, indX, indY, 68, 94, 16, 16);
-	//	else if(cooldown < 1f) {
-	//		int progH = (int)(cooldown * 17f);
-	//		drawTexture(matrices, indX, indY, 36, 94, 16, 4);
-	//		drawTexture(matrices, indX, indY, 52, 94, progH, 4);
-	//	}
-	//
-	//	ci.cancel();
-	//}
+	@Inject(
+		at = @At("HEAD"),
+		method = "renderCrosshair(Lnet/minecraft/client/util/math/MatrixStack;)V",
+		cancellable = true
+	)
+	private void hijackRenderCrosshair(MatrixStack matrices, CallbackInfo ci) {
+		ci.cancel();
+
+		if(client.options.hudHidden) return;
+		if(!client.options.getPerspective().isFirstPerson()) return;
+		if(client.interactionManager.getCurrentGameMode() == GameMode.SPECTATOR && !callShouldRenderSpectatorCrosshair(client.crosshairTarget)) return;
+	
+		// -- Crosshair --
+		if(client.options.debugEnabled) {
+			renderDebugXhair();
+			return;
+		} else {
+			RenderSystem.blendFuncSeparate(SrcFactor.ONE_MINUS_DST_COLOR, DstFactor.ONE_MINUS_SRC_COLOR, SrcFactor.ONE, DstFactor.ZERO);
+			if(Config.dotXhair)
+				renderDotXhair(matrices);
+			else
+				renderDefaultXhair(matrices);
+		}
+	
+		// -- Attack Indicator --
+		if(client.options.getAttackIndicator().getValue() != AttackIndicator.CROSSHAIR) return;
+	
+		var cooldown = client.player.getAttackCooldownProgress(0f);
+		var opp = (
+			   client.targetedEntity != null
+			&& client.targetedEntity instanceof LivingEntity
+			&& cooldown >= 1f
+			&& client.player.getAttackCooldownProgressPerTick() > 5f
+			&& client.targetedEntity.isAlive()
+		);
+		// var opp = false;
+		// if(client.targetedEntity != null &&
+		// 	 client.targetedEntity instanceof LivingEntity &&
+		// 	 cooldown >= 1f)
+		// {
+		// 	opp = client.player.getAttackCooldownProgressPerTick() > 5f
+		// 	   && client.targetedEntity.isAlive();
+		// }
+	
+		int indX = scaledWidth/2-8;
+		int indY = scaledHeight/2+11;
+
+		if(opp)
+			drawTexture(matrices, indX, indY, 68, 94, 16, 16);
+		else if(cooldown < 1f) {
+			int progH = (int)(cooldown * 17f);
+			drawTexture(matrices, indX, indY, 36, 94, 16, 4);
+			drawTexture(matrices, indX, indY, 52, 94, progH, 4);
+		}
+	}
 
 	/*
 	The methods below are only ever called by hijackRenderCrosshair. Since it's
@@ -156,16 +169,14 @@ public abstract class InGameHudMixin {
 	/** Renders a small dot in the middle of the screen as a crosshair. */
 	@Unique
 	private void renderDotXhair(MatrixStack matrices) {
-		float x1 = (float)(scaledWidth)/2f,
-		      x2 = x1+1,
-		      y1 = (float)(scaledHeight)/2f,
-		      y2 = y1+1;
+		float x1 = (float)(scaledWidth)/2f-(float)(Config.dotSize)/2f,
+		      x2 = x1+Config.dotSize/2f,
+		      y1 = (float)(scaledHeight)/2f-(float)(Config.dotSize)/2f,
+		      y2 = y1+Config.dotSize/2f;
 
 		// most of this code is the decompiled source of DrawableHelper#fill
 		var matrix = matrices.peek().getPositionMatrix();
 		var bufferBuilder = Tessellator.getInstance().getBuffer();
-		RenderSystem.enableBlend();
-		RenderSystem.disableTexture();
 		RenderSystem.setShader(GameRenderer::getPositionColorShader);
 		bufferBuilder.begin(DrawMode.QUADS, VertexFormats.POSITION_COLOR);
 		bufferBuilder.vertex(matrix, x1, y2, 0.0F).color(255, 255, 255, 255).next();
@@ -173,8 +184,6 @@ public abstract class InGameHudMixin {
 		bufferBuilder.vertex(matrix, x2, y1, 0.0F).color(255, 255, 255, 255).next();
 		bufferBuilder.vertex(matrix, x1, y1, 0.0F).color(255, 255, 255, 255).next();
 		BufferRenderer.drawWithShader(bufferBuilder.end());
-		RenderSystem.enableTexture();
-		RenderSystem.disableBlend();
 	}
 
 	/** Renders the default crosshair, as provided by the current resource pack. */
