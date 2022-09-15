@@ -22,6 +22,7 @@ import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Tameable;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.util.hit.BlockHitResult;
@@ -201,7 +202,9 @@ public class DebugHudMixin extends DrawableHelper {
 			if(ent instanceof LivingEntity lent)
 				cl.add(String.format("Health: %.1f/%d",
 					lent.getHealth(), (int)lent.getAttributeValue(EntityAttributes.GENERIC_MAX_HEALTH)));
-
+			if(ent instanceof Tameable te)
+				if(te.getOwner() != null)
+					cl.add("Owner: "+te.getOwner().getDisplayName().getString());
 			int cbgw = 0;
 			for(String s: cl)
 			{
