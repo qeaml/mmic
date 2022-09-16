@@ -79,15 +79,6 @@ public abstract class InGameHudMixin {
 		}
 	}
 
-	/*
-	Commented out due to bugs:
-		1. Attack indicator does not show up while an attack is possible. (i.e.
-		   hovering over something)
-		2. The attack indicator does not have the proper blending function. It is
-		   reset back to the default somewhere along the path, and I could not find
-		   where or why. 
-	*/
-
 	@Inject(
 		at = @At("HEAD"),
 		method = "renderCrosshair(Lnet/minecraft/client/util/math/MatrixStack;)V",
@@ -123,14 +114,6 @@ public abstract class InGameHudMixin {
 			&& client.player.getAttackCooldownProgressPerTick() > 5f
 			&& client.targetedEntity.isAlive()
 		);
-		// var opp = false;
-		// if(client.targetedEntity != null &&
-		// 	 client.targetedEntity instanceof LivingEntity &&
-		// 	 cooldown >= 1f)
-		// {
-		// 	opp = client.player.getAttackCooldownProgressPerTick() > 5f
-		// 	   && client.targetedEntity.isAlive();
-		// }
 	
 		int indX = scaledWidth/2-8;
 		int indY = scaledHeight/2+11;
@@ -143,11 +126,6 @@ public abstract class InGameHudMixin {
 			drawTexture(matrices, indX, indY, 52, 94, progH, 4);
 		}
 	}
-
-	/*
-	The methods below are only ever called by hijackRenderCrosshair. Since it's
-	commented out, these will never be called.
-	*/
 
 	/** Renders the debug crosshair. (Visible when the debug HUD menu is visible) */
 	@Unique
@@ -169,10 +147,16 @@ public abstract class InGameHudMixin {
 	/** Renders a small dot in the middle of the screen as a crosshair. */
 	@Unique
 	private void renderDotXhair(MatrixStack matrices) {
-		float x1 = (float)(scaledWidth)/2f-(float)(Config.dotSize)/2f,
-		      x2 = x1+Config.dotSize/2f,
-		      y1 = (float)(scaledHeight)/2f-(float)(Config.dotSize)/2f,
-		      y2 = y1+Config.dotSize/2f;
+		float dotRad = (float)(Config.dotSize)/2f;
+		if(Config.dynamicDot) {
+			var vel = client.player.getVelocity();
+			dotRad *= 1f+Math.abs(vel.getX())+Math.abs(vel.getY())+Math.abs(vel.getZ());
+		}
+
+		float x1 = (float)(scaledWidth)/2f-dotRad,
+		      x2 = x1+dotRad,
+		      y1 = (float)(scaledHeight)/2f-dotRad,
+		      y2 = y1+dotRad;
 
 		// most of this code is the decompiled source of DrawableHelper#fill
 		var matrix = matrices.peek().getPositionMatrix();

@@ -19,6 +19,7 @@ public class Config implements ModMenuApi {
 	public static Boolean perfectSigns = false;
 	public static Boolean dotXhair = false;
 	public static Integer dotSize = 2;
+	public static Boolean dynamicDot = false;
 
 	public enum LagType
 	{
@@ -159,8 +160,13 @@ public class Config implements ModMenuApi {
 				.setDefaultValue(2)
 				.setTooltip(Text.translatable("config.mmic.dotSize.tip"))
 				.setSaveConsumer(i -> dotSize = i)
-				// .setMax(5)
-				// .setMin(1)
+				.build());
+			cosm.addEntry(entry.startBooleanToggle(
+				Text.translatable("config.mmic.dynamicDot"),
+				dynamicDot)
+				.setDefaultValue(false)
+				.setTooltip(Text.translatable("config.mmic.dynamicDot.tip"))
+				.setSaveConsumer(b -> dynamicDot = b)
 				.build());
 
 			builder.setSavingRunnable(Client.cfgMan::save);

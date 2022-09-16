@@ -52,5 +52,7 @@
 	"config.mmic.dotXhair": "Dot Crosshair",
 	"config.mmic.dotXhair.tip": "Turns the default crosshair into a dot.",
 	"config.mmic.dotSize": "Dot Crosshair Size",
-	"config.mmic.dotSize.tip": "Changes the size of the crosshair if Dot Crosshair is enabled."
+	"config.mmic.dotSize.tip": "Changes the size of the crosshair if Dot Crosshair is enabled.",
+	"config.mmic.dynamicDot": "Dynamic Dot",
+	"config.mmic.dynamicDot.tip": "Makes the Dor Crosshair change size depending on movement speed."
 }
