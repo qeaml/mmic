@@ -7,6 +7,8 @@
 * Added Prefect Wall Signs.
 * Added 'Owner' text to Mini F3 when hovering over a tamed entity.
 * Added Dot Crosshair.
+* Added subcategories to Cosmetic category in configuartion screen.
+* Toolips of configuration options now fit on screen more reliably.
 * Internal changes to configuration.
 
 ## 1.3.1
