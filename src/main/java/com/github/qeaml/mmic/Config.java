@@ -79,35 +79,42 @@ public class Config implements ModMenuApi {
 
 			var cosm = builder.getOrCreateCategory(Text.translatable("config.mmic.cosm"));
 
-			cosm.addEntry(entry.startAlphaColorField(
+			var gen = entry.startSubCategory(Text.translatable("config.mmic.gen"));
+
+			gen.add(entry.startAlphaColorField(
 				Text.translatable("config.mmic.gridColor"),
 				gridColor)
 				.setDefaultValue(0xFF000000)
 				.setTooltip(Text.translatable("config.mmic.gridColor.tip"))
 				.setSaveConsumer(i -> gridColor = i)
 				.build());
-			cosm.addEntry(entry.startDoubleField(
+			gen.add(entry.startDoubleField(
 				Text.translatable("config.mmic.gammaStep"),
 				gammaStep * 100)
 				.setDefaultValue(20)
 				.setTooltip(Text.translatable("config.mmic.gammaStep.tip"))
 				.setSaveConsumer(d -> gammaStep = d / 100)
 				.build());
-			cosm.addEntry(entry.startBooleanToggle(
+			gen.add(entry.startBooleanToggle(
 				Text.translatable("config.mmic.miniF3"),
 				miniF3)
 				.setDefaultValue(false)
 				.setTooltip(Text.translatable("config.mmic.miniF3.tip"))
 				.setSaveConsumer(b -> miniF3 = b)
 				.build());
-			cosm.addEntry(entry.startBooleanToggle(
+			gen.add(entry.startBooleanToggle(
 				Text.translatable("config.mmic.staticHand"),
 				staticHand)
 				.setDefaultValue(false)
 				.setTooltip(Text.translatable("config.mmic.staticHand.tip"))
 				.setSaveConsumer(b -> staticHand = b)
 				.build());
-			cosm.addEntry(entry.startDoubleField(
+
+			cosm.addEntry(gen.build());
+
+			var zoom = entry.startSubCategory(Text.translatable("config.mmic.zoom"));
+
+			zoom.add(entry.startDoubleField(
 				Text.translatable("config.mmic.zoomFovDiv"),
 				zoomFovDiv)
 				.setDefaultValue(5)
@@ -116,7 +123,7 @@ public class Config implements ModMenuApi {
 				.setMin(1.0)
 				.setMax(10.0)
 				.build());
-			cosm.addEntry(entry.startDoubleField(
+			zoom.add(entry.startDoubleField(
 				Text.translatable("config.mmic.zoomSensDiv"),
 				zoomSensDiv)
 				.setDefaultValue(2)
@@ -125,35 +132,45 @@ public class Config implements ModMenuApi {
 				.setMin(1.0)
 				.setMax(10.0)
 				.build());
-			cosm.addEntry(entry.startBooleanToggle(
+			zoom.add(entry.startBooleanToggle(
 				Text.translatable("config.mmic.zoomSmooth"),
 				zoomSmooth)
 				.setDefaultValue(false)
 				.setTooltip(Text.translatable("config.mmic.zoomSmooth.tip"))
 				.setSaveConsumer(b -> zoomSmooth = b)
 				.build());
-			cosm.addEntry(entry.startBooleanToggle(
+
+			cosm.addEntry(zoom.build());
+
+			var signs = entry.startSubCategory(Text.translatable("config.mmic.signs"));
+
+			signs.add(entry.startBooleanToggle(
 				Text.translatable("config.mmic.centeredSigns"),
 				centeredSigns)
 				.setDefaultValue(false)
 				.setTooltip(Text.translatable("config.mmic.centeredSigns.tip"))
 				.setSaveConsumer(b -> centeredSigns = b)
 				.build());
-			cosm.addEntry(entry.startBooleanToggle(
+			signs.add(entry.startBooleanToggle(
 				Text.translatable("config.mmic.perfectSigns"),
 				perfectSigns)
 				.setDefaultValue(false)
 				.setTooltip(Text.translatable("config.mmic.perfectSigns.tip"))
 				.setSaveConsumer(b -> perfectSigns = b)
 				.build());
-			cosm.addEntry(entry.startBooleanToggle(
+
+			cosm.addEntry(signs.build());
+
+			var xhair = entry.startSubCategory(Text.translatable("config.mmic.xhair"));
+
+			xhair.add(entry.startBooleanToggle(
 				Text.translatable("config.mmic.dotXhair"),
 				dotXhair)
 				.setDefaultValue(false)
 				.setTooltip(Text.translatable("config.mmic.dotXhair.tip"))
 				.setSaveConsumer(b -> dotXhair = b)
 				.build());
-			cosm.addEntry(entry.startIntSlider(
+			xhair.add(entry.startIntSlider(
 				Text.translatable("config.mmic.dotSize"),
 				dotSize,
 				1, 5)
@@ -161,13 +178,15 @@ public class Config implements ModMenuApi {
 				.setTooltip(Text.translatable("config.mmic.dotSize.tip"))
 				.setSaveConsumer(i -> dotSize = i)
 				.build());
-			cosm.addEntry(entry.startBooleanToggle(
+			xhair.add(entry.startBooleanToggle(
 				Text.translatable("config.mmic.dynamicDot"),
 				dynamicDot)
 				.setDefaultValue(false)
 				.setTooltip(Text.translatable("config.mmic.dynamicDot.tip"))
 				.setSaveConsumer(b -> dynamicDot = b)
 				.build());
+
+			cosm.addEntry(xhair.build());
 
 			builder.setSavingRunnable(Client.cfgMan::save);
 

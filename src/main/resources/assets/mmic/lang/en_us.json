@@ -23,36 +23,43 @@
 	"config.mmic.game": "Gameplay",
 
 	"config.mmic.lagType": "Lag Type",
-	"config.mmic.lagType.tip": "Changes the type of lag caused by the lag switch\nBLOCK causes all packets sent by the client to be completely ignored\nCLOG blocks all packets and sends them all at once when the lag switch is disabled\nLOSSY_BLOCK causes a randomly chosen 25% of all packets to be blocked\nLOSSY_CLOG causes a randomly chosen 25% of all packets to be blocked and sent when lag is toggled off",
+	"config.mmic.lagType.tip": "Changes the type of lag caused by the lag switch\n\nBLOCK causes all packets sent by the client to be\ncompletely ignored\n\nCLOG blocks all packets and sends them all at once\nwhen the lag switch is disabled\n\nLOSSY_BLOCK causes a randomly chosen 25% of all\npackets to be blocked\n\nLOSSY_CLOG causes a randomly chosen 25% of all\npackets to be blocked and sent when lag is toggled off",
 	"config.mmic.autoplant": "Auto-Replant",
-	"config.mmic.autoplant.tip": "Automatically replant harvested crops.\nThis only works if seeds of the harvested crops are in your hotbar.",
+	"config.mmic.autoplant.tip": "Automatically replant harvested crops.\nThis only works if seeds of the harvested\ncrops are in your hotbar.",
 	"config.mmic.sneakAutoplant": "Sneaky Auto-Replant",
 	"config.mmic.sneakAutoplant.tip": "Only allow Auto-Replant while sneaking.",
 
 	"config.mmic.cosm": "Cosmetic",
 
+	"config.mmic.gen": "General",
 	"config.mmic.gridColor": "Grid Color",
-	"config.mmic.gridColor.tip": "Changes the color of the togglable grids (thirds, halves etc.)",
+	"config.mmic.gridColor.tip": "Changes the color of the togglable grids (thirds,\nhalves etc.)",
 	"config.mmic.gammaStep": "Brightness Step",
-	"config.mmic.gammaStep.tip": "Changes by how much % the brigthness will change when using the brightness buttons",
+	"config.mmic.gammaStep.tip": "Changes by how much % the brigthness will change\nwhen using the brightness buttons",
 	"config.mmic.miniF3": "Minimized Debug HUD",
-	"config.mmic.miniF3.tip": "Replaces the default Debug HUD (F3 menu) with a new, smaller one which displays only the most important information.",
+	"config.mmic.miniF3.tip": "Replaces the default Debug HUD (F3 menu) with a new,\nsmaller one which displays only the most important information.",
 	"config.mmic.staticHand": "Static Hand",
 	"config.mmic.staticHand.tip": "Disables most hand animations",
+
+	"config.mmic.zoom": "Zoom",
 	"config.mmic.zoomFovDiv": "Zoom FOV Divider",
 	"config.mmic.zoomFovDiv.tip": "Changes how much zoom is applied.\nThe range is 1.0-10.0, where 1.0 is no zoom.",
 	"config.mmic.zoomSensDiv": "Zoom Sensitivty Divider",
 	"config.mmic.zoomSensDiv.tip": "Changes how much mouse sensitivity is decreased when zooming.\nThe range is 1.0-10.0, where 1.0 is no difference.",
 	"config.mmic.zoomSmooth": "Cinematic Zoom",
 	"config.mmic.zoomSmooth.tip": "Enables cinematic camera whenever zooming.",
+
+	"config.mmic.signs": "Better Signs",
 	"config.mmic.centeredSigns": "Centered Sign Text",
 	"config.mmic.centeredSigns.tip": "Moves sign text to be always vertically centered.",
 	"config.mmic.perfectSigns": "Perfect Wall Signs",
 	"config.mmic.perfectSigns.tip": "Removes the tiny gap between the sign and the wall.",
+
+	"config.mmic.xhair": "Crosshair",
 	"config.mmic.dotXhair": "Dot Crosshair",
 	"config.mmic.dotXhair.tip": "Turns the default crosshair into a dot.",
 	"config.mmic.dotSize": "Dot Crosshair Size",
-	"config.mmic.dotSize.tip": "Changes the size of the crosshair if Dot Crosshair is enabled.",
+	"config.mmic.dotSize.tip": "Changes the size of the crosshair if Dot Crosshair\nis enabled.",
 	"config.mmic.dynamicDot": "Dynamic Dot",
-	"config.mmic.dynamicDot.tip": "Makes the Dor Crosshair change size depending on movement speed."
+	"config.mmic.dynamicDot.tip": "Makes the Dor Crosshair change size depending on\nmovement speed."
 }
