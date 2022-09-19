@@ -40,6 +40,8 @@
 	"config.mmic.miniF3.tip": "Replaces the default Debug HUD (F3 menu) with a new,\nsmaller one which displays only the most important information.",
 	"config.mmic.staticHand": "Static Hand",
 	"config.mmic.staticHand.tip": "Disables most hand animations",
+	"config.mmic.blockOutlineColor": "Block Outline Color",
+	"config.mmic.blockOutlineColor.tip": "Changes the color of the block outline",
 
 	"config.mmic.zoom": "Zoom",
 	"config.mmic.zoomFovDiv": "Zoom FOV Divider",

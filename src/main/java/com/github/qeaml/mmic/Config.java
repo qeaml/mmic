@@ -20,6 +20,10 @@ public class Config implements ModMenuApi {
 	public static Boolean dotXhair = false;
 	public static Integer dotSize = 2;
 	public static Boolean dynamicDot = false;
+	public static Integer blockOutlineColor = 0;
+	public static Double zoomFovDiv = 5.0;
+	public static Double zoomSensDiv = 2.0;
+	public static Boolean zoomSmooth = false;
 
 	public enum LagType
 	{
@@ -29,10 +33,6 @@ public class Config implements ModMenuApi {
 		LOSSY_CLOG
 	}
 	public static LagType lagType = LagType.BLOCK;
-
-	public static Double zoomFovDiv = 5.0;
-	public static Double zoomSensDiv = 2.0;
-	public static Boolean zoomSmooth = false;
 
 	public ConfigScreenFactory<?> getModConfigScreenFactory() {
 		if(!FabricLoader.getInstance().isModLoaded("cloth-config2"))
@@ -108,6 +108,13 @@ public class Config implements ModMenuApi {
 				.setDefaultValue(false)
 				.setTooltip(Text.translatable("config.mmic.staticHand.tip"))
 				.setSaveConsumer(b -> staticHand = b)
+				.build());
+			gen.add(entry.startColorField(
+				Text.translatable("config.mmic.blockOutlineColor"),
+				blockOutlineColor)
+				.setDefaultValue(0)
+				.setTooltip(Text.translatable("config.mmic.blockOutlineColor.tip"))
+				.setSaveConsumer(i -> blockOutlineColor = i)
 				.build());
 
 			cosm.addEntry(gen.build());

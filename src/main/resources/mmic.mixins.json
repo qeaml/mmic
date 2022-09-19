@@ -14,7 +14,8 @@
     "MouseMixin",
     "HeldItemRendererMixin",
     "InteractionManagerMixin",
-    "SignRendererMixin"
+    "SignRendererMixin",
+    "WorldRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
