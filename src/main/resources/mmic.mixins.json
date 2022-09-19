@@ -15,7 +15,8 @@
     "HeldItemRendererMixin",
     "InteractionManagerMixin",
     "SignRendererMixin",
-    "WorldRendererMixin"
+    "WorldRendererMixin",
+    "TitleScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

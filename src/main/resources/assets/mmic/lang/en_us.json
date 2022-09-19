@@ -18,6 +18,11 @@
 	"key.mmic.lagSwitch": "Lag Switch",
 	"other.mmic.lag_switched": "Switched Lag %s",
 
+	"gui.mmic.sessions": "Sessions",
+	"gui.mmic.sessions.game": "Game",
+	"gui.mmic.sessions.world": "Worlds",
+	"gui.mmic.sessions.server": "Servers",
+
 	"config.mmic.title": "MMIC",
 
 	"config.mmic.game": "Gameplay",

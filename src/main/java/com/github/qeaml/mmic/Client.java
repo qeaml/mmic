@@ -33,14 +33,18 @@ public class Client implements ClientModInitializer {
 	private static MinecraftClient mc = MinecraftClient.getInstance();
 
 	private static final File
-	cfgFile = new File(MinecraftClient.getInstance().runDirectory, "options.mmic.txt");
+	cfgFile = new File(mc.runDirectory, "options.mmic.txt");
 
 	public static final ConfigManager<Config>
 	cfgMan = new ConfigManager<>(new Config(), cfgFile);
 
+	private static long sessionStart;
+
 	@Override
 	public void onInitializeClient() {
 		log.info("Hello world");
+
+		sessionStart = System.currentTimeMillis();
 
 		if(!cfgFile.exists()) {
 			cfgFile.getParentFile().mkdirs();
@@ -79,6 +83,8 @@ public class Client implements ClientModInitializer {
 					return i;
 			return ItemStack.EMPTY;
 		});
+
+		Sessions.load();
 	}
 
 	public static void tick()
@@ -116,6 +122,14 @@ public class Client implements ClientModInitializer {
 		p.pop();
 	}
 
+	public static void stop() {
+		log.info("Goodbye world");
+		var sessionEnd = System.currentTimeMillis();
+		Sessions.game(sessionStart, sessionEnd);
+		Sessions.save();
+		log.info(String.format("Game session lasted %dms.", sessionEnd-sessionStart));
+	}
+
 	public static Text onOff(boolean on) {
 		var tkey = "other.mmic." + (on ? "on" : "off");
 		var color = on ? Formatting.GREEN : Formatting.RED;
@@ -146,5 +160,11 @@ public class Client implements ClientModInitializer {
 				Text.of(name),
 				message);
 		log.info(message.getString());
+	}
+
+	public static void error(String fmt, Object... args) {
+		var txt = String.format(fmt, args);
+		log.error(txt);
+		// notify(Text.of(txt));
 	}
 }

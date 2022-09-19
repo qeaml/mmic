@@ -25,7 +25,7 @@ public abstract class WorldRendererMixin {
   private ClientWorld world;
 
   @Invoker
-  protected abstract void callDrawCuboidShapeOutline(MatrixStack matrices, VertexConsumer vertexConsumer, VoxelShape shape, double offsetX, double offsetY, double offsetZ, float red, float green, float blue, float alpha);
+  protected static void callDrawCuboidShapeOutline(MatrixStack matrices, VertexConsumer vertexConsumer, VoxelShape shape, double offsetX, double offsetY, double offsetZ, float red, float green, float blue, float alpha) {}
 
   @Inject(
     method = "drawBlockOutline",

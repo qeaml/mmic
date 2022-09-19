@@ -19,4 +19,12 @@ public class ClientMixin {
 	{
 		Client.tick();
 	}
+
+	@Inject(
+		method = "stop",
+		at = @At("HEAD")
+	)
+	private void onStop(CallbackInfo ci) {
+		Client.stop();
+	}
 }
