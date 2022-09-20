@@ -113,6 +113,32 @@ public class Sessions {
     }
   }
 
+  private static long sessionStart;
+  private static boolean isServer;
+  private static String worldName;
+  private static String serverIp;
+
+  public static void startWorld(String name) {
+    log.info(String.format("Starting world session on %s", name));
+    sessionStart = System.currentTimeMillis();
+    isServer = false;
+    worldName = name;
+  }
+
+  public static void startServer(String ip) {
+    sessionStart = System.currentTimeMillis();
+    isServer = true;
+    serverIp = ip;
+  }
+
+  public static void end() {
+    log.info("Session ended");
+    if(isServer)
+      server(serverIp, sessionStart, System.currentTimeMillis());
+    else
+      world(worldName, sessionStart, System.currentTimeMillis());
+  }
+
   public static void game(long start, long end) {
     log.info(String.format("Game session: %d-%d", start, end));
     synchronized(lock) {
@@ -121,7 +147,7 @@ public class Sessions {
   }
 
   public static void world(String w, long start, long end) {
-    log.info(String.format("World session: %d-%d on %s", start, end, world));
+    log.info(String.format("World session: %d-%d on %s", start, end, w));
     synchronized(lock) {
       world.addFirst(new World(w, start, end));
     }

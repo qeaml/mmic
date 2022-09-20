@@ -16,7 +16,8 @@
     "InteractionManagerMixin",
     "SignRendererMixin",
     "WorldRendererMixin",
-    "TitleScreenMixin"
+    "TitleScreenMixin",
+    "MultiplayerScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

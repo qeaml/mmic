@@ -1,5 +1,11 @@
 # MMIC Changelog
 
+## 1.5.0
+*September, 2022*
+
+* Added Block Outline Color.
+* Added session statistics.
+
 ## 1.4.0
 *September 12, 2022*
 

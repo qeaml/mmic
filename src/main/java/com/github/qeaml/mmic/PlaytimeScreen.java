@@ -60,10 +60,12 @@ public class PlaytimeScreen extends Screen {
 
   private class GameSessionList extends AlwaysSelectedEntryListWidget<GameSessionEntry> {
     private PlaytimeScreen parent;
+    public int count;
 
     public GameSessionList(PlaytimeScreen p, MinecraftClient client) {
       super(client, p.width, p.height, 32, p.height - 64, 10);
       parent = p;
+      count = Sessions.game.size();
       Sessions.game.forEach(s -> addEntry(new GameSessionEntry(s)));
     }
 
@@ -102,10 +104,12 @@ public class PlaytimeScreen extends Screen {
 
   private class WorldSessionList extends AlwaysSelectedEntryListWidget<WorldSessionEntry> {
     private PlaytimeScreen parent;
+    public int count;
 
     public WorldSessionList(PlaytimeScreen p, MinecraftClient client) {
       super(client, p.width, p.height, 32, p.height - 64, 10);
       parent = p;
+      count = Sessions.world.size();
       Sessions.world.forEach(s -> addEntry(new WorldSessionEntry(s)));
     }
 
@@ -144,10 +148,12 @@ public class PlaytimeScreen extends Screen {
 
   private class ServerSessionList extends AlwaysSelectedEntryListWidget<ServerSessionEntry> {
     private PlaytimeScreen parent;
+    public int count;
 
     public ServerSessionList(PlaytimeScreen p, MinecraftClient client) {
       super(client, p.width, p.height, 32, p.height - 64, 10);
       parent = p;
+      count = Sessions.server.size();
       Sessions.server.forEach(s -> addEntry(new ServerSessionEntry(s)));
     }
 
@@ -174,16 +180,32 @@ public class PlaytimeScreen extends Screen {
     world = new WorldSessionList(this, client);
     server = new ServerSessionList(this, client);
     selectList(game);
-    addDrawableChild(new ButtonWidget(width / 2 - 120, height - 52, 80, 20, Text.translatable("gui.mmic.sessions.game"), (button) -> {
+    addDrawableChild(new ButtonWidget(
+      width / 2 - 120, height - 52,
+      80, 20,
+      Text.translatable("gui.mmic.sessions.game", Integer.toString(game.count)),
+    (button) -> {
       selectList(game);
     }));
-    addDrawableChild(new ButtonWidget(width / 2 - 40, height - 52, 80, 20, Text.translatable("gui.mmic.sessions.world"), (button) -> {
+    addDrawableChild(new ButtonWidget(
+      width / 2 - 40, height - 52,
+      80, 20,
+      Text.translatable("gui.mmic.sessions.world", Integer.toString(world.count)),
+    (button) -> {
       selectList(world);
     }));
-    addDrawableChild(new ButtonWidget(width / 2 + 40, height - 52, 80, 20, Text.translatable("gui.mmic.sessions.server"), (button) -> {
+    addDrawableChild(new ButtonWidget(
+      width / 2 + 40, height - 52,
+      80, 20,
+      Text.translatable("gui.mmic.sessions.server", Integer.toString(server.count)),
+    (button) -> {
       selectList(server);
     }));
-    addDrawableChild(new ButtonWidget(width / 2 - 100, height - 28, 200, 20, ScreenTexts.DONE, (button) -> {
+    addDrawableChild(new ButtonWidget(
+      width / 2 - 100, height - 28,
+      200, 20,
+      ScreenTexts.DONE,
+    (button) -> {
       client.setScreen(parent);
     }));
   }

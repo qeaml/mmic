@@ -19,9 +19,9 @@
 	"other.mmic.lag_switched": "Switched Lag %s",
 
 	"gui.mmic.sessions": "Sessions",
-	"gui.mmic.sessions.game": "Game",
-	"gui.mmic.sessions.world": "Worlds",
-	"gui.mmic.sessions.server": "Servers",
+	"gui.mmic.sessions.game": "Game (%s)",
+	"gui.mmic.sessions.world": "Worlds (%s)",
+	"gui.mmic.sessions.server": "Servers (%s)",
 
 	"config.mmic.title": "MMIC",
 
