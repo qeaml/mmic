@@ -65,10 +65,15 @@ public class PlaytimeScreen extends Screen {
     public int count;
 
     public GameSessionList(PlaytimeScreen p, MinecraftClient client) {
-      super(client, p.width, p.height, 32, p.height - 64, 10);
+      super(client, p.width, p.height, 32, p.height - 64, textRenderer.fontHeight);
       parent = p;
       count = Sessions.game.size();
       Sessions.game.forEach(s -> addEntry(new GameSessionEntry(s)));
+    }
+
+    @Override
+    public int getRowLeft() {
+      return parent.width/4;
     }
 
     @Override
@@ -94,13 +99,16 @@ public class PlaytimeScreen extends Screen {
         int mouseY, boolean hovered, float tickDelta)
     {
       DrawableHelper.drawStringWithShadow(matrices, textRenderer,
-        String.format(
-          "%s for %s on world \"%s\"",
-          long2timestamp(sesh.start()),
-          long2timespan(sesh.end()-sesh.start()),
-          sesh.world()),
+        sesh.world(),
         x, y,
-        0xFFFFFFFF);
+        0xFFFFFF);
+      DrawableHelper.drawStringWithShadow(matrices, textRenderer,
+        String.format(
+          "%s for %s",
+          long2timestamp(sesh.start()),
+          long2timespan(sesh.end()-sesh.start())),
+        x, y+textRenderer.fontHeight,
+        0x909090);
     }
   }
 
@@ -109,10 +117,15 @@ public class PlaytimeScreen extends Screen {
     public int count;
 
     public WorldSessionList(PlaytimeScreen p, MinecraftClient client) {
-      super(client, p.width, p.height, 32, p.height - 64, 10);
+      super(client, p.width, p.height, 32, p.height - 64, textRenderer.fontHeight*2);
       parent = p;
       count = Sessions.world.size();
       Sessions.world.forEach(s -> addEntry(new WorldSessionEntry(s)));
+    }
+
+    @Override
+    public int getRowLeft() {
+      return parent.width/4;
     }
 
     @Override
@@ -138,13 +151,16 @@ public class PlaytimeScreen extends Screen {
         int mouseY, boolean hovered, float tickDelta)
     {
       DrawableHelper.drawStringWithShadow(matrices, textRenderer,
-        String.format(
-          "%s for %s on server %s",
-          long2timestamp(sesh.start()),
-          long2timespan(sesh.end()-sesh.start()),
-          sesh.ip()),
+        sesh.ip(),
         x, y,
-        0xFFFFFFFF);
+        0xFFFFFF);
+      DrawableHelper.drawStringWithShadow(matrices, textRenderer,
+        String.format(
+          "%s for %s",
+          long2timestamp(sesh.start()),
+          long2timespan(sesh.end()-sesh.start())),
+        x, y+textRenderer.fontHeight,
+        0x909090);
     }
   }
 
@@ -153,10 +169,15 @@ public class PlaytimeScreen extends Screen {
     public int count;
 
     public ServerSessionList(PlaytimeScreen p, MinecraftClient client) {
-      super(client, p.width, p.height, 32, p.height - 64, 10);
+      super(client, p.width, p.height, 32, p.height - 64, textRenderer.fontHeight*2);
       parent = p;
       count = Sessions.server.size();
       Sessions.server.forEach(s -> addEntry(new ServerSessionEntry(s)));
+    }
+
+    @Override
+    public int getRowLeft() {
+      return parent.width/4;
     }
 
     @Override
