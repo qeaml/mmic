@@ -39,6 +39,14 @@ public abstract class ClientMixin {
 	}
 
 	@Inject(
+		method = "cleanUpAfterCrash",
+		at = @At("HEAD")
+	)
+	private void crash(CallbackInfo ci) {
+		Client.stop();
+	}
+
+	@Inject(
 		method = "startIntegratedServer",
 		at = @At("HEAD")
 	)
