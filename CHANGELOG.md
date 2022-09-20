@@ -5,6 +5,7 @@
 
 * Added Block Outline Color.
 * Added session statistics.
+* Added mod menu accesible via the 'MMIC' button in the options menu.
 
 ## 1.4.0
 *September 12, 2022*

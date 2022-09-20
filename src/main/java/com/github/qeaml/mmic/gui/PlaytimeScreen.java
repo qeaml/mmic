@@ -1,8 +1,10 @@
-package com.github.qeaml.mmic;
+package com.github.qeaml.mmic.gui;
 
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+
+import com.github.qeaml.mmic.Sessions;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
