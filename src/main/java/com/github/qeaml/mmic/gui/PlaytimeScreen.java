@@ -51,12 +51,16 @@ public class PlaytimeScreen extends Screen {
         int mouseY, boolean hovered, float tickDelta)
     {
       DrawableHelper.drawStringWithShadow(matrices, textRenderer,
+        sesh.version(),
+        x, y,
+        0xFFFFFF);
+      DrawableHelper.drawStringWithShadow(matrices, textRenderer,
         String.format(
           "%s for %s",
           long2timestamp(sesh.start()),
           long2timespan(sesh.end()-sesh.start())),
-        x, y,
-        0xFFFFFFFF);
+        x, y+textRenderer.fontHeight,
+        0x909090);
     }
   }
 
@@ -65,7 +69,7 @@ public class PlaytimeScreen extends Screen {
     public int count;
 
     public GameSessionList(PlaytimeScreen p, MinecraftClient client) {
-      super(client, p.width, p.height, 32, p.height - 64, textRenderer.fontHeight);
+      super(client, p.width, p.height, 32, p.height - 64, textRenderer.fontHeight*2);
       parent = p;
       count = Sessions.game.size();
       Sessions.game.forEach(s -> addEntry(new GameSessionEntry(s)));
@@ -73,7 +77,12 @@ public class PlaytimeScreen extends Screen {
 
     @Override
     public int getRowLeft() {
-      return parent.width/4;
+      return parent.width/6;
+    }
+
+    @Override
+    public int getRowRight() {
+      return parent.width*5/6;
     }
 
     @Override
@@ -125,7 +134,12 @@ public class PlaytimeScreen extends Screen {
 
     @Override
     public int getRowLeft() {
-      return parent.width/4;
+      return parent.width/6;
+    }
+
+    @Override
+    public int getRowRight() {
+      return parent.width*5/6;
     }
 
     @Override
@@ -177,9 +191,13 @@ public class PlaytimeScreen extends Screen {
 
     @Override
     public int getRowLeft() {
-      return parent.width/4;
+      return parent.width/6;
     }
 
+    @Override
+    public int getRowRight() {
+      return parent.width*5/6;
+    }
     @Override
     protected void renderBackground(MatrixStack matrices) {
       parent.renderBackground(matrices);

@@ -27,7 +27,7 @@ public class Sessions {
   public static final File
   serverSessions = new File(mc.runDirectory, "mmic.serverSessions.csv");
 
-  public record Game(long start, long end) {}
+  public record Game(String version, long start, long end) {}
   public record World(String world, long start, long end) {}
   public record Server(String ip, long start, long end) {}
 
@@ -55,8 +55,11 @@ public class Sessions {
       String[] row;
       try(var fr = new FileReader(gameSessions); var csv = new CSVReader(fr)) {
         game.clear();
-        while((row = csv.readNext()) != null)
-          game.addLast(new Game(Long.parseLong(row[0]), Long.parseLong(row[1])));
+        while((row = csv.readNext()) != null) {
+          var ver = row.length < 3 ? "Unknown" : row[2];
+          
+          game.addLast(new Game(ver, Long.parseLong(row[0]), Long.parseLong(row[1])));
+        }
       } catch(CsvValidationException | IOException e) {
         log.error(String.format("Could not load game session data: %s", e));
       }
@@ -89,7 +92,7 @@ public class Sessions {
     synchronized(lock) {
       try(var fw = new FileWriter(gameSessions); var csv = new CSVWriter(fw)) {
         game.forEach(g -> csv.writeNext(new String[]{
-          Long.toString(g.start), Long.toString(g.end)
+          Long.toString(g.start), Long.toString(g.end), g.version
         }));
       } catch(IOException e) {
         log.error(String.format("Could not save game session data: %s", e));
@@ -139,10 +142,10 @@ public class Sessions {
       world(worldName, sessionStart, System.currentTimeMillis());
   }
 
-  public static void game(long start, long end) {
+  public static void game(String version, long start, long end) {
     log.info(String.format("Game session: %d-%d", start, end));
     synchronized(lock) {
-      game.addFirst(new Game(start, end));
+      game.addFirst(new Game(version, start, end));
     }
   }
 

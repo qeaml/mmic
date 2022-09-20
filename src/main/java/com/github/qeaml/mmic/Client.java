@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.event.client.player.ClientPickBlockGatherCallback;
+import net.minecraft.SharedConstants;
 import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
@@ -125,7 +126,7 @@ public class Client implements ClientModInitializer {
 	public static void stop() {
 		log.info("Goodbye world");
 		var sessionEnd = System.currentTimeMillis();
-		Sessions.game(sessionStart, sessionEnd);
+		Sessions.game(SharedConstants.getGameVersion().getName(), sessionStart, sessionEnd);
 		Sessions.save();
 		log.info(String.format("Game session lasted %dms.", sessionEnd-sessionStart));
 	}
