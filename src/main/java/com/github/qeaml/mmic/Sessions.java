@@ -27,15 +27,32 @@ public class Sessions {
   public static final File
   serverSessions = new File(mc.runDirectory, "mmic.serverSessions.csv");
 
-  public record Game(String version, long start, long end) {}
-  public record World(String world, long start, long end) {}
-  public record Server(String ip, long start, long end) {}
+  public static interface Session {
+    public long start();
+    public long end();
+  }
+
+  public static record Game(String version, long start, long end) implements Session {}
+  public static record World(String world, long start, long end) implements Session {}
+  public static record Server(String ip, long start, long end) implements Session {}
 
   private static Object lock = new Object();
 
   public static Deque<Game> game = new LinkedList<>();
   public static Deque<World> world = new LinkedList<>();
   public static Deque<Server> server = new LinkedList<>();
+
+  public static Iterable<Session> getGameSessions() {
+    return game.stream().map(g -> (Session)g).toList();
+  }
+
+  public static Iterable<Session> getWorldSessions() {
+    return world.stream().map(w -> (Session)w).toList();
+  }
+
+  public static Iterable<Session> getServerSessions() {
+    return server.stream().map(s -> (Session)s).toList();
+  }
 
   public static void load() {
     log.info("Loading session data");
@@ -117,7 +134,7 @@ public class Sessions {
   }
 
   public static void migrate() {
-    
+
   }
 
   private static long sessionStart;

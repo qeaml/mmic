@@ -194,6 +194,10 @@ public class PlaytimeScreen extends Screen {
   private GameSessionList game;
   private WorldSessionList world;
   private ServerSessionList server;
+
+  private Text totalText;
+  private Text maxText;
+  private Text minText;
   private AlwaysSelectedEntryListWidget<?> selectedList;
   private Screen parent;
 
@@ -234,7 +238,7 @@ public class PlaytimeScreen extends Screen {
     }));
 
     addDrawableChild(new ButtonWidget(
-      width / 2 + 125, height - 52,
+      width - 85, height - 45,
       80, 20,
       Text.translatable("gui.mmic.sessions.migrate"),
     (button) -> {
@@ -248,7 +252,7 @@ public class PlaytimeScreen extends Screen {
       Text.translatable("gui.mmic.sessions.migrate.confirm")));
     }));
     addDrawableChild(new ButtonWidget(
-      width / 2 + 125, height - 32,
+      width - 85, height - 25,
       80, 20,
       Text.translatable("gui.mmic.sessions.clear"),
     (button) -> {
@@ -281,12 +285,46 @@ public class PlaytimeScreen extends Screen {
     if(l != null) {
       addSelectableChild(l);
       selectedList = l;
+
+      totalText = maxText = minText = Text.empty();
+
+      if(l instanceof GameSessionList)
+        updateStatText(Sessions.getGameSessions());
+      if(l instanceof WorldSessionList)
+        updateStatText(Sessions.getWorldSessions());
+      if(l instanceof ServerSessionList)
+        updateStatText(Sessions.getServerSessions());
     }
+  }
+
+  private void updateStatText(Iterable<Sessions.Session> sl) {
+    long total = 0, min = 0, max = 0;
+    for(var s: sl) {
+      var t = s.end() - s.start();
+      total += t;
+      if(t > max) max = t;
+      if(t < min || min == 0) min = t;
+    }
+    totalText = Text.translatable("gui.mmic.sessions.total", long2timespan(total));
+    maxText = Text.translatable("gui.mmic.sessions.max", long2timespan(max));
+    minText = Text.translatable("gui.mmic.sessions.min", long2timespan(min));
   }
 
   @Override
   public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
     selectedList.render(matrices, mouseX, mouseY, delta);
+    drawTextWithShadow(matrices, textRenderer,
+      totalText,
+      5, height - 5 - textRenderer.fontHeight*3,
+      0xFFFFFF);
+    drawTextWithShadow(matrices, textRenderer,
+      maxText,
+      5, height - 5 - textRenderer.fontHeight*2,
+      0xFFFFFF);
+    drawTextWithShadow(matrices, textRenderer,
+      minText,
+      5, height - 5 - textRenderer.fontHeight,
+      0xFFFFFF);
     drawCenteredText(matrices, textRenderer, Text.translatable("gui.mmic.sessions"), width/2, 20, 0xFFFFFFFF);
     super.render(matrices, mouseX, mouseY, delta);
   }
