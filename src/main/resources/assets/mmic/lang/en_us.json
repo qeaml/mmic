@@ -19,7 +19,8 @@
 	"other.mmic.lag_switched": "Switched Lag %s",
 
 	"gui.mmic.menu": "MMIC",
-
+	"gui.mmic.config": "Config",
+	
 	"gui.mmic.sessions": "Sessions",
 	"gui.mmic.sessions.game": "Game (%s)",
 	"gui.mmic.sessions.world": "Worlds (%s)",
@@ -32,8 +33,6 @@
 	"gui.mmic.sessions.max": "Longest: %s",
 	"gui.mmic.sessions.min": "Shortest: %s",
 	"gui.mmic.sessions.current": "Current: %s",
-
-	"config.mmic.title": "MMIC",
 
 	"config.mmic.game": "Gameplay",
 

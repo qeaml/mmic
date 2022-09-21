@@ -40,7 +40,7 @@ public class Config implements ModMenuApi {
 		return parent -> {
 			var builder = ConfigBuilder.create()
 				.setParentScreen(parent)
-				.setTitle(Text.translatable("config.mmic.title"))
+				.setTitle(Text.translatable("gui.mmic.config"))
 				.setDefaultBackgroundTexture(new Identifier("minecraft", "textures/block/lapis_block.png"));
 			var entry = builder.entryBuilder();
 
