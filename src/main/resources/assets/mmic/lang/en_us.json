@@ -31,6 +31,7 @@
 	"gui.mmic.sessions.total": "Total: %s",
 	"gui.mmic.sessions.max": "Longest: %s",
 	"gui.mmic.sessions.min": "Shortest: %s",
+	"gui.mmic.sessions.current": "Current: %s",
 
 	"config.mmic.title": "MMIC",
 

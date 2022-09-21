@@ -39,7 +39,7 @@ public class Client implements ClientModInitializer {
 	public static final ConfigManager<Config>
 	cfgMan = new ConfigManager<>(new Config(), cfgFile);
 
-	private static long sessionStart;
+	public static long sessionStart;
 
 	@Override
 	public void onInitializeClient() {

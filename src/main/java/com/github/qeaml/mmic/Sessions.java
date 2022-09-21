@@ -137,9 +137,9 @@ public class Sessions {
 
   }
 
-  private static long sessionStart;
-  private static boolean inSession;
-  private static boolean isServer;
+  public static long sessionStart;
+  public static boolean inSession;
+  public static boolean isServer;
   private static String worldName;
   private static String serverIp;
 

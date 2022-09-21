@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
+import com.github.qeaml.mmic.Client;
 import com.github.qeaml.mmic.Sessions;
 
 import net.minecraft.client.MinecraftClient;
@@ -313,6 +314,29 @@ public class PlaytimeScreen extends Screen {
   @Override
   public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
     selectedList.render(matrices, mouseX, mouseY, delta);
+
+    long now = System.currentTimeMillis();
+    String curr;
+    if(selectedList instanceof GameSessionList) {
+      curr = long2timespan(now-Client.sessionStart);
+      drawTextWithShadow(matrices, textRenderer,
+      Text.translatable("gui.mmic.sessions.current", curr),
+        5, height - 5 - textRenderer.fontHeight*4,
+        0xFFFFFF);
+    } else if(Sessions.inSession) {
+      curr = long2timespan(now-Sessions.sessionStart);
+      if(selectedList instanceof WorldSessionList && !Sessions.isServer)
+        drawTextWithShadow(matrices, textRenderer,
+          Text.translatable("gui.mmic.sessions.current", curr),
+          5, height - 5 - textRenderer.fontHeight*4,
+          0xFFFFFF);
+      else if(selectedList instanceof ServerSessionList && Sessions.isServer)
+        drawTextWithShadow(matrices, textRenderer,
+          Text.translatable("gui.mmic.sessions.current", curr),
+          5, height - 5 - textRenderer.fontHeight*4,
+          0xFFFFFF);
+    }
+
     drawTextWithShadow(matrices, textRenderer,
       totalText,
       5, height - 5 - textRenderer.fontHeight*3,
@@ -325,7 +349,10 @@ public class PlaytimeScreen extends Screen {
       minText,
       5, height - 5 - textRenderer.fontHeight,
       0xFFFFFF);
-    drawCenteredText(matrices, textRenderer, Text.translatable("gui.mmic.sessions"), width/2, 20, 0xFFFFFFFF);
+    drawCenteredText(matrices, textRenderer,
+      Text.translatable("gui.mmic.sessions"),
+      width/2, 20,
+      0xFFFFFFFF);
     super.render(matrices, mouseX, mouseY, delta);
   }
 }
