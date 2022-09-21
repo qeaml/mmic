@@ -8,6 +8,7 @@ import com.github.qeaml.mmic.Sessions;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.screen.ConfirmScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -76,13 +77,8 @@ public class PlaytimeScreen extends Screen {
     }
 
     @Override
-    public int getRowLeft() {
-      return parent.width/6;
-    }
-
-    @Override
-    public int getRowRight() {
-      return parent.width*5/6;
+    public int getRowWidth() {
+      return width * 2 / 3;
     }
 
     @Override
@@ -133,13 +129,8 @@ public class PlaytimeScreen extends Screen {
     }
 
     @Override
-    public int getRowLeft() {
-      return parent.width/6;
-    }
-
-    @Override
-    public int getRowRight() {
-      return parent.width*5/6;
+    public int getRowWidth() {
+      return width * 2 / 3;
     }
 
     @Override
@@ -190,14 +181,10 @@ public class PlaytimeScreen extends Screen {
     }
 
     @Override
-    public int getRowLeft() {
-      return parent.width/6;
+    public int getRowWidth() {
+      return width * 2 / 3;
     }
 
-    @Override
-    public int getRowRight() {
-      return parent.width*5/6;
-    }
     @Override
     protected void renderBackground(MatrixStack matrices) {
       parent.renderBackground(matrices);
@@ -220,7 +207,10 @@ public class PlaytimeScreen extends Screen {
     game = new GameSessionList(this, client);
     world = new WorldSessionList(this, client);
     server = new ServerSessionList(this, client);
+    var that = this;
+
     selectList(game);
+
     addDrawableChild(new ButtonWidget(
       width / 2 - 120, height - 52,
       80, 20,
@@ -242,6 +232,39 @@ public class PlaytimeScreen extends Screen {
     (button) -> {
       selectList(server);
     }));
+
+    addDrawableChild(new ButtonWidget(
+      width / 2 + 125, height - 52,
+      80, 20,
+      Text.translatable("gui.mmic.sessions.migrate"),
+    (button) -> {
+      client.setScreen(new ConfirmScreen(
+      (ok) -> {
+        client.setScreen(that);
+        if(!ok) return;
+        Sessions.migrate();
+      },
+      Text.translatable("gui.mmic.sessions.migrate"),
+      Text.translatable("gui.mmic.sessions.migrate.confirm")));
+    }));
+    addDrawableChild(new ButtonWidget(
+      width / 2 + 125, height - 32,
+      80, 20,
+      Text.translatable("gui.mmic.sessions.clear"),
+    (button) -> {
+      client.setScreen(new ConfirmScreen(
+      (ok) -> {
+        client.setScreen(that);
+        if(!ok) return;
+        Sessions.game.clear();
+        Sessions.world.clear();
+        Sessions.server.clear();
+        Sessions.save();
+      },
+      Text.translatable("gui.mmic.sessions.clear"),
+      Text.translatable("gui.mmic.sessions.clear.confirm")));
+    }));
+
     addDrawableChild(new ButtonWidget(
       width / 2 - 100, height - 28,
       200, 20,

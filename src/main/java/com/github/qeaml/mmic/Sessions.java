@@ -116,6 +116,10 @@ public class Sessions {
     }
   }
 
+  public static void migrate() {
+    
+  }
+
   private static long sessionStart;
   private static boolean isServer;
   private static String worldName;
