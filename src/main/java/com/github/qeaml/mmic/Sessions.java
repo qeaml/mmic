@@ -138,29 +138,35 @@ public class Sessions {
   }
 
   private static long sessionStart;
+  private static boolean inSession;
   private static boolean isServer;
   private static String worldName;
   private static String serverIp;
 
   public static void startWorld(String name) {
     log.info(String.format("Starting world session on %s", name));
+    inSession = true;
     sessionStart = System.currentTimeMillis();
     isServer = false;
     worldName = name;
   }
-
+  
   public static void startServer(String ip) {
+    log.info(String.format("Starting server session on %s", ip));
+    inSession = true;
     sessionStart = System.currentTimeMillis();
     isServer = true;
     serverIp = ip;
   }
 
   public static void end() {
+    if(!inSession) return;
     log.info("Session ended");
     if(isServer)
       server(serverIp, sessionStart, System.currentTimeMillis());
     else
       world(worldName, sessionStart, System.currentTimeMillis());
+    inSession = false;
   }
 
   public static void game(String version, long start, long end) {

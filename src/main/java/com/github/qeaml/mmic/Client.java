@@ -126,6 +126,7 @@ public class Client implements ClientModInitializer {
 	public static void stop() {
 		log.info("Goodbye world");
 		var sessionEnd = System.currentTimeMillis();
+		Sessions.end();
 		Sessions.game(SharedConstants.getGameVersion().getName(), sessionStart, sessionEnd);
 		Sessions.save();
 		log.info(String.format("Game session lasted %dms.", sessionEnd-sessionStart));
