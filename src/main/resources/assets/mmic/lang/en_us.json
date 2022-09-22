@@ -79,5 +79,10 @@
 	"config.mmic.dotSize": "Dot Crosshair Size",
 	"config.mmic.dotSize.tip": "Changes the size of the crosshair if Dot Crosshair\nis enabled.",
 	"config.mmic.dynamicDot": "Dynamic Dot",
-	"config.mmic.dynamicDot.tip": "Makes the Dor Crosshair change size depending on\nmovement speed."
+	"config.mmic.dynamicDot.tip": "Makes the Dor Crosshair change size depending on\nmovement speed.",
+
+	"config.mmic.other": "Other",
+
+	"config.mmic.migrationDepth": "Migration Search Depth",
+	"config.mmic.migrationDepth.tip": "Changes how far session migration will\nsearch.\n(i.e. the higher this number, the more\nfolders it will search through)"
 }

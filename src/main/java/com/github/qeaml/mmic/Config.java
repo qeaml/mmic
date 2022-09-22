@@ -24,6 +24,7 @@ public class Config implements ModMenuApi {
 	public static Double zoomFovDiv = 5.0;
 	public static Double zoomSensDiv = 2.0;
 	public static Boolean zoomSmooth = false;
+	public static Integer migrationDepth = 2;
 
 	public enum LagType
 	{
@@ -194,6 +195,20 @@ public class Config implements ModMenuApi {
 				.build());
 
 			cosm.addEntry(xhair.build());
+
+			//
+			// ─── OTHER ───────────────────────────────────────────────────────
+			//
+
+			var other = builder.getOrCreateCategory(Text.translatable("config.mmic.other"));
+
+			other.addEntry(entry.startIntSlider(
+				Text.translatable("config.mmic.migrationDepth"),
+				migrationDepth, 1, 5)
+				.setDefaultValue(2)
+				.setSaveConsumer(i -> migrationDepth = i)
+				.setTooltip(Text.translatable("config.mmic.migrationDepth.tip"))
+				.build());
 
 			builder.setSavingRunnable(Client.cfgMan::save);
 

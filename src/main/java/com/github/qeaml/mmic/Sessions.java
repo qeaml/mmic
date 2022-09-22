@@ -163,11 +163,9 @@ public class Sessions {
     }
   }
 
-  private static final int MIGRATION_DEPTH = 2;
-
   public static boolean migrate() {
     var root = Path.of(mc.runDirectory.getAbsolutePath());
-    for(int i = 0; i < MIGRATION_DEPTH; i++) {
+    for(int i = 0; i < Config.migrationDepth; i++) {
       root = root.getParent();
     }
 
