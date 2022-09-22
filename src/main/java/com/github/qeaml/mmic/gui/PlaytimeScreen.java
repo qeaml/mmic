@@ -245,9 +245,12 @@ public class PlaytimeScreen extends Screen {
     (button) -> {
       client.setScreen(new ConfirmScreen(
       (ok) -> {
-        client.setScreen(that);
-        if(!ok) return;
-        Sessions.migrate();
+        client.setScreen(new LoadingScreen<>(
+          Text.translatable("gui.mmic.sessions.migrate.progress"),
+          LoadingScreen.Loader.of(
+            Sessions::migrate,
+            (success) -> client.setScreen(that)
+          )));
       },
       Text.translatable("gui.mmic.sessions.migrate"),
       Text.translatable("gui.mmic.sessions.migrate.confirm")));

@@ -26,6 +26,8 @@
 	"gui.mmic.sessions.world": "Worlds (%s)",
 	"gui.mmic.sessions.server": "Servers (%s)",
 	"gui.mmic.sessions.migrate": "Migrate",
+	"gui.mmic.sessions.migrate.progress": "Migrating...",
+	"gui.mmic.sessions.migrate.finish": "Migrated %s sessions.",
 	"gui.mmic.sessions.migrate.confirm": "Are you sure you want to migrate sessions from other Minecraft instances?\nThis is not guaranteed to find all instances present on your computer.",
 	"gui.mmic.sessions.clear": "Clear",
 	"gui.mmic.sessions.clear.confirm": "Are you sure you want to clear ALL your sessions forever?\nThis action cannot be undone.",

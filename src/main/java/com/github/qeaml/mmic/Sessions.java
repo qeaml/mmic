@@ -4,8 +4,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,10 +19,11 @@ import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.text.Text;
 
 public class Sessions {
-  private static MinecraftClient mc = MinecraftClient.getInstance();
-  private static Logger log = LoggerFactory.getLogger(Client.name+"/Sessions");
+  private static final MinecraftClient mc = MinecraftClient.getInstance();
+  private static final Logger log = LoggerFactory.getLogger(Client.name+"/Sessions");
 
   public static final File
   gameSessions = new File(mc.runDirectory, "mmic.gameSessions.csv");
@@ -69,38 +74,63 @@ public class Sessions {
     }
 
     synchronized(lock) {
-      String[] row;
-      try(var fr = new FileReader(gameSessions); var csv = new CSVReader(fr)) {
-        game.clear();
-        while((row = csv.readNext()) != null) {
-          var ver = row.length < 3 ? "Unknown" : row[2];
-          
-          game.addLast(new Game(ver, Long.parseLong(row[0]), Long.parseLong(row[1])));
-        }
-      } catch(CsvValidationException | IOException e) {
-        log.error(String.format("Could not load game session data: %s", e));
-      }
+      game.clear();
+      game.addAll(loadGame(gameSessions));
 
-      try(var fr = new FileReader(worldSessions); var csv = new CSVReader(fr)) {
-        world.clear();
-        while((row = csv.readNext()) != null)
-        world.addLast(new World(row[2], Long.parseLong(row[0]), Long.parseLong(row[1])));
-      } catch(CsvValidationException | IOException e) {
-        log.error(String.format("Could not load world session data: %s", e));
-      }
-      
-      try(var fr = new FileReader(serverSessions); var csv = new CSVReader(fr)) {
-        server.clear();
-        while((row = csv.readNext()) != null)
-          server.addLast(new Server(row[2], Long.parseLong(row[0]), Long.parseLong(row[1])));
-      } catch(CsvValidationException | IOException e) {
-        log.error(String.format("Could not load server session data: %s", e));
-      }
+      world.clear();
+      world.addAll(loadWorld(worldSessions));
+
+      server.clear();
+      server.addAll(loadServer(serverSessions));
     }
 
     log.info(String.format(
       "Loaded %d game sessions, %d world sessions, %d server sessions",
       game.size(), world.size(), server.size()));
+  }
+
+  private static List<Game> loadGame(File src) {
+    var out = new LinkedList<Game>();
+
+    try(var fr = new FileReader(src); var csv = new CSVReader(fr)) {
+      String[] row;
+      while((row = csv.readNext()) != null) {
+        var ver = row.length < 3 ? "Unknown" : row[2];
+        out.addLast(new Game(ver, Long.parseLong(row[0]), Long.parseLong(row[1])));
+      }
+    } catch(CsvValidationException | IOException e) {
+      log.error(String.format("Could not load game session data: %s", e));
+    }
+
+    return out;
+  }
+
+  private static List<World> loadWorld(File src) {
+    var out = new LinkedList<World>();
+
+    try(var fr = new FileReader(src); var csv = new CSVReader(fr)) {
+      String[] row;
+      while((row = csv.readNext()) != null)
+        out.addLast(new World(row[2], Long.parseLong(row[0]), Long.parseLong(row[1])));
+    } catch(CsvValidationException | IOException e) {
+      log.error(String.format("Could not load world session data: %s", e));
+    }
+
+    return out;
+  }
+
+  private static List<Server> loadServer(File src) {
+    var out = new LinkedList<Server>();
+
+    try(var fr = new FileReader(src); var csv = new CSVReader(fr)) {
+      String[] row;
+      while((row = csv.readNext()) != null)
+        out.addLast(new Server(row[2], Long.parseLong(row[0]), Long.parseLong(row[1])));
+    } catch(CsvValidationException | IOException e) {
+      log.error(String.format("Could not load server session data: %s", e));
+    }
+
+    return out;
   }
 
   public static void save() {
@@ -133,8 +163,79 @@ public class Sessions {
     }
   }
 
-  public static void migrate() {
+  private static final int MIGRATION_DEPTH = 2;
 
+  public static boolean migrate() {
+    var root = Path.of(mc.runDirectory.getAbsolutePath());
+    for(int i = 0; i < MIGRATION_DEPTH; i++) {
+      root = root.getParent();
+    }
+
+    var all = Arrays.asList(new File(root.toString()).listFiles())
+      .parallelStream()
+      .filter(f -> f.isDirectory())
+      .map(Sessions::tryMigrateDir)
+      .reduce((sum, curr) -> {sum.addAll(curr); return sum;})
+      .orElse(new LinkedList<>());
+
+    var cmp = Comparator.comparingLong((Session s) -> s.start()).reversed();
+    var newGame = new LinkedList<Game>();
+    newGame.addAll(game);
+    newGame.addAll(all.stream()
+      .filter(s -> {return (s instanceof Game);})
+      .map(s -> (Game)s)
+      .toList());
+    game.clear();
+    game.addAll(newGame.stream().sorted(cmp).toList());
+
+    var newWorld = new LinkedList<World>();
+    newWorld.addAll(world);
+    newWorld.addAll(all.stream()
+      .filter(s -> {return (s instanceof World);})
+      .map(s -> (World)s)
+      .toList());
+    world.clear();
+    world.addAll(newWorld.stream().sorted(cmp).toList());
+
+    var newServer = new LinkedList<Server>();
+    newServer.addAll(server);
+    newServer.addAll(all.stream()
+      .filter(s -> {return (s instanceof Server);})
+      .map(s -> (Server)s)
+      .toList());
+    server.clear();
+    server.addAll(newServer.stream().sorted(cmp).toList());
+
+    save();
+
+    Client.notify(Text.translatable("gui.mmic.sessions.migrate.finish", all.size()));
+
+    return true;
+  }
+
+  private static List<Session> tryMigrateDir(File dir) {
+    var out = new LinkedList<Session>();
+    for(File f: dir.listFiles()) {
+      if(f.getAbsolutePath().startsWith(mc.runDirectory.getAbsolutePath()))
+        continue;
+      if(f.isDirectory())
+        out.addAll(tryMigrateDir(f));
+      else switch(f.getName()) {
+        case "mmic.gameSessions.csv":
+          out.addAll(loadGame(f));
+          f.delete();
+          break;
+        case "mmic.worldSessions.csv":
+          out.addAll(loadWorld(f));
+          f.delete();
+          break;
+        case "mmic.serverSessions.csv":
+          out.addAll(loadServer(f));
+          f.delete();
+          break;
+      }
+    }
+    return out;
   }
 
   public static long sessionStart;
