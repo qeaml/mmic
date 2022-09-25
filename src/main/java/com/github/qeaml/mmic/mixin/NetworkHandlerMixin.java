@@ -14,35 +14,35 @@ import net.minecraft.util.math.random.Random;
 
 @Mixin(ClientPlayNetworkHandler.class)
 public class NetworkHandlerMixin {
-	private static Random rand = Random.createLocal();
+  private static Random rand = Random.createLocal();
 
-	@Inject(
-		method = "sendPacket(Lnet/minecraft/network/Packet;)V",
-		at = @At("Head"),
-		cancellable = true
-	)
-	private void onSendPacket(Packet<?> packet, CallbackInfo ci)
-	{
-		if(State.lagging)
-		{
-			switch (Config.lagType) {
-			case CLOG:
-				State.packets.add(packet);
-			case BLOCK:
-				ci.cancel();
-				break;
-			case LOSSY_CLOG:
-				if(rand.nextBoolean() && rand.nextBoolean()) {
-					State.packets.add(packet);
-					ci.cancel();
-				} 
-				break;
-			case LOSSY_BLOCK:
-				if(rand.nextBoolean() && rand.nextBoolean()) {
-					ci.cancel();
-				}
-				break;
-			}
-		}
-	}
+  @Inject(
+    method = "sendPacket(Lnet/minecraft/network/Packet;)V",
+    at = @At("Head"),
+    cancellable = true
+  )
+  private void onSendPacket(Packet<?> packet, CallbackInfo ci)
+  {
+    if(State.lagging)
+    {
+      switch (Config.lagType) {
+      case CLOG:
+        State.packets.add(packet);
+      case BLOCK:
+        ci.cancel();
+        break;
+      case LOSSY_CLOG:
+        if(rand.nextBoolean() && rand.nextBoolean()) {
+          State.packets.add(packet);
+          ci.cancel();
+        } 
+        break;
+      case LOSSY_BLOCK:
+        if(rand.nextBoolean() && rand.nextBoolean()) {
+          ci.cancel();
+        }
+        break;
+      }
+    }
+  }
 }

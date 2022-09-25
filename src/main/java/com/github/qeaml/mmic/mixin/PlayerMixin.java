@@ -15,20 +15,20 @@ import net.minecraft.util.Hand;
 
 @Mixin(ClientPlayerEntity.class)
 public class PlayerMixin {
-	@Shadow
-	private ClientPlayNetworkHandler networkHandler;
+  @Shadow
+  private ClientPlayNetworkHandler networkHandler;
 
-	@Inject(
-		method = "swingHand(Lnet/minecraft/util/Hand;)V",
-		at = @At("HEAD"),
-		cancellable = true
-	)
-	private void injectSwingHand(Hand hand, CallbackInfo ci)
-	{
-		if(Config.staticHand)
-		{
-			networkHandler.sendPacket(new HandSwingC2SPacket(hand));
-			ci.cancel();
-		}
-	}
+  @Inject(
+    method = "swingHand(Lnet/minecraft/util/Hand;)V",
+    at = @At("HEAD"),
+    cancellable = true
+  )
+  private void injectSwingHand(Hand hand, CallbackInfo ci)
+  {
+    if(Config.staticHand)
+    {
+      networkHandler.sendPacket(new HandSwingC2SPacket(hand));
+      ci.cancel();
+    }
+  }
 }

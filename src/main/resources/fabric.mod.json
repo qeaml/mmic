@@ -20,9 +20,9 @@
     "client": [
       "com.github.qeaml.mmic.Client"
     ],
-		"modmenu": [
-			"com.github.qeaml.mmic.Config"
-		]
+    "modmenu": [
+      "com.github.qeaml.mmic.Config"
+    ]
   },
   "mixins": [
     "mmic.mixins.json"
@@ -34,10 +34,10 @@
     "minecraft": "1.19.x",
     "java": ">=17"
   },
-	"recommends": {
-		"cloth-config2": "7.0.x"
-	},
-	"suggests": {
-		"modmenu": "4.0.x"
-	}
+  "recommends": {
+    "cloth-config2": "7.0.x"
+  },
+  "suggests": {
+    "modmenu": "4.0.x"
+  }
 }

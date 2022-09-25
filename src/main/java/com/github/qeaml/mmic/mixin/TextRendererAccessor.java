@@ -9,7 +9,7 @@ import net.minecraft.util.math.Matrix4f;
 
 @Mixin(TextRenderer.class)
 public interface TextRendererAccessor {
-	// for DebugHudMixin
-	@Invoker("drawInternal")
-	int internalDraw(String text, float x, float y, int color, boolean shadow, Matrix4f matrix, VertexConsumerProvider consumers, boolean seeThrough, int backgroundColor, int light, boolean mirror);
+  // for DebugHudMixin
+  @Invoker("drawInternal")
+  int internalDraw(String text, float x, float y, int color, boolean shadow, Matrix4f matrix, VertexConsumerProvider consumers, boolean seeThrough, int backgroundColor, int light, boolean mirror);
 }
