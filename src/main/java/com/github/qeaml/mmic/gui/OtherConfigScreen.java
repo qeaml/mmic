@@ -1,5 +1,6 @@
 package com.github.qeaml.mmic.gui;
 
+import com.github.qeaml.mmic.Client;
 import com.github.qeaml.mmic.gui.widgets.ClickableWidgetList;
 
 import net.minecraft.client.gui.screen.Screen;
@@ -8,36 +9,23 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
 
-public class MenuScreen extends Screen {
+import static com.github.qeaml.mmic.gui.ConfigScreen.*;
+
+public class OtherConfigScreen extends Screen {
   private Screen parent;
 
-  public MenuScreen(Screen parent) {
-    super(Text.translatable("gui.mmic.menu"));
+  public OtherConfigScreen(Screen parent) {
+    super(Text.translatable("config.mmic.other"));
     this.parent = parent;
   }
 
   @Override
   protected void init() {
-    var that = this;
-
     addDrawableChild(new ClickableWidgetList(
       0, 40,
       this.width,
       2,
-      new ButtonWidget(
-        width / 2 - 100, 40,
-        200, 20,
-        Text.translatable("gui.mmic.sessions"),
-      (button) -> {
-        client.setScreen(new PlaytimeScreen(this));
-      }),
-      new ButtonWidget(
-        width / 2 - 100, 60,
-        200, 20,
-        Text.translatable("gui.mmic.config"),
-      (button) -> {
-        client.setScreen(new ConfigScreen(that));
-      })
+      optionIntegerSlider(Client.config.migrationDepth)
     ));
 
     addDrawableChild(new ButtonWidget(

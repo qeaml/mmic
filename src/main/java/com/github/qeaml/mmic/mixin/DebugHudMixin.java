@@ -2,7 +2,7 @@ package com.github.qeaml.mmic.mixin;
 
 import java.util.LinkedList;
 
-import com.github.qeaml.mmic.Config;
+import com.github.qeaml.mmic.Client;
 
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -70,7 +70,7 @@ public class DebugHudMixin extends DrawableHelper {
     method = "render(Lnet/minecraft/client/util/math/MatrixStack;)V",
     cancellable = true)
   private void hijackRender(MatrixStack matrices, CallbackInfo ci) {
-    if(!Config.miniF3) return;
+    if(!Client.config.miniF3.get()) return;
 
     var ll = new LinkedList<String>();
 

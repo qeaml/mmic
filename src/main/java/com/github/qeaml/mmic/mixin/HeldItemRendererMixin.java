@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.github.qeaml.mmic.Config;
+import com.github.qeaml.mmic.Client;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.item.HeldItemRenderer;
@@ -31,7 +31,7 @@ public abstract class HeldItemRendererMixin {
 
   @Inject(method="updateHeldItems()V", at=@At("TAIL"), cancellable=true)
   private void updateHeldItems(CallbackInfo ci) {
-    if(Config.staticHand) {
+    if(Client.config.staticHand.get()) {
       prevEquipProgressMainHand = 1;
       equipProgressMainHand = 1;
       prevEquipProgressOffHand = 1;

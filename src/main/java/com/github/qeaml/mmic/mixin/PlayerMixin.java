@@ -1,6 +1,6 @@
 package com.github.qeaml.mmic.mixin;
 
-import com.github.qeaml.mmic.Config;
+import com.github.qeaml.mmic.Client;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -25,7 +25,7 @@ public class PlayerMixin {
   )
   private void injectSwingHand(Hand hand, CallbackInfo ci)
   {
-    if(Config.staticHand)
+    if(Client.config.staticHand.get())
     {
       networkHandler.sendPacket(new HandSwingC2SPacket(hand));
       ci.cancel();

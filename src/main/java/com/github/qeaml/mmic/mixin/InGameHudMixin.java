@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.github.qeaml.mmic.Config;
+import com.github.qeaml.mmic.Client;
 import com.github.qeaml.mmic.Grid;
 import com.github.qeaml.mmic.State;
 import com.mojang.blaze3d.platform.GlStateManager.DstFactor;
@@ -63,7 +63,7 @@ public abstract class InGameHudMixin {
         int ay = (int)((float)scaledHeight * r.a().y())-1;
         int bx = (int)((float)scaledWidth * r.b().x())+1;
         int by = (int)((float)scaledHeight * r.b().y())+1;
-        DrawableHelper.fill(matrices, ax, ay, bx, by, Config.gridColor);
+        DrawableHelper.fill(matrices, ax, ay, bx, by, Client.config.gridColor.get().argb());
       }
     }
 
@@ -97,7 +97,7 @@ public abstract class InGameHudMixin {
       return;
     } else {
       RenderSystem.blendFuncSeparate(SrcFactor.ONE_MINUS_DST_COLOR, DstFactor.ONE_MINUS_SRC_COLOR, SrcFactor.ONE, DstFactor.ZERO);
-      if(Config.dotXhair)
+      if(Client.config.dotXhair.get())
         renderDotXhair(matrices);
       else
         renderDefaultXhair(matrices);
@@ -147,8 +147,8 @@ public abstract class InGameHudMixin {
   /** Renders a small dot in the middle of the screen as a crosshair. */
   @Unique
   private void renderDotXhair(MatrixStack matrices) {
-    float dotRad = (float)(Config.dotSize)/2f;
-    if(Config.dynamicDot) {
+    float dotRad = (float)(Client.config.dotSize.get())/2f;
+    if(Client.config.dynamicDot.get()) {
       var vel = client.player.getVelocity();
       dotRad *= 1f+Math.abs(vel.getX())+Math.abs(vel.getY())+Math.abs(vel.getZ());
     }

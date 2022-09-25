@@ -1,11 +1,12 @@
 package com.github.qeaml.mmic;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.github.qeaml.mmic.config.Config;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.event.client.player.ClientPickBlockGatherCallback;
@@ -31,32 +32,20 @@ public class Client implements ClientModInitializer {
   public static final String name = "MMIC";
 
   public static final Logger log = LoggerFactory.getLogger(name);
-  private static MinecraftClient mc = MinecraftClient.getInstance();
-
-  private static final File
-  cfgFile = new File(mc.runDirectory, "options.mmic.txt");
-
-  public static final ConfigManager<Config>
-  cfgMan = new ConfigManager<>(new Config(), cfgFile);
+  public static MinecraftClient mc = MinecraftClient.getInstance();
 
   public static long sessionStart;
+
+  public static Config config;
 
   @Override
   public void onInitializeClient() {
     log.info("Hello world");
 
+    config = new Config(new File(mc.runDirectory, "options_mmic.txt"));
+    config.load();
+
     sessionStart = System.currentTimeMillis();
-
-    if(!cfgFile.exists()) {
-      cfgFile.getParentFile().mkdirs();
-      try {
-        cfgFile.createNewFile();
-      } catch(IOException ioe) {
-        log.error("Could not create Config: "+ioe.getLocalizedMessage());
-      }
-    }
-
-    cfgMan.load();
 
     var visuals = "key.categories.mmic.visuals";
     Keys.gammaInc = new Bind("key.mmic.gammaInc", GLFW.GLFW_KEY_RIGHT_BRACKET, visuals);
@@ -101,10 +90,10 @@ public class Client implements ClientModInitializer {
     if(!State.fullbright)
     {
       if(Keys.gammaInc.wasJustPressed() && mc.options.getGamma().getValue() < 3.0) {
-        State.changeGamma(Config.gammaStep);
+        State.changeGamma(config.gammaStep.get());
       }
       if(Keys.gammaDec.wasJustPressed() && mc.options.getGamma().getValue() > 0.0) {
-        State.changeGamma(-Config.gammaStep);
+        State.changeGamma(-config.gammaStep.get());
       }
     }
     for(var g: Grid.values())

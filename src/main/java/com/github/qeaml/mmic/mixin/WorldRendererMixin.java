@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.github.qeaml.mmic.Config;
+import com.github.qeaml.mmic.Client;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -33,15 +33,16 @@ public abstract class WorldRendererMixin {
     cancellable = true
   )
   private void hijackDrawBlockOutline(MatrixStack matrices, VertexConsumer vertexConsumer, Entity entity, double cameraX, double cameraY, double cameraZ, BlockPos pos, BlockState state, CallbackInfo ci) {
+    var color = Client.config.blockOutlineColor.get();
     callDrawCuboidShapeOutline(
       matrices, vertexConsumer,
       state.getOutlineShape(world, pos, ShapeContext.of(entity)),
       (double)pos.getX() - cameraX,
       (double)pos.getY() - cameraY,
       (double)pos.getZ() - cameraZ,
-      (float)((Config.blockOutlineColor>>16)&0xFF)/255f,
-      (float)((Config.blockOutlineColor>>8)&0xFF)/255f,
-      (float)(Config.blockOutlineColor&0xFF)/255f,
+      color.redFloat(),
+      color.greenFloat(),
+      color.blueFloat(),
       0.4F);
     ci.cancel();
   }

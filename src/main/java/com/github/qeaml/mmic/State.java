@@ -3,7 +3,7 @@ package com.github.qeaml.mmic;
 import java.util.Deque;
 import java.util.LinkedList;
 
-import com.github.qeaml.mmic.Config.LagType;
+import com.github.qeaml.mmic.config.value.LagType;
 import com.github.qeaml.mmic.mixin.OptionAccessor;
 
 import net.minecraft.client.MinecraftClient;
@@ -46,7 +46,7 @@ public class State {
   public static void toggleLag()
   {
     lagging = !lagging;
-    if(!lagging && (Config.lagType == LagType.CLOG || Config.lagType == LagType.LOSSY_CLOG))
+    if(!lagging && (Client.config.lagType.get() == LagType.CLOG || Client.config.lagType.get() == LagType.LOSSY_CLOG))
     {
       packets.forEach(mc.getNetworkHandler()::sendPacket);
       packets.clear();
@@ -64,7 +64,7 @@ public class State {
   public static void zoom() {
     applyZoom(true);
 
-    if(Config.zoomSmooth) {
+    if(Client.config.zoomSmooth.get()) {
       oldSmooth = mc.options.smoothCameraEnabled;
       mc.options.smoothCameraEnabled = true;
     }
@@ -77,7 +77,7 @@ public class State {
     mc.options.getFov().setValue(oldFOV);
     mc.options.getMouseSensitivity().setValue(oldSens);
     
-    if(Config.zoomSmooth) {
+    if(Client.config.zoomSmooth.get()) {
       mc.options.smoothCameraEnabled = oldSmooth;
     }
 
@@ -89,8 +89,8 @@ public class State {
     if(saveOld) {
       oldFOV = fov.getValue();
     }
-    double fovDivMod = (Config.zoomFovDiv/15)*zoomMod;
-    double fovDiv = Math.max(Config.zoomFovDiv+fovDivMod, 1.0);
+    double fovDivMod = (Client.config.zoomFovDiv.get()/15)*zoomMod;
+    double fovDiv = Math.max(Client.config.zoomFovDiv.get()+fovDivMod, 1.0);
     int newFOV = (int)Math.round(oldFOV/fovDiv);
     ((OptionAccessor)(Object)fov).setValueBypass(newFOV);
 
@@ -98,8 +98,8 @@ public class State {
     if(saveOld) {
       oldSens = sens.getValue();
     }
-    double sensDivMod = (Config.zoomSensDiv/20)*zoomMod;
-    double sensDiv = Math.max(Config.zoomSensDiv+sensDivMod, 1.0);
+    double sensDivMod = (Client.config.zoomSensDiv.get()/20)*zoomMod;
+    double sensDiv = Math.max(Client.config.zoomSensDiv.get()+sensDivMod, 1.0);
     double newSens = oldSens/sensDiv;
     ((OptionAccessor)(Object)sens).setValueBypass(newSens);
   }

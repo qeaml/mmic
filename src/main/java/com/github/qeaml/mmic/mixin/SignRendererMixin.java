@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.github.qeaml.mmic.Config;
+import com.github.qeaml.mmic.Client;
 
 import net.minecraft.block.SignBlock;
 import net.minecraft.block.WallSignBlock;
@@ -63,7 +63,7 @@ public abstract class SignRendererMixin {
     } else {
       rotation = -blockState.get(WallSignBlock.FACING).asRotation();
       matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(rotation));
-      matrices.translate(0d, -5d/16d, Config.perfectSigns ? -0.459d : -7d/16d);
+      matrices.translate(0d, -5d/16d, Client.config.perfectSigns.get() ? -0.459d : -7d/16d);
       signModel.stick.visible = false;
     }
 
@@ -99,7 +99,7 @@ public abstract class SignRendererMixin {
 
     var lines = new OrderedText[4];
     int lineCount;
-    if(Config.centeredSigns) {
+    if(Client.config.centeredSigns.get()) {
       lineCount = 0;
       for(var ln: orderedTexts) {
         if(ln != OrderedText.EMPTY) {
@@ -116,7 +116,7 @@ public abstract class SignRendererMixin {
     for(int lineNo = 0; lineNo < lineCount; ++lineNo) {
       OrderedText text;
       float y;
-      if(Config.centeredSigns) {
+      if(Client.config.centeredSigns.get()) {
         text = lines[lineNo];
         y = baseY+lineNo*10;
       } else {

@@ -1,6 +1,6 @@
 package com.github.qeaml.mmic.mixin;
 
-import com.github.qeaml.mmic.Config;
+import com.github.qeaml.mmic.Client;
 import com.github.qeaml.mmic.State;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,7 +25,7 @@ public class NetworkHandlerMixin {
   {
     if(State.lagging)
     {
-      switch (Config.lagType) {
+      switch (Client.config.lagType.get()) {
       case CLOG:
         State.packets.add(packet);
       case BLOCK:

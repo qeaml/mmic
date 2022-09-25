@@ -165,7 +165,7 @@ public class Sessions {
 
   public static boolean migrate() {
     var root = Path.of(mc.runDirectory.getAbsolutePath());
-    for(int i = 0; i < Config.migrationDepth; i++) {
+    for(int i = 0; i < Client.config.migrationDepth.get(); i++) {
       root = root.getParent();
     }
 

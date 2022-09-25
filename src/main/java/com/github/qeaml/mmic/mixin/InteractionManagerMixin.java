@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.github.qeaml.mmic.Config;
+import com.github.qeaml.mmic.Client;
 
 import net.minecraft.block.CropBlock;
 import net.minecraft.client.MinecraftClient;
@@ -45,8 +45,8 @@ public abstract class InteractionManagerMixin {
     at = @At("HEAD")
   )
   private void onBreakBlock(BlockPos pos, CallbackInfoReturnable<Boolean> ci) {
-    if(!Config.autoplant) return;
-    if(Config.sneakAutoplant && !client.player.isSneaking()) return;
+    if(!Client.config.autoplant.get()) return;
+    if(Client.config.sneakAutoplant.get() && !client.player.isSneaking()) return;
     if(client.player.isBlockBreakingRestricted(client.world, pos, gameMode)) return;
 
     var world = client.world;
