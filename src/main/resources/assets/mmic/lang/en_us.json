@@ -22,6 +22,7 @@
   "gui.mmic.config": "Config",
   
   "gui.mmic.sessions": "Sessions",
+  "gui.mmic.sessions.loading": "Crunching session data...",
   "gui.mmic.sessions.game": "Game (%s)",
   "gui.mmic.sessions.world": "Worlds (%s)",
   "gui.mmic.sessions.server": "Servers (%s)",

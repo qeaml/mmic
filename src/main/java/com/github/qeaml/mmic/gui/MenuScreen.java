@@ -29,7 +29,12 @@ public class MenuScreen extends Screen {
         200, 20,
         Text.translatable("gui.mmic.sessions"),
       (button) -> {
-        client.setScreen(new PlaytimeScreen(this));
+        client.setScreen(new LoadingScreen<>(
+          Text.translatable("gui.mmic.sessions.loading"),
+          LoadingScreen.Loader.of(
+            () -> new PlaytimeScreen(that),
+            client::setScreen
+          )));
       }),
       new ButtonWidget(
         width / 2 - 100, 60,
