@@ -26,7 +26,7 @@ public class CosmeticConfigScreen extends Screen {
       0, 40,
       this.width,
       2,
-      optionColorText(Client.config.gridColor),
+      optionColorARGB(Client.config.gridColor),
       optionDoubleSlider(Client.config.gammaStep),
       optionButton(
         Client.config.miniF3,
@@ -59,7 +59,7 @@ public class CosmeticConfigScreen extends Screen {
         Client.config.dynamicDot,
         ConfigScreen::toggle
       ),
-      optionColorText(Client.config.blockOutlineColor)
+      optionColorRGB(Client.config.blockOutlineColor)
     ));
 
     addDrawableChild(new ButtonWidget(

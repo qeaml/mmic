@@ -6,12 +6,14 @@ import com.github.qeaml.mmic.Client;
 import com.github.qeaml.mmic.config.Option;
 import com.github.qeaml.mmic.config.value.Color;
 import com.github.qeaml.mmic.gui.widgets.ClickableWidgetList;
+import com.github.qeaml.mmic.gui.widgets.OptionARGBWidget;
 import com.github.qeaml.mmic.gui.widgets.OptionButtonWidget;
-import com.github.qeaml.mmic.gui.widgets.OptionColorTextFieldWidget;
+import com.github.qeaml.mmic.gui.widgets.OptionRGBWidget;
 import com.github.qeaml.mmic.gui.widgets.OptionDoubleSliderWidget;
 import com.github.qeaml.mmic.gui.widgets.OptionIntegerSliderWidget;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
@@ -96,9 +98,19 @@ public class ConfigScreen extends Screen {
       opt);
   }
 
-  public static OptionColorTextFieldWidget optionColorText(Option<Color> opt) {
-    return new OptionColorTextFieldWidget(
-      MinecraftClient.getInstance().textRenderer,
+  private static TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
+
+  public static OptionARGBWidget optionColorARGB(Option<Color> opt) {
+    return new OptionARGBWidget(
+      textRenderer,
+      0, 0,
+      200, 20,
+      opt);
+  }
+
+  public static OptionRGBWidget optionColorRGB(Option<Color> opt) {
+    return new OptionRGBWidget(
+      textRenderer,
       0, 0,
       200, 20,
       opt);

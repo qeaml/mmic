@@ -43,6 +43,8 @@ public class ClickableWidgetList extends ClickableWidget {
     for(var w: widgets)
       if(w.isMouseOver(mouseX, mouseY))
         return w.mouseClicked(mouseX, mouseY, button);
+      else
+        w.mouseClicked(mouseX, mouseY, button);
     return false;
   }
 
@@ -67,6 +69,22 @@ public class ClickableWidgetList extends ClickableWidget {
     for(var w: widgets)
       if(w.isMouseOver(mouseX, mouseY))
         return w.mouseScrolled(mouseX, mouseY, amount);
+    return false;
+  }
+
+  @Override
+  public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    for(var w: widgets)
+      if(w.isFocused())
+        return w.keyPressed(keyCode, scanCode, modifiers);
+    return false;
+  }
+
+  @Override
+  public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+    for(var w: widgets)
+      if(w.isFocused())
+        return w.keyReleased(keyCode, scanCode, modifiers);
     return false;
   }
 
