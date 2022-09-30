@@ -8,6 +8,10 @@ public interface Codec<T> {
   Optional<T> decode(String raw);
   String encode(T value);
 
+  public static <T> String encodeObject(Codec<T> codec, Object o) {
+    return codec.encode((T)o);
+  }
+
   public static <E> Codec<E> of(Function<E, String> encoder, Function<String, Optional<E>> decoder) {
     return new Codec<E>() {
       @Override
