@@ -20,6 +20,21 @@ public class Color {
     this(red, green, blue, (short)0xFF);
   }
 
+  public Color(double red, double green, double blue, double alpha) {
+    this(
+      (short)Math.floor(red*255),
+      (short)Math.floor(green*255),
+      (short)Math.floor(blue*255),
+      (short)Math.floor(alpha*255));
+  }
+
+  public Color(double red, double green, double blue) {
+    this(
+      (short)Math.floor(red*255),
+      (short)Math.floor(green*255),
+      (short)Math.floor(blue*255));
+  }
+
   public static Color ofARGB(long argb) {
     return new Color(
       (short)((argb >> 16) & 0xFF),
@@ -65,6 +80,40 @@ public class Color {
       Client.log.warn("invalid color "+raw+": "+e.getMessage());
       return Optional.empty();
     }
+  }
+
+  public static Color ofHSV(double hue, double sat, double value) {
+    double chroma = value * sat;
+    double hue_ = hue / 60f;
+    double x = chroma * (1 - Math.abs((hue_ % 2) - 1));
+    double r = 0, g = 0, b = 0;
+    if(0 <= hue_ && hue < 1) {
+      r = chroma;
+      g = x;
+      b = 0;
+    } else if(1 <= hue_ && hue_ < 2) {
+      r = x;
+      g = chroma;
+      b = 0;
+    } else if(2 <= hue_ && hue_ < 3) {
+      r = 0;
+      g = chroma;
+      b = x;
+    } else if(3 <= hue_ && hue_ < 4) {
+      r = 0;
+      g = x;
+      b = chroma;
+    } else if(4 <= hue_ && hue_ < 5) {
+      r = x;
+      g = 0;
+      b = chroma;
+    } else if(5 <= hue_ && hue_ < 6) {
+      r = chroma;
+      g = 0;
+      b = x;
+    }
+    double m = value - chroma;
+    return new Color(r+m, g+m, b+m);
   }
 
   public short redShort()   { return r; }
