@@ -49,6 +49,10 @@
 
   "options.mmic.lagType": "Lag Type",
   "options.mmic.lagType.tip": "Changes the type of lag caused by the lag switch\n\nBLOCK causes all packets sent by the client to be\ncompletely ignored\n\nCLOG blocks all packets and sends them all at once\nwhen the lag switch is disabled\n\nLOSSY_BLOCK causes a randomly chosen 25% of all\npackets to be blocked\n\nLOSSY_CLOG causes a randomly chosen 25% of all\npackets to be blocked and sent when lag is toggled off",
+  "options.mmic.lagType.block": "Block",
+  "options.mmic.lagType.clog": "Clog",
+  "options.mmic.lagType.lossy_block": "Lossy Block",
+  "options.mmic.lagType.lossy_clog": "Lossy Clog",
   "options.mmic.autoplant": "Auto-Replant",
   "options.mmic.autoplant.tip": "Automatically replant harvested crops.\nThis only works if seeds of the harvested\ncrops are in your hotbar.",
   "options.mmic.sneakAutoplant": "Sneaky Auto-Replant",
