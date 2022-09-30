@@ -41,7 +41,7 @@ public class MenuScreen extends Screen {
         200, 20,
         Text.translatable("gui.mmic.config"),
       (button) -> {
-        client.setScreen(new ConfigScreen(that));
+        client.setScreen(new CategoryConfigScreen(that));
       })
     ));
 

@@ -2,72 +2,54 @@ package com.github.qeaml.mmic.gui;
 
 import java.util.function.Consumer;
 
-import com.github.qeaml.mmic.Client;
 import com.github.qeaml.mmic.config.Option;
 import com.github.qeaml.mmic.config.value.Color;
 import com.github.qeaml.mmic.gui.widgets.ClickableWidgetList;
 import com.github.qeaml.mmic.gui.widgets.OptionARGBWidget;
 import com.github.qeaml.mmic.gui.widgets.OptionButtonWidget;
-import com.github.qeaml.mmic.gui.widgets.OptionRGBWidget;
 import com.github.qeaml.mmic.gui.widgets.OptionDoubleSliderWidget;
 import com.github.qeaml.mmic.gui.widgets.OptionIntegerSliderWidget;
+import com.github.qeaml.mmic.gui.widgets.OptionRGBWidget;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
 
-public class ConfigScreen extends Screen {
-  private Screen parent;
+public abstract class ConfigScreen extends Screen {
+  protected Screen parent;
 
-  public ConfigScreen(Screen parent) {
-    super(Text.translatable("gui.mmic.config"));
+  protected ConfigScreen(Screen parent, Text title) {
+    super(title);
     this.parent = parent;
   }
 
+  protected abstract ClickableWidget[] widgets();
+  protected abstract void onExit();
+
   @Override
   protected void init() {
-    var that = this;
-
     addDrawableChild(new ClickableWidgetList(
       0, 40,
       this.width,
       2,
-      new ButtonWidget(
-        0, 0,
-        200, 20,
-        Text.translatable("config.mmic.game"),
-      (button) -> {
-        client.setScreen(new GameplayConfigScreen(that));
-      }),
-      new ButtonWidget(
-        10, 10,
-        200, 20,
-        Text.translatable("config.mmic.cosm"),
-      (button) -> {
-        client.setScreen(new CosmeticConfigScreen(that));
-      }),
-      new ButtonWidget(
-        10, 10,
-        200, 20,
-        Text.translatable("config.mmic.other"),
-      (button) -> {
-        client.setScreen(new OtherConfigScreen(that));
-      })
-    ));
+      widgets()));
 
     addDrawableChild(new ButtonWidget(
       width / 2 - 100, height / 6 + 168,
       200, 20,
       ScreenTexts.DONE,
     (button) -> {
-      Client.config.save();
+      onExit();
       client.setScreen(parent);
     }));
   }
+
+  private static TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 
   @Override
   public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
@@ -98,7 +80,6 @@ public class ConfigScreen extends Screen {
       opt);
   }
 
-  private static TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 
   public static OptionARGBWidget optionColorARGB(Option<Color> opt) {
     return new OptionARGBWidget(
