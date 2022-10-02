@@ -1,12 +1,11 @@
 package com.github.qeaml.mmic.mixin;
 
-import com.github.qeaml.mmic.Client;
-import com.github.qeaml.mmic.State;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import com.github.qeaml.mmic.Client;
 
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.Packet;
@@ -23,17 +22,17 @@ public class NetworkHandlerMixin {
   )
   private void onSendPacket(Packet<?> packet, CallbackInfo ci)
   {
-    if(State.lagging)
+    if(Client.isLagging())
     {
       switch (Client.config.lagType.get()) {
       case CLOG:
-        State.packets.add(packet);
+        Client.clogPacket(packet);
       case BLOCK:
         ci.cancel();
         break;
       case LOSSY_CLOG:
         if(rand.nextBoolean() && rand.nextBoolean()) {
-          State.packets.add(packet);
+          Client.clogPacket(packet);
           ci.cancel();
         } 
         break;

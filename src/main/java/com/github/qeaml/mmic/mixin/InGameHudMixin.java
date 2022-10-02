@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.github.qeaml.mmic.Client;
 import com.github.qeaml.mmic.Grid;
-import com.github.qeaml.mmic.State;
 import com.mojang.blaze3d.platform.GlStateManager.DstFactor;
 import com.mojang.blaze3d.platform.GlStateManager.SrcFactor;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -68,12 +67,11 @@ public abstract class InGameHudMixin {
     }
 
     int y = scaledHeight - client.textRenderer.fontHeight - 5;
-    if(State.fullbright) {
+    if(Client.isFullbright()) {
       client.textRenderer.drawWithShadow(matrices, "FULLBRIGHT", 5, y, 0x80FFFFFF);
       y -= client.textRenderer.fontHeight;
     }
-    if(State.lagging)
-    {
+    if(Client.isLagging()) {
       client.textRenderer.drawWithShadow(matrices, "LAGGING", 5, y, 0x80FFFFFF);
       y -= client.textRenderer.fontHeight;
     }
