@@ -18,6 +18,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
+import net.minecraft.SharedConstants;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 
@@ -236,40 +237,54 @@ public class Sessions {
     return out;
   }
 
-  public static long sessionStart;
-  public static boolean inSession;
-  public static boolean isServer;
+  private static long gameSessionStart;
+  private static long subSessionStart;
+  private static boolean inSubSession;
+  private static boolean isOnServer;
   private static String worldName;
   private static String serverIp;
 
+  public static void startGameSession() {
+    log.info(String.format("Starting game session"));
+    gameSessionStart = System.currentTimeMillis();
+  }
+
   public static void startWorld(String name) {
     log.info(String.format("Starting world session on %s", name));
-    inSession = true;
-    sessionStart = System.currentTimeMillis();
-    isServer = false;
+    inSubSession = true;
+    subSessionStart = System.currentTimeMillis();
+    isOnServer = false;
     worldName = name;
   }
   
   public static void startServer(String ip) {
     log.info(String.format("Starting server session on %s", ip));
-    inSession = true;
-    sessionStart = System.currentTimeMillis();
-    isServer = true;
+    inSubSession = true;
+    subSessionStart = System.currentTimeMillis();
+    isOnServer = true;
     serverIp = ip;
   }
 
-  public static void end() {
-    if(!inSession) return;
-    log.info("Session ended");
-    if(isServer)
-      server(serverIp, sessionStart, System.currentTimeMillis());
+  public static void endSubSession() {
+    if(!inSubSession) return;
+    log.info("Subsession ended");
+    if(isOnServer)
+      server(serverIp, subSessionStart, System.currentTimeMillis());
     else
-      world(worldName, sessionStart, System.currentTimeMillis());
-    inSession = false;
+      world(worldName, subSessionStart, System.currentTimeMillis());
+    inSubSession = false;
+  }
+
+  public static void endGameSession() {
+    log.info("Game session ended.");
+    game(
+      SharedConstants.getGameVersion().getName(),
+      gameSessionStart,
+      System.currentTimeMillis());
   }
 
   public static void game(String version, long start, long end) {
-    log.info(String.format("Game session: %d-%d", start, end));
+    log.info(String.format("Game session: %d-%d on %s", start, end, version));
     synchronized(lock) {
       game.addFirst(new Game(version, start, end));
     }
@@ -287,5 +302,21 @@ public class Sessions {
     synchronized(lock) {
       server.addFirst(new Server(ip, start, end));
     }
+  }
+
+  public static long gameSessionDuration() {
+    return System.currentTimeMillis()-gameSessionStart;
+  }
+
+  public static long subSessionDuration() {
+    return System.currentTimeMillis()-subSessionStart;
+  }
+
+  public static boolean isInSubSession() {
+    return inSubSession;
+  }
+
+  public static boolean isInServerSession() {
+    return isOnServer;
   }
 }

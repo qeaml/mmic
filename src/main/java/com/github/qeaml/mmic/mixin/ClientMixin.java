@@ -60,6 +60,6 @@ public abstract class ClientMixin {
   )
   private void disconnect(Screen screen, CallbackInfo ci) {
     if(callGetNetworkHandler() != null)
-      Sessions.end();
+      Sessions.endSubSession();
   }
 }

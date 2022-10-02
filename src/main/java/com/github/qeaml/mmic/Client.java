@@ -14,7 +14,6 @@ import com.github.qeaml.mmic.mixin.OptionAccessor;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.event.client.player.ClientPickBlockGatherCallback;
-import net.minecraft.SharedConstants;
 import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
@@ -39,8 +38,6 @@ public class Client implements ClientModInitializer {
   public static final Logger log = LoggerFactory.getLogger(name);
   public static final MinecraftClient mc = MinecraftClient.getInstance();
 
-  public static long sessionStart;
-
   public static Config config;
 
   @Override
@@ -49,8 +46,6 @@ public class Client implements ClientModInitializer {
 
     config = new Config(new File(mc.runDirectory, "options_mmic.txt"));
     config.load();
-
-    sessionStart = System.currentTimeMillis();
 
     var visuals = "key.categories.mmic.visuals";
     Keys.gammaInc = new Bind("key.mmic.gammaInc", GLFW.GLFW_KEY_RIGHT_BRACKET, visuals);
@@ -80,6 +75,7 @@ public class Client implements ClientModInitializer {
     });
 
     Sessions.load();
+    Sessions.startGameSession();
   }
 
   public static void tick() {
@@ -118,11 +114,9 @@ public class Client implements ClientModInitializer {
 
   public static void stop() {
     log.info("Goodbye world");
-    var sessionEnd = System.currentTimeMillis();
-    Sessions.end();
-    Sessions.game(SharedConstants.getGameVersion().getName(), sessionStart, sessionEnd);
-    Sessions.save();
-    log.info(String.format("Game session lasted %dms.", sessionEnd-sessionStart));
+
+    Sessions.endSubSession();
+    Sessions.endGameSession();
   }
 
   //

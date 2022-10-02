@@ -4,7 +4,6 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-import com.github.qeaml.mmic.Client;
 import com.github.qeaml.mmic.Sessions;
 
 import net.minecraft.client.MinecraftClient;
@@ -318,22 +317,21 @@ public class PlaytimeScreen extends Screen {
   public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
     selectedList.render(matrices, mouseX, mouseY, delta);
 
-    long now = System.currentTimeMillis();
     String curr;
     if(selectedList instanceof GameSessionList) {
-      curr = long2timespan(now-Client.sessionStart);
+      curr = long2timespan(Sessions.gameSessionDuration());
       drawTextWithShadow(matrices, textRenderer,
       Text.translatable("gui.mmic.sessions.current", curr),
         5, height - 5 - textRenderer.fontHeight*4,
         0xFFFFFF);
-    } else if(Sessions.inSession) {
-      curr = long2timespan(now-Sessions.sessionStart);
-      if(selectedList instanceof WorldSessionList && !Sessions.isServer)
+    } else if(Sessions.isInSubSession()) {
+      curr = long2timespan(Sessions.subSessionDuration());
+      if(selectedList instanceof WorldSessionList && !Sessions.isInServerSession())
         drawTextWithShadow(matrices, textRenderer,
           Text.translatable("gui.mmic.sessions.current", curr),
           5, height - 5 - textRenderer.fontHeight*4,
           0xFFFFFF);
-      else if(selectedList instanceof ServerSessionList && Sessions.isServer)
+      else if(selectedList instanceof ServerSessionList && Sessions.isInServerSession())
         drawTextWithShadow(matrices, textRenderer,
           Text.translatable("gui.mmic.sessions.current", curr),
           5, height - 5 - textRenderer.fontHeight*4,
