@@ -7,6 +7,7 @@
 * Added session statistics.
 * Added mod menu accesible via the 'MMIC' button in the options menu.
 * Major internal configuration rework. Cloth Config is no longer required.
+* Removed pickblock override.
 
 ## 1.4.0
 *September 12, 2022*

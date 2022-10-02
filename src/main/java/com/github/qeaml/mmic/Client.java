@@ -13,23 +13,17 @@ import com.github.qeaml.mmic.config.value.LagType;
 import com.github.qeaml.mmic.mixin.OptionAccessor;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.event.client.player.ClientPickBlockGatherCallback;
-import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.toast.SystemToast;
-import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.random.Random;
 
 public class Client implements ClientModInitializer {
@@ -57,22 +51,6 @@ public class Client implements ClientModInitializer {
     for(Grid g: Grid.values()) {
       g.toggle = new Bind("other.mmic.grid."+g.name, g.key, "key.categories.mmic.grids");
     }
-
-    ClientPickBlockGatherCallback.EVENT.register((player, hitResult) -> {
-      if(hitResult.getType() != HitResult.Type.BLOCK)
-        return ItemStack.EMPTY;
-      var pos = ((BlockHitResult)hitResult).getBlockPos();
-      var block = player.world.getBlockState(pos);
-      log.info("Hit "+block.toString()+" at "+pos.toShortString());
-      MinecraftServer server = mc.getServer();
-      if(server == null)
-        return ItemStack.EMPTY;
-      var stax = Block.getDroppedStacks(block, server.getWorld(player.world.getRegistryKey()), pos, null);
-      for(ItemStack i: stax)
-        if(player.getInventory().contains(i))
-          return i;
-      return ItemStack.EMPTY;
-    });
 
     Sessions.load();
     Sessions.startGameSession();
