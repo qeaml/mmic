@@ -113,7 +113,7 @@ public class Client implements ClientModInitializer {
     return fullbright;
   }
 
-  private static void toggleFullbright() {
+  public static void toggleFullbright() {
     fullbright = !fullbright;
     var acc = (OptionAccessor)(Object)mc.options.getGamma();
     if(fullbright) {

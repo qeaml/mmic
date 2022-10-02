@@ -274,6 +274,8 @@ public class Sessions {
       world(worldName, subSessionStart, System.currentTimeMillis());
     inSubSession = false;
     Client.clearCurrentChunk();
+    if(Client.isFullbright())
+      Client.toggleFullbright();
   }
 
   public static void endGameSession() {
