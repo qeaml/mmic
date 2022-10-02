@@ -273,6 +273,7 @@ public class Sessions {
     else
       world(worldName, subSessionStart, System.currentTimeMillis());
     inSubSession = false;
+    Client.clearCurrentChunk();
   }
 
   public static void endGameSession() {

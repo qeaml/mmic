@@ -10,8 +10,11 @@ import org.slf4j.LoggerFactory;
 
 import com.github.qeaml.mmic.config.Config;
 import com.github.qeaml.mmic.config.value.LagType;
+import com.github.qeaml.mmic.mixin.BiomeAccessAccess;
 import com.github.qeaml.mmic.mixin.OptionAccessor;
 
+import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap;
+import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
@@ -24,7 +27,9 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.World;
 
 public class Client implements ClientModInitializer {
   public static final String name = "MMIC";
@@ -266,5 +271,80 @@ public class Client implements ClientModInitializer {
         volume, pitch,
         soundRandom,
         0, 0, 0));
+  }
+
+  //
+  // ─── CHUNK NAMES ────────────────────────────────────────────────────────────────
+  //
+
+  private static final Long2ObjectMap<String> chunkNameCache = new Long2ObjectArrayMap<>();
+  private static String chunkName = "";
+
+  public static void setCurrentChunk(ChunkPos pos) {
+    chunkName = chunkName(mc.player.getWorld(), pos);
+  }
+
+  public static String getCurrentChunk() {
+    return chunkName;
+  }
+
+  public static void clearCurrentChunk() {
+    chunkName = "";
+    chunkNameCache.clear();
+  }
+
+  private static final char[] VOWELS = "aeiouáéó".toCharArray();
+  private static final char[] CONSONANTS = "bcdfgklmnoprstz".toCharArray();
+  private static final String[] VOWL_DIPH = new String[] { "ie", "ei", "ia" };
+  private static final String[] CONS_DIPH = new String[] { "sh", "ch", "tch", "th", "tz", "zh" };
+
+  private static String chunkName(World world, ChunkPos pos) {
+    var seed = ((BiomeAccessAccess)world.getBiomeAccess()).getSeed();
+    var id = seed * pos.toLong();
+    if(chunkNameCache.containsKey(id))
+      return chunkNameCache.get(id);
+    var name = generateChunkName(id);
+    chunkNameCache.put(id, name);
+    return name;
+  }
+
+  private static String generateChunkName(long id) {
+    var r = Random.create(id);
+    var wordCount = r.nextBetween(2, 3);
+    var words = new String[wordCount];
+    for(int i = 0; i < wordCount; i++)
+      words[i] = generateWord(r);
+    return String.join("-", words);
+  }
+
+  private static String generateWord(Random r) {
+    var len = r.nextBetween(1, 2);
+    var out = "";
+    if(r.nextBoolean()) {
+      out += nextVowl(r);
+      out += "'";
+    } else if(r.nextBoolean()) {
+      out += nextVowl(r);
+      out += " ";
+    }
+    for(int i = 0; i < len; i++) {
+      out += nextVowl(r);
+      out += nextCons(r);
+    }
+    if(r.nextBoolean())
+      out += nextVowl(r);
+    return Character.toUpperCase(out.charAt(0)) + out.substring(1);
+  }
+
+  private static String nextCons(Random r) {
+    if(r.nextBoolean())
+      return CONS_DIPH[r.nextInt(CONS_DIPH.length)];
+    return Character.toString(CONSONANTS[r.nextInt(CONSONANTS.length)]);
+  }
+
+  private static String nextVowl(Random r) {
+    if(r.nextBoolean())
+      return VOWL_DIPH[r.nextInt(VOWL_DIPH.length)];
+    return Character.toString(VOWELS[r.nextInt(VOWELS.length)]);
   }
 }

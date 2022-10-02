@@ -35,6 +35,7 @@ public class Config {
   public final Option<Boolean> zoomSmooth;
   public final Option<Integer> migrationDepth;
   public final Option<LagType> lagType;
+  public final Option<Boolean> chunkNames;
 
   public Config(File optionsFile) {
     file              = optionsFile;
@@ -56,6 +57,7 @@ public class Config {
     zoomSmooth        = bool("zoomSmooth");
     migrationDepth    = integer("migrationDepth", 2, 1, 5);
     lagType           = lagType();
+    chunkNames        = bool("chunkNames");
   }
 
   private final File file;

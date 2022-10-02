@@ -47,7 +47,11 @@ public class CosmeticConfigScreen extends ConfigScreen {
         Client.config.dynamicDot,
         CategoryConfigScreen::toggle
       ),
-      optionColorRGB(Client.config.blockOutlineColor)
+      optionColorRGB(Client.config.blockOutlineColor),
+      optionButton(
+        Client.config.chunkNames,
+        CategoryConfigScreen::toggle
+      )
     };
   }
 

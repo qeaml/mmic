@@ -6,6 +6,7 @@
 * Added Block Outline Color.
 * Added session statistics.
 * Added mod menu accesible via the 'MMIC' button in the options menu.
+* Added chunk names.
 * Major internal configuration rework. Cloth Config is no longer required.
 * Removed pickblock override.
 

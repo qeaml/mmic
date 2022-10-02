@@ -67,6 +67,10 @@ public abstract class InGameHudMixin {
     }
 
     int y = scaledHeight - client.textRenderer.fontHeight - 5;
+    if(Client.config.chunkNames.get()) {
+      client.textRenderer.drawWithShadow(matrices, Client.getCurrentChunk(), 5, y, 0x80FFFFFF);
+      y -= client.textRenderer.fontHeight;
+    }
     if(Client.isFullbright()) {
       client.textRenderer.drawWithShadow(matrices, "FULLBRIGHT", 5, y, 0x80FFFFFF);
       y -= client.textRenderer.fontHeight;

@@ -18,6 +18,8 @@
   "key.mmic.lagSwitch": "Lag Switch",
   "other.mmic.lag_switched": "Switched Lag %s",
 
+  "gui.mmic.entering": "Entering %s",
+
   "gui.mmic.menu": "MMIC",
   "gui.mmic.config": "Config",
   "gui.mmic.submenu": "%s...",
