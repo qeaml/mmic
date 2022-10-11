@@ -84,10 +84,12 @@ public abstract class ConfigScreen extends Screen {
     super.render(matrices, mouseX, mouseY, delta);
   }
 
+  protected static final int BUTTON_WIDTH = 150;
+
   public static <T> OptionButtonWidget<T> optionButton(Option<T> opt, Consumer<Option<T>> action) {
     return new OptionButtonWidget<>(
       0, 0,
-      200, 20,
+      BUTTON_WIDTH, 20,
       opt,
       action);
   }
@@ -95,28 +97,28 @@ public abstract class ConfigScreen extends Screen {
   public static OptionDoubleSliderWidget optionDoubleSlider(Option<Double> opt) {
     return new OptionDoubleSliderWidget(
       0, 0,
-      200, 20,
+      BUTTON_WIDTH, 20,
       opt);
   }
 
   public static OptionIntegerSliderWidget optionIntegerSlider(Option<Integer> opt) {
     return new OptionIntegerSliderWidget(
       0, 0,
-      200, 20,
+      BUTTON_WIDTH, 20,
       opt);
   }
 
   protected ButtonWidget optionColorRGB(Option<Color> opt) {
     return new OptionRGBButtonWidget(
       0, 0,
-      200, 20,
+      BUTTON_WIDTH, 20,
       opt, this);
   }
 
   protected ButtonWidget optionColorARGB(Option<Color> opt) {
     return new OptionRGBAButtonWidget(
       0, 0,
-      200, 20,
+      BUTTON_WIDTH, 20,
       opt, this);
   }
 
