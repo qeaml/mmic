@@ -23,6 +23,8 @@
   "gui.mmic.menu": "MMIC",
   "gui.mmic.config": "Config",
   "gui.mmic.config.reset": "Right-Click an option to reset it.",
+  "gui.mmic.config.saved": "Config saved.",
+  "gui.mmic.config.saveFailed": "Could not save config.",
   "gui.mmic.submenu": "%s...",
 
   "gui.mmic.color.red": "Red: %s%%",
