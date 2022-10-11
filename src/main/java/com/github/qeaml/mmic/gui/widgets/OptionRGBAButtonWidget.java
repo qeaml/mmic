@@ -1,30 +1,26 @@
 package com.github.qeaml.mmic.gui.widgets;
 
-import java.util.function.Consumer;
-
 import com.github.qeaml.mmic.Client;
 import com.github.qeaml.mmic.config.Option;
+import com.github.qeaml.mmic.config.value.Color;
+import com.github.qeaml.mmic.gui.OptionRGBAScreen;
 
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.text.Text;
 
-public class OptionButtonWidget<T> extends ButtonWidget {
-  private Option<T> option;
-  private Consumer<Option<T>> action;
+public class OptionRGBAButtonWidget extends ButtonWidget {
+  private Option<Color> option;
 
-  public OptionButtonWidget(int x, int y, int width, int height, Option<T> option, Consumer<Option<T>> action) {
+  public OptionRGBAButtonWidget(int x, int y, int width, int height, Option<Color> option, Screen parent) {
     super(
       x, y,
       width, height,
-      option.display(option.get()),
-      (button) -> {});
+      Text.translatable("gui.mmic.submenu", option.title),
+    (button) -> {
+      Client.mc.setScreen(new OptionRGBAScreen(parent, option));
+    });
     this.option = option;
-    this.action = action;
-  }
-
-  @Override
-  public void onPress() {
-    action.accept(option);
-    setMessage(option.display(option.get()));
   }
 
   @Override
@@ -32,7 +28,6 @@ public class OptionButtonWidget<T> extends ButtonWidget {
     if(clicked(mouseX, mouseY) && button == 1) {
       playDownSound(Client.mc.getSoundManager());
       option.set(option.defaultValue);
-      setMessage(option.display(option.get()));
       return true;
     }
     return super.mouseClicked(mouseX, mouseY, button);

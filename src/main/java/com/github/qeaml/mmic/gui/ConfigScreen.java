@@ -8,6 +8,8 @@ import com.github.qeaml.mmic.gui.widgets.ClickableWidgetList;
 import com.github.qeaml.mmic.gui.widgets.OptionButtonWidget;
 import com.github.qeaml.mmic.gui.widgets.OptionDoubleSliderWidget;
 import com.github.qeaml.mmic.gui.widgets.OptionIntegerSliderWidget;
+import com.github.qeaml.mmic.gui.widgets.OptionRGBAButtonWidget;
+import com.github.qeaml.mmic.gui.widgets.OptionRGBButtonWidget;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -16,6 +18,7 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.screen.ScreenTexts;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 
 public abstract class ConfigScreen extends Screen {
@@ -79,19 +82,17 @@ public abstract class ConfigScreen extends Screen {
   }
 
   protected ButtonWidget optionColorRGB(Option<Color> opt) {
-    return new ButtonWidget(
+    return new OptionRGBButtonWidget(
       0, 0,
       200, 20,
-      Text.translatable("gui.mmic.submenu", opt.title),
-      (button) -> client.setScreen(new OptionRGBScreen(this, opt)));
+      opt, this);
   }
 
   protected ButtonWidget optionColorARGB(Option<Color> opt) {
-    return new ButtonWidget(
+    return new OptionRGBAButtonWidget(
       0, 0,
       200, 20,
-      Text.translatable("gui.mmic.submenu", opt.title),
-      (button) -> client.setScreen(new OptionRGBAScreen(this, opt)));
+      opt, this);
   }
 
   public static void toggle(Option<Boolean> opt) {
