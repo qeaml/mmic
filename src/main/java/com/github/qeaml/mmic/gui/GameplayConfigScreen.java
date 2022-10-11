@@ -23,6 +23,10 @@ public class GameplayConfigScreen extends ConfigScreen {
         CategoryConfigScreen::toggle
       ),
       optionButton(
+        Client.config.autoplantOldOnly,
+        CategoryConfigScreen::toggle
+      ),
+      optionButton(
         Client.config.lagType,
         opt -> opt.set(opt.get().next())
       )

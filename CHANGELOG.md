@@ -7,7 +7,9 @@
 * Added session statistics.
 * Added mod menu accesible via the 'MMIC' button in the options menu.
 * Added chunk names.
-* Major internal configuration rework. Cloth Config is no longer required.
+* Added 'Auto-Replant Old Crops' option
+* Major internal configuration rework. Cloth Config and Mod Menu are no longer
+  required.
 * Removed pickblock override.
 
 ## 1.4.0

@@ -58,7 +58,7 @@ public abstract class InteractionManagerMixin {
     var block = blockState.getBlock();
 
     if(!(block instanceof CropBlock)) return;
-    if(blockState.get(CropBlock.AGE) != CropBlock.MAX_AGE) return;
+    if(Client.config.autoplantOldOnly.get() && blockState.get(CropBlock.AGE) != CropBlock.MAX_AGE) return;
 
     var seed = block.getPickStack(world, pos, blockState);
 

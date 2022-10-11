@@ -24,6 +24,7 @@ public class Config {
   public final Option<Boolean> staticHand;
   public final Option<Boolean> autoplant;
   public final Option<Boolean> sneakAutoplant;
+  public final Option<Boolean> autoplantOldOnly;
   public final Option<Boolean> centeredSigns;
   public final Option<Boolean> perfectSigns;
   public final Option<Boolean> dotXhair;
@@ -45,7 +46,8 @@ public class Config {
     miniF3            = bool("miniF3");
     staticHand        = bool("staticHand");
     autoplant         = bool("autoplant");
-    sneakAutoplant    = bool("sneakAutoplant");
+    sneakAutoplant    = bool("sneakAutoplant", true);
+    autoplantOldOnly  = bool("autoplantOldOnly", true);
     centeredSigns     = bool("centeredSigns");
     perfectSigns      = bool("perfectSigns");
     dotXhair          = bool("dotXhair");

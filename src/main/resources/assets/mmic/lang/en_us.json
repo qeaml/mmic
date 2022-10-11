@@ -59,6 +59,8 @@
   "options.mmic.autoplant.tip": "Automatically replant harvested crops.\nThis only works if seeds of the harvested\ncrops are in your hotbar.",
   "options.mmic.sneakAutoplant": "Sneaky Auto-Replant",
   "options.mmic.sneakAutoplant.tip": "Only allow Auto-Replant while sneaking.",
+  "options.mmic.autoplantOldOnly": "Auto-Replant Old Crops",
+  "options.mmic.autoplantOldOnly.tip": "Only allow Auto-Replant for fully grown crops.",
 
   "config.mmic.cosm": "Cosmetic",
 
