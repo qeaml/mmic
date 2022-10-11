@@ -23,6 +23,8 @@ import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 
 public abstract class ConfigScreen extends Screen {
+  private static final Text RESET_TEXT = Text.translatable("gui.mmic.config.reset");
+
   protected Screen parent;
 
   protected ConfigScreen(Screen parent, Text title) {
@@ -57,6 +59,7 @@ public abstract class ConfigScreen extends Screen {
   public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
     renderBackground(matrices);
     drawCenteredText(matrices, textRenderer, title, width / 2, 20, 0xFFFFFFFF);
+    drawCenteredText(matrices, textRenderer, RESET_TEXT, width/2, height-textRenderer.fontHeight-2, 0xFFFFFFFF);
     super.render(matrices, mouseX, mouseY, delta);
   }
 

@@ -22,6 +22,7 @@
 
   "gui.mmic.menu": "MMIC",
   "gui.mmic.config": "Config",
+  "gui.mmic.config.reset": "Right-Click an option to reset it.",
   "gui.mmic.submenu": "%s...",
 
   "gui.mmic.color.red": "Red: %s%%",
