@@ -18,6 +18,7 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.screen.ScreenTexts;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 
@@ -93,6 +94,16 @@ public abstract class ConfigScreen extends Screen {
       0, 0,
       200, 20,
       opt, this);
+  }
+
+  public static <T> Text optionButtonText(Option<T> opt) {
+    return optionButtonText(opt, opt.display(opt.get()));
+  }
+
+  public static <T> Text optionButtonText(Option<T> opt, Text txt) {
+    return MutableText
+      .of(txt.getContent())
+      .setStyle(Style.EMPTY.withItalic(!opt.get().equals(opt.defaultValue)));
   }
 
   public static void toggle(Option<Boolean> opt) {

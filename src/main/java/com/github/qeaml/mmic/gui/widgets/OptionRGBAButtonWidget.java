@@ -3,6 +3,7 @@ package com.github.qeaml.mmic.gui.widgets;
 import com.github.qeaml.mmic.Client;
 import com.github.qeaml.mmic.config.Option;
 import com.github.qeaml.mmic.config.value.Color;
+import com.github.qeaml.mmic.gui.ConfigScreen;
 import com.github.qeaml.mmic.gui.OptionRGBAScreen;
 
 import net.minecraft.client.gui.screen.Screen;
@@ -16,7 +17,8 @@ public class OptionRGBAButtonWidget extends ButtonWidget {
     super(
       x, y,
       width, height,
-      Text.translatable("gui.mmic.submenu", option.title),
+      ConfigScreen.optionButtonText(
+        option, Text.translatable("gui.mmic.submenu", option.title)),
     (button) -> {
       Client.mc.setScreen(new OptionRGBAScreen(parent, option));
     });
@@ -28,6 +30,8 @@ public class OptionRGBAButtonWidget extends ButtonWidget {
     if(clicked(mouseX, mouseY) && button == 1) {
       playDownSound(Client.mc.getSoundManager());
       option.set(option.defaultValue);
+      setMessage(ConfigScreen.optionButtonText(
+        option, Text.translatable("gui.mmic.submenu", option.title)));
       return true;
     }
     return super.mouseClicked(mouseX, mouseY, button);

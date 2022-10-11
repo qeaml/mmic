@@ -4,6 +4,7 @@ import java.util.function.Consumer;
 
 import com.github.qeaml.mmic.Client;
 import com.github.qeaml.mmic.config.Option;
+import com.github.qeaml.mmic.gui.ConfigScreen;
 
 import net.minecraft.client.gui.widget.ButtonWidget;
 
@@ -15,7 +16,7 @@ public class OptionButtonWidget<T> extends ButtonWidget {
     super(
       x, y,
       width, height,
-      option.display(option.get()),
+      ConfigScreen.optionButtonText(option),
       (button) -> {});
     this.option = option;
     this.action = action;
@@ -24,7 +25,7 @@ public class OptionButtonWidget<T> extends ButtonWidget {
   @Override
   public void onPress() {
     action.accept(option);
-    setMessage(option.display(option.get()));
+    setMessage(ConfigScreen.optionButtonText(option));
   }
 
   @Override
@@ -32,7 +33,7 @@ public class OptionButtonWidget<T> extends ButtonWidget {
     if(clicked(mouseX, mouseY) && button == 1) {
       playDownSound(Client.mc.getSoundManager());
       option.set(option.defaultValue);
-      setMessage(option.display(option.get()));
+      setMessage(ConfigScreen.optionButtonText(option));
       return true;
     }
     return super.mouseClicked(mouseX, mouseY, button);

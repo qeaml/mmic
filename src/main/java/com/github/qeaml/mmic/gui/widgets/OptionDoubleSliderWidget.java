@@ -2,6 +2,7 @@ package com.github.qeaml.mmic.gui.widgets;
 
 import com.github.qeaml.mmic.Client;
 import com.github.qeaml.mmic.config.Option;
+import com.github.qeaml.mmic.gui.ConfigScreen;
 
 import net.minecraft.client.gui.widget.SliderWidget;
 
@@ -12,7 +13,7 @@ public class OptionDoubleSliderWidget extends SliderWidget {
     super(
       x, y,
       width, height,
-      option.display(option.get()),
+      ConfigScreen.optionButtonText(option),
       (option.get()-option.minValue)/(option.maxValue-option.minValue));
     this.option = option;
   }
@@ -24,7 +25,7 @@ public class OptionDoubleSliderWidget extends SliderWidget {
 
   @Override
   protected void updateMessage() {
-    setMessage(option.display(option.get()));
+    setMessage(ConfigScreen.optionButtonText(option));
   }
 
   @Override
@@ -33,7 +34,7 @@ public class OptionDoubleSliderWidget extends SliderWidget {
       playDownSound(Client.mc.getSoundManager());
       option.set(option.defaultValue);
       value = (option.get()-option.minValue)/(option.maxValue-option.minValue);
-      setMessage(option.display(option.get()));
+      setMessage(ConfigScreen.optionButtonText(option));
       return true;
     }
     return super.mouseClicked(mouseX, mouseY, button);
