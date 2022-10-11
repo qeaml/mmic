@@ -8,7 +8,7 @@ import net.minecraft.text.Text;
 
 public class GameplayConfigScreen extends ConfigScreen {
   public GameplayConfigScreen(Screen parent) {
-    super(parent, Text.translatable("config.mmic.game"));
+    super(parent, Text.translatable("config.mmic.game"), false);
   }
 
   @Override
@@ -32,7 +32,4 @@ public class GameplayConfigScreen extends ConfigScreen {
       )
     };
   }
-
-  @Override
-  protected void onExit() {}
 }

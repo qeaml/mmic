@@ -8,7 +8,7 @@ import net.minecraft.text.Text;
 
 public class OtherConfigScreen extends ConfigScreen {
   public OtherConfigScreen(Screen parent) {
-    super(parent, Text.translatable("config.mmic.other"));
+    super(parent, Text.translatable("config.mmic.other"), false);
   }
 
   @Override
@@ -17,7 +17,4 @@ public class OtherConfigScreen extends ConfigScreen {
       optionIntegerSlider(Client.config.migrationDepth)
     };
   }
-
-  @Override
-  protected void onExit() {}
 }

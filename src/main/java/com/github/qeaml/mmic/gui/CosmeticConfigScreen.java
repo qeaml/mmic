@@ -8,7 +8,7 @@ import net.minecraft.text.Text;
 
 public class CosmeticConfigScreen extends ConfigScreen {
   public CosmeticConfigScreen(Screen parent) {
-    super(parent, Text.translatable("config.mmic.cosm"));
+    super(parent, Text.translatable("config.mmic.cosm"), false);
   }
 
   @Override
@@ -54,7 +54,4 @@ public class CosmeticConfigScreen extends ConfigScreen {
       )
     };
   }
-
-  @Override
-  protected void onExit() {}
 }

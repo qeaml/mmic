@@ -26,14 +26,17 @@ public abstract class ConfigScreen extends Screen {
   private static final Text RESET_TEXT = Text.translatable("gui.mmic.config.reset");
 
   protected Screen parent;
+  protected boolean cancellable;
 
-  protected ConfigScreen(Screen parent, Text title) {
+  protected ConfigScreen(Screen parent, Text title, boolean canCancel) {
     super(title);
     this.parent = parent;
+    this.cancellable = canCancel;
   }
 
   protected abstract ClickableWidget[] widgets();
-  protected abstract void onExit();
+
+  protected void done() {}
 
   @Override
   protected void init() {
@@ -43,14 +46,32 @@ public abstract class ConfigScreen extends Screen {
       2,
       widgets()));
 
-    addDrawableChild(new ButtonWidget(
-      width / 2 - 100, height / 6 + 168,
-      200, 20,
-      ScreenTexts.DONE,
-    (button) -> {
-      onExit();
-      client.setScreen(parent);
-    }));
+    if(cancellable) {
+      addDrawableChild(new ButtonWidget(
+        width/2 - 154, height/6 + 168,
+        150, 20,
+        ScreenTexts.CANCEL,
+      (button) -> {
+        client.setScreen(parent);
+      }));
+      addDrawableChild(new ButtonWidget(
+        width/2 + 4, height/6 + 168,
+        150, 20,
+        ScreenTexts.DONE,
+      (button) -> {
+        done();
+        client.setScreen(parent);
+      }));
+    } else {
+      addDrawableChild(new ButtonWidget(
+        width/2 - 100, height/6 + 168,
+        200, 20,
+        ScreenTexts.DONE,
+      (button) -> {
+        done();
+        client.setScreen(parent);
+      }));
+    }
   }
 
   private static TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;

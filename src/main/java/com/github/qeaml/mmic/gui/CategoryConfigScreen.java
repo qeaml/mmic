@@ -9,7 +9,7 @@ import net.minecraft.text.Text;
 
 public class CategoryConfigScreen extends ConfigScreen {
   public CategoryConfigScreen(Screen parent) {
-    super(parent, Text.translatable("gui.mmic.config"));
+    super(parent, Text.translatable("gui.mmic.config"), true);
   }
 
   @Override
@@ -40,7 +40,7 @@ public class CategoryConfigScreen extends ConfigScreen {
   }
 
   @Override
-  protected void onExit() {
+  public void done() {
     Client.config.save();
   }
 }
