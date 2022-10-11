@@ -15,7 +15,6 @@ import com.github.qeaml.mmic.mixin.OptionAccessor;
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
-import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.sound.PositionedSoundInstance;
@@ -31,7 +30,7 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
-public class Client implements ClientModInitializer {
+public class Client {
   public static final String name = "MMIC";
 
   public static final Logger log = LoggerFactory.getLogger(name);
@@ -39,8 +38,7 @@ public class Client implements ClientModInitializer {
 
   public static Config config;
 
-  @Override
-  public void onInitializeClient() {
+  public static void init() {
     log.info("Hello world");
 
     config = new Config(new File(mc.runDirectory, "options_mmic.txt"));
