@@ -284,6 +284,7 @@ public class Sessions {
       SharedConstants.getGameVersion().getName(),
       gameSessionStart,
       System.currentTimeMillis());
+    save();
   }
 
   public static void game(String version, long start, long end) {
