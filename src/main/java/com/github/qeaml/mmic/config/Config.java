@@ -39,11 +39,12 @@ public class Config {
   public final Option<Integer> migrationDepth;
   public final Option<LagType> lagType;
   public final Option<Boolean> chunkNames;
+  public final Option<Boolean> noChatIndicators;
 
   public Config(File optionsFile) {
     file              = optionsFile;
     options           = new HashMap<>();
-    gridColor         = colorARGB("gridColor", Color.ofARGB(0));
+    gridColor         = colorARGB("gridColor", new Color(0, 0, 0, 255));
     gammaStep         = scaledDouble("gammaStep", 0.2, 10, 0.1, 0.5, Display.PERCENT);
     miniF3            = bool("miniF3");
     staticHand        = bool("staticHand");
@@ -62,6 +63,7 @@ public class Config {
     migrationDepth    = integer("migrationDepth", 2, 1, 5);
     lagType           = lagType();
     chunkNames        = bool("chunkNames");
+    noChatIndicators  = bool("noChatIndicators");
   }
 
   private final File file;

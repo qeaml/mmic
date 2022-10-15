@@ -64,6 +64,8 @@
   "options.mmic.sneakAutoplant.tip": "Only allow Auto-Replant while sneaking.",
   "options.mmic.autoplantOldOnly": "Auto-Replant Old Crops",
   "options.mmic.autoplantOldOnly.tip": "Only allow Auto-Replant for fully grown crops.",
+  "options.mmic.noChatIndicators": "No Chat Indicators",
+  "options.mmic.noChatIndicators.tip": "Disables the colored indicators in the in-game chat.",
 
   "config.mmic.cosm": "Cosmetic",
 

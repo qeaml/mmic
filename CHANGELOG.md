@@ -4,6 +4,7 @@
 *September, 2022*
 
 * Added Block Outline Color.
+* Added No Chat Indicators.
 * Added session statistics.
 * Added mod menu accesible via the 'MMIC' button in the options menu.
 * Added chunk names.

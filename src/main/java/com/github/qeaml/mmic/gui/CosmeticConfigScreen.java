@@ -51,6 +51,10 @@ public class CosmeticConfigScreen extends ConfigScreen {
       optionButton(
         Client.config.chunkNames,
         CategoryConfigScreen::toggle
+      ),
+      optionButton(
+        Client.config.noChatIndicators,
+        CategoryConfigScreen::toggle
       )
     };
   }

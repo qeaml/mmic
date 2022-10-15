@@ -18,7 +18,8 @@
     "WorldRendererMixin",
     "OptionsScreenMixin",
     "MultiplayerScreenMixin",
-    "BiomeAccessAccess"
+    "BiomeAccessAccess",
+    "ChatHudMixin"
   ],
   "injectors": {
     "defaultRequire": 1
