@@ -147,7 +147,7 @@ public class Client {
 
   public static void toggleLag() {
     lagging = !lagging;
-    if(!lagging && (config.lagType.get() == LagType.CLOG || config.lagType.get() == LagType.LOSSY_CLOG))
+    if(!lagging && config.lagType.get().clogs())
     {
       packets.forEach(mc.getNetworkHandler()::sendPacket);
       packets.clear();

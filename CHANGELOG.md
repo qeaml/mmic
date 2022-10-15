@@ -5,6 +5,7 @@
 
 * Added Block Outline Color.
 * Added No Chat Indicators.
+* Added 'Teleport' lag type.
 * Added session statistics.
 * Added mod menu accesible via the 'MMIC' button in the options menu.
 * Added chunk names.

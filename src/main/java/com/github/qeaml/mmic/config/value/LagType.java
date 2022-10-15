@@ -12,7 +12,8 @@ public enum LagType {
   BLOCK,
   CLOG,
   LOSSY_BLOCK,
-  LOSSY_CLOG;
+  LOSSY_CLOG,
+  TELEPORT;
 
   public static final Codec<LagType> CODEC = Codec.of(
     value -> value.toString(),
@@ -25,11 +26,21 @@ public enum LagType {
     m.put(CLOG, Text.translatable("options.mmic.lagType.clog"));
     m.put(LOSSY_BLOCK, Text.translatable("options.mmic.lagType.lossy_block"));
     m.put(LOSSY_CLOG, Text.translatable("options.mmic.lagType.lossy_clog"));
+    m.put(TELEPORT, Text.translatable("options.mmic.lagType.teleport"));
     return m;
   });
 
   public LagType next() {
     var vals = LagType.values();
     return vals[(ordinal()+1)%vals.length];
+  }
+
+  public boolean clogs() {
+    switch(this) {
+    case CLOG, LOSSY_CLOG, TELEPORT:
+      return true;
+    default:
+      return false;
+    }
   }
 }
