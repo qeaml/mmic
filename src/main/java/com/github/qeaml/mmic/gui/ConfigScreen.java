@@ -36,6 +36,10 @@ public abstract class ConfigScreen extends Screen {
 
   protected abstract ClickableWidget[] widgets();
 
+  protected void prep() {}
+
+  protected void cancel() {}
+
   protected void done() {}
 
   @Override
@@ -52,6 +56,7 @@ public abstract class ConfigScreen extends Screen {
         150, 20,
         ScreenTexts.CANCEL,
       (button) -> {
+        cancel();
         client.setScreen(parent);
       }));
       addDrawableChild(new ButtonWidget(
@@ -72,6 +77,8 @@ public abstract class ConfigScreen extends Screen {
         client.setScreen(parent);
       }));
     }
+
+    prep();
   }
 
   private static TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;

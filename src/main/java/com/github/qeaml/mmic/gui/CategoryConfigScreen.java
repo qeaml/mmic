@@ -1,5 +1,7 @@
 package com.github.qeaml.mmic.gui;
 
+import java.util.Map;
+
 import com.github.qeaml.mmic.Client;
 
 import net.minecraft.client.gui.screen.Screen;
@@ -39,8 +41,20 @@ public class CategoryConfigScreen extends ConfigScreen {
     };
   }
 
+  private Map<String, Object> oldValues;
+
   @Override
-  public void done() {
+  protected void prep() {
+    oldValues = Client.config.freeze();
+  }
+
+  @Override
+  protected void cancel() {
+    Client.config.unfreeze(oldValues);
+  }
+
+  @Override
+  protected void done() {
     Client.config.save();
   }
 }

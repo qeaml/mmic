@@ -196,4 +196,20 @@ public class Config {
     options.put(name, opt);
     return opt;
   }
+
+  public Map<String, Object> freeze() {
+    var m = new HashMap<String, Object>();
+    for(var e: options.entrySet()) {
+      m.put(e.getKey(), e.getValue().get());
+    }
+    return m;
+  }
+
+  public void unfreeze(Map<String, Object> values) {
+    for(var e: values.entrySet()) {
+      if(options.containsKey(e.getKey())) {
+        options.get(e.getKey()).setObject(e.getValue());
+      }
+    }
+  }
 }
