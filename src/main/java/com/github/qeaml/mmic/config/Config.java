@@ -40,6 +40,7 @@ public class Config {
   public final Option<LagType> lagType;
   public final Option<Boolean> chunkNames;
   public final Option<Boolean> noChatIndicators;
+  public final Option<Boolean> hoeHelper;
 
   public Config(File optionsFile) {
     file              = optionsFile;
@@ -64,6 +65,7 @@ public class Config {
     lagType           = lagType();
     chunkNames        = bool("chunkNames");
     noChatIndicators  = bool("noChatIndicators");
+    hoeHelper         = bool("hoeHelper");
   }
 
   private final File file;
