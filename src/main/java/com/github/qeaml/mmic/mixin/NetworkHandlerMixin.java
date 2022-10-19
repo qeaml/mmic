@@ -10,7 +10,6 @@ import com.github.qeaml.mmic.Client;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
-import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 import net.minecraft.util.math.random.Random;
 
 @Mixin(ClientPlayNetworkHandler.class)

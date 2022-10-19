@@ -8,6 +8,7 @@ public interface Codec<T> {
   Optional<T> decode(String raw);
   String encode(T value);
 
+  @SuppressWarnings("unchecked")
   public static <T> String encodeObject(Codec<T> codec, Object o) {
     return codec.encode((T)o);
   }

@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.github.qeaml.mmic.config.Config;
-import com.github.qeaml.mmic.config.value.LagType;
 import com.github.qeaml.mmic.mixin.BiomeAccessAccess;
 import com.github.qeaml.mmic.mixin.OptionAccessor;
 

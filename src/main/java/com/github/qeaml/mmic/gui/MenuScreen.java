@@ -21,8 +21,10 @@ public class MenuScreen extends Screen {
     var that = this;
 
     addDrawableChild(new ClickableWidgetList(
-      0, 40,
+      client,
+      0, 32,
       this.width,
+      this.height-64,
       2,
       new ButtonWidget(
         width / 2 - 100, 40,
@@ -46,7 +48,7 @@ public class MenuScreen extends Screen {
     ));
 
     addDrawableChild(new ButtonWidget(
-      width / 2 - 100, height / 6 + 168,
+      width/2 - 100, height-27,
       200, 20,
       ScreenTexts.DONE,
     (button) -> {

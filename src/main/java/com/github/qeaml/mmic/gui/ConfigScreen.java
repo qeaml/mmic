@@ -45,14 +45,16 @@ public abstract class ConfigScreen extends Screen {
   @Override
   protected void init() {
     addDrawableChild(new ClickableWidgetList(
-      0, 40,
+      client,
+      0, 32,
       this.width,
+      this.height-73,
       2,
       widgets()));
 
     if(cancellable) {
       addDrawableChild(new ButtonWidget(
-        width/2 - 154, height/6 + 168,
+        width/2 - 154, height-27,
         150, 20,
         ScreenTexts.CANCEL,
       (button) -> {
@@ -60,7 +62,7 @@ public abstract class ConfigScreen extends Screen {
         client.setScreen(parent);
       }));
       addDrawableChild(new ButtonWidget(
-        width/2 + 4, height/6 + 168,
+        width/2 + 4, height-27,
         150, 20,
         ScreenTexts.DONE,
       (button) -> {
@@ -69,7 +71,7 @@ public abstract class ConfigScreen extends Screen {
       }));
     } else {
       addDrawableChild(new ButtonWidget(
-        width/2 - 100, height/6 + 168,
+        width/2 - 100, height-27,
         200, 20,
         ScreenTexts.DONE,
       (button) -> {
@@ -87,7 +89,7 @@ public abstract class ConfigScreen extends Screen {
   public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
     renderBackground(matrices);
     drawCenteredText(matrices, textRenderer, title, width / 2, 20, 0xFFFFFFFF);
-    drawCenteredText(matrices, textRenderer, RESET_TEXT, width/2, height-textRenderer.fontHeight-2, 0xFFFFFFFF);
+    drawCenteredText(matrices, textRenderer, RESET_TEXT, width/2, height-27-textRenderer.fontHeight-2, 0xFFFFFFFF);
     super.render(matrices, mouseX, mouseY, delta);
   }
 
