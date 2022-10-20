@@ -29,8 +29,6 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	// ModMenu
 	modApi "com.terraformersmc:modmenu:4.0.0"
-
-	implementation 'com.opencsv:opencsv:5.7.0'
 }
 
 processResources {
