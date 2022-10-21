@@ -87,40 +87,31 @@ public abstract class InGameHudMixin {
     cancellable = true
   )
   private void hijackRenderCrosshair(MatrixStack matrices, CallbackInfo ci) {
-    ci.cancel();
+    if(Client.config.dotXhair.get() && !client.options.debugEnabled)
+      ci.cancel();
+    else
+      return;
 
     if(client.options.hudHidden) return;
     if(!client.options.getPerspective().isFirstPerson()) return;
     if(client.interactionManager.getCurrentGameMode() == GameMode.SPECTATOR && !callShouldRenderSpectatorCrosshair(client.crosshairTarget)) return;
-  
+
     // -- Crosshair --
-    if(client.options.debugEnabled) {
-      renderDebugXhair();
-      return;
-    } else {
-      RenderSystem.blendFuncSeparate(SrcFactor.ONE_MINUS_DST_COLOR, DstFactor.ONE_MINUS_SRC_COLOR, SrcFactor.ONE, DstFactor.ZERO);
-      if(Client.config.dotXhair.get())
-        renderDotXhair(matrices);
-      else
-        renderDefaultXhair(matrices);
-    }
-  
+    RenderSystem.blendFuncSeparate(SrcFactor.ONE_MINUS_DST_COLOR, DstFactor.ONE_MINUS_SRC_COLOR, SrcFactor.ONE, DstFactor.ZERO);
+    renderDotXhair(matrices);
+
     // -- Attack Indicator --
     if(client.options.getAttackIndicator().getValue() != AttackIndicator.CROSSHAIR) return;
-  
+
     var cooldown = client.player.getAttackCooldownProgress(0f);
-    var opp = (
-         client.targetedEntity != null
-      && client.targetedEntity instanceof LivingEntity
-      && cooldown >= 1f
-      && client.player.getAttackCooldownProgressPerTick() > 5f
-      && client.targetedEntity.isAlive()
-    );
-  
     int indX = scaledWidth/2-8;
     int indY = scaledHeight/2+11;
 
-    if(opp)
+    if(client.targetedEntity != null
+    &&(client.targetedEntity instanceof LivingEntity)
+    &&(cooldown >= 1f)
+    &&(client.player.getAttackCooldownProgressPerTick() > 5f)
+    &&(client.targetedEntity.isAlive()))
       drawTexture(matrices, indX, indY, 68, 94, 16, 16);
     else if(cooldown < 1f) {
       int progH = (int)(cooldown * 17f);
@@ -170,12 +161,6 @@ public abstract class InGameHudMixin {
     bufferBuilder.vertex(matrix, x2, y1, 0.0F).color(255, 255, 255, 255).next();
     bufferBuilder.vertex(matrix, x1, y1, 0.0F).color(255, 255, 255, 255).next();
     BufferRenderer.drawWithShader(bufferBuilder.end());
-  }
-
-  /** Renders the default crosshair, as provided by the current resource pack. */
-  @Unique
-  private void renderDefaultXhair(MatrixStack matrices) {
-    drawTexture(matrices, (scaledWidth-15)/2, (scaledHeight-15)/2, 0, 0, 15, 15);
   }
 
   /** Shorthand for the DrawableHeler#drawTexture method. */
