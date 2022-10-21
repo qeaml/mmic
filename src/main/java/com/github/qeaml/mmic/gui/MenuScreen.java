@@ -22,9 +22,9 @@ public class MenuScreen extends Screen {
 
     addDrawableChild(new ClickableWidgetList(
       client,
-      0, 32,
       this.width,
-      this.height-64,
+      this.height,
+      32, this.height-34,
       2,
       new ButtonWidget(
         width / 2 - 100, 40,
@@ -58,8 +58,7 @@ public class MenuScreen extends Screen {
 
   @Override
   public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-    renderBackground(matrices);
-    drawCenteredText(matrices, textRenderer, title, width / 2, 20, 0xFFFFFFFF);
     super.render(matrices, mouseX, mouseY, delta);
+    drawCenteredText(matrices, textRenderer, title, width / 2, 20, 0xFFFFFFFF);
   }
 }

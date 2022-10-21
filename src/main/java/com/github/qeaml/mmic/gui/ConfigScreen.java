@@ -46,9 +46,9 @@ public abstract class ConfigScreen extends Screen {
   protected void init() {
     addDrawableChild(new ClickableWidgetList(
       client,
-      0, 32,
       this.width,
-      this.height-73,
+      this.height,
+      32, this.height-43,
       2,
       widgets()));
 
@@ -87,10 +87,9 @@ public abstract class ConfigScreen extends Screen {
 
   @Override
   public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-    renderBackground(matrices);
+    super.render(matrices, mouseX, mouseY, delta);
     drawCenteredText(matrices, textRenderer, title, width / 2, 20, 0xFFFFFFFF);
     drawCenteredText(matrices, textRenderer, RESET_TEXT, width/2, height-27-textRenderer.fontHeight-2, 0xFFFFFFFF);
-    super.render(matrices, mouseX, mouseY, delta);
   }
 
   protected static final int BUTTON_WIDTH = 150;
