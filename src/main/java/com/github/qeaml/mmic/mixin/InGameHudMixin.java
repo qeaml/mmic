@@ -28,7 +28,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.GameMode;
 
 @Mixin(InGameHud.class)
@@ -118,23 +117,6 @@ public abstract class InGameHudMixin {
       drawTexture(matrices, indX, indY, 36, 94, 16, 4);
       drawTexture(matrices, indX, indY, 52, 94, progH, 4);
     }
-  }
-
-  /** Renders the debug crosshair. (Visible when the debug HUD menu is visible) */
-  @Unique
-  private void renderDebugXhair() {
-    var cam = client.gameRenderer.getCamera();
-    var matrices = RenderSystem.getModelViewStack();
-    matrices.push();
-    int zOffset = ((DrawableHelper)(Object)this).getZOffset();
-    matrices.translate(scaledWidth/2, scaledHeight/2, zOffset);
-    matrices.multiply(Vec3f.NEGATIVE_X.getDegreesQuaternion(cam.getPitch()));
-    matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(cam.getYaw()));
-    matrices.scale(-1, -1, -1);
-    RenderSystem.applyModelViewMatrix();
-    RenderSystem.renderCrosshair(10);
-    matrices.pop();
-    RenderSystem.applyModelViewMatrix();
   }
 
   /** Renders a small dot in the middle of the screen as a crosshair. */
