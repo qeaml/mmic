@@ -26,6 +26,8 @@ import net.minecraft.client.render.VertexFormat.DrawMode;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.GameMode;
@@ -48,6 +50,9 @@ public abstract class InGameHudMixin {
 
   @Invoker
   protected abstract boolean callShouldRenderSpectatorCrosshair(HitResult target);
+
+  @Invoker
+  protected abstract PlayerEntity callGetCameraPlayer();
 
   @Inject(
     at = @At("HEAD"),
@@ -143,6 +148,26 @@ public abstract class InGameHudMixin {
     bufferBuilder.vertex(matrix, x2, y1, 0.0F).color(255, 255, 255, 255).next();
     bufferBuilder.vertex(matrix, x1, y1, 0.0F).color(255, 255, 255, 255).next();
     BufferRenderer.drawWithShader(bufferBuilder.end());
+  }
+
+  @Inject(
+    method = "renderHotbar",
+    at = @At("TAIL")
+  )
+  private void injectRenderHotbar(float tickDelta, MatrixStack matrices, CallbackInfo ci) {
+    if(!Client.config.hotbarNums.get()) return;
+
+    var inv = callGetCameraPlayer().getInventory();
+    for(int i = 0; i < PlayerInventory.getHotbarSize(); i++) {
+      if(i == inv.selectedSlot) continue;
+
+      // TODO: put this in front of the item
+      client.textRenderer.drawWithShadow(matrices,
+        Client.mc.options.hotbarKeys[i].getBoundKeyLocalizedText(),
+        scaledWidth/2 - 78 + i*20,
+        scaledHeight-18,
+        0x80FFFFFF);
+    }
   }
 
   /** Shorthand for the DrawableHeler#drawTexture method. */

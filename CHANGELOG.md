@@ -10,6 +10,7 @@
 * Added mod menu accesible via the 'MMIC' button in the options menu.
 * Added chunk names.
 * Added 'Auto-Replant Old Crops' option
+* Added Hotbar Binds.
 * Major internal configuration rework. Cloth Config and Mod Menu are no longer
   required.
 * Removed pickblock override.

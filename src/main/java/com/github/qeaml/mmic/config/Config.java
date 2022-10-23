@@ -41,6 +41,7 @@ public class Config {
   public final Option<Boolean> chunkNames;
   public final Option<Boolean> noChatIndicators;
   public final Option<Boolean> hoeHelper;
+  public final Option<Boolean> hotbarNums;
 
   public Config(File optionsFile) {
     file              = optionsFile;
@@ -66,6 +67,7 @@ public class Config {
     chunkNames        = bool("chunkNames");
     noChatIndicators  = bool("noChatIndicators");
     hoeHelper         = bool("hoeHelper");
+    hotbarNums        = bool("hotbarNums");
   }
 
   private final File file;

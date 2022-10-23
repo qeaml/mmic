@@ -83,6 +83,8 @@
   "options.mmic.blockOutlineColor.tip": "Changes the color of the block outline",
   "options.mmic.chunkNames": "Chunk Names",
   "options.mmic.chunkNames.tip": "Gives every chunk a unique name",
+  "options.mmic.hotbarNums": "Hotbar Binds",
+  "options.mmic.hotbarNums.tip": "Displays the key bound to each hotbar slot.",
 
   "options.mmic.zoom": "Zoom",
   "options.mmic.zoomFovDiv": "Zoom FOV Divider",

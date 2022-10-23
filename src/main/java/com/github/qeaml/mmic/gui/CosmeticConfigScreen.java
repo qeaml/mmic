@@ -55,6 +55,10 @@ public class CosmeticConfigScreen extends ConfigScreen {
       optionButton(
         Client.config.noChatIndicators,
         CategoryConfigScreen::toggle
+      ),
+      optionButton(
+        Client.config.hotbarNums,
+        ConfigScreen::toggle
       )
     };
   }
