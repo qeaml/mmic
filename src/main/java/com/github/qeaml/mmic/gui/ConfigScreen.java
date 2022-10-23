@@ -94,40 +94,45 @@ public abstract class ConfigScreen extends Screen {
 
   protected static final int BUTTON_WIDTH = 150;
 
-  public static <T> OptionButtonWidget<T> optionButton(Option<T> opt, Consumer<Option<T>> action) {
+  protected <T> OptionButtonWidget<T> optionButton(Option<T> opt, Consumer<Option<T>> action) {
     return new OptionButtonWidget<>(
       0, 0,
       BUTTON_WIDTH, 20,
       opt,
-      action);
+      action,
+      this::renderTooltip);
   }
 
-  public static OptionDoubleSliderWidget optionDoubleSlider(Option<Double> opt) {
+  protected OptionDoubleSliderWidget optionDoubleSlider(Option<Double> opt) {
     return new OptionDoubleSliderWidget(
       0, 0,
       BUTTON_WIDTH, 20,
-      opt);
+      opt,
+      this::renderTooltip);
   }
 
-  public static OptionIntegerSliderWidget optionIntegerSlider(Option<Integer> opt) {
+  protected OptionIntegerSliderWidget optionIntegerSlider(Option<Integer> opt) {
     return new OptionIntegerSliderWidget(
       0, 0,
       BUTTON_WIDTH, 20,
-      opt);
+      opt,
+      this::renderTooltip);
   }
 
   protected ButtonWidget optionColorRGB(Option<Color> opt) {
     return new OptionRGBButtonWidget(
       0, 0,
       BUTTON_WIDTH, 20,
-      opt, this);
+      opt, this,
+      this::renderTooltip);
   }
 
   protected ButtonWidget optionColorARGB(Option<Color> opt) {
     return new OptionRGBAButtonWidget(
       0, 0,
       BUTTON_WIDTH, 20,
-      opt, this);
+      opt, this,
+      this::renderTooltip);
   }
 
   public static <T> Text optionButtonText(Option<T> opt) {

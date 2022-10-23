@@ -4,6 +4,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import net.minecraft.client.gui.widget.SliderWidget;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 public class GenericSliderWidget extends SliderWidget {
@@ -24,5 +25,12 @@ public class GenericSliderWidget extends SliderWidget {
   @Override
   protected void applyValue() {
     valueConsumer.accept(value);
+  }
+
+  @Override
+  public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+    super.render(matrices, mouseX, mouseY, delta);
+    if(isHovered())
+      renderTooltip(matrices, mouseX, mouseY);
   }
 }

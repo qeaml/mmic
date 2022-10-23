@@ -53,14 +53,14 @@
   "config.mmic.game": "Gameplay",
 
   "options.mmic.lagType": "Lag Type",
-  "options.mmic.lagType.tip": "Changes the type of lag caused by the lag switch\n\nBLOCK causes all packets sent by the client to be\ncompletely ignored\n\nCLOG blocks all packets and sends them all at once\nwhen the lag switch is disabled\n\nLOSSY_BLOCK causes a randomly chosen 25% of all\npackets to be blocked\n\nLOSSY_CLOG causes a randomly chosen 25% of all\npackets to be blocked and sent when lag is toggled off",
+  "options.mmic.lagType.tip": "Changes the type of lag caused by the lag switch\n\nBLOCK causes all packets sent by the client to be completely ignored\n\nCLOG blocks all packets and sends them all at once when the lag switch is disabled\n\nLOSSY_BLOCK causes a randomly chosen 25% of all packets to be blocked\n\nLOSSY_CLOG causes a randomly chosen 25% of all packets to be blocked and sent when lag is toggled off",
   "options.mmic.lagType.block": "Block",
   "options.mmic.lagType.clog": "Clog",
   "options.mmic.lagType.lossy_block": "Lossy Block",
   "options.mmic.lagType.lossy_clog": "Lossy Clog",
   "options.mmic.lagType.teleport": "Teleport",
   "options.mmic.autoplant": "Auto-Replant",
-  "options.mmic.autoplant.tip": "Automatically replant harvested crops.\nThis only works if seeds of the harvested\ncrops are in your hotbar.",
+  "options.mmic.autoplant.tip": "Automatically replant harvested crops.\nThis only works if seeds of the harvested crops are in your hotbar.",
   "options.mmic.sneakAutoplant": "Sneaky Auto-Replant",
   "options.mmic.sneakAutoplant.tip": "Only allow Auto-Replant while sneaking.",
   "options.mmic.autoplantOldOnly": "Auto-Replant Old Crops",
@@ -72,11 +72,11 @@
 
   "options.mmic.gen": "General",
   "options.mmic.gridColor": "Grid Color",
-  "options.mmic.gridColor.tip": "Changes the color of the togglable grids (thirds,\nhalves etc.)",
+  "options.mmic.gridColor.tip": "Changes the color of the togglable grids (thirds, halves etc.)",
   "options.mmic.gammaStep": "Brightness Step",
-  "options.mmic.gammaStep.tip": "Changes by how much % the brigthness will change\nwhen using the brightness buttons",
+  "options.mmic.gammaStep.tip": "Changes by how much % the brigthness will change when using the brightness buttons",
   "options.mmic.miniF3": "Minimized Debug HUD",
-  "options.mmic.miniF3.tip": "Replaces the default Debug HUD (F3 menu) with a new,\nsmaller one which displays only the most important information.",
+  "options.mmic.miniF3.tip": "Replaces the default Debug HUD (F3 menu) with a new, smaller one which displays only the most important information.",
   "options.mmic.staticHand": "Static Hand",
   "options.mmic.staticHand.tip": "Disables most hand animations",
   "options.mmic.blockOutlineColor": "Block Outline Color",
@@ -102,12 +102,12 @@
   "options.mmic.dotXhair": "Dot Crosshair",
   "options.mmic.dotXhair.tip": "Turns the default crosshair into a dot.",
   "options.mmic.dotSize": "Dot Crosshair Size",
-  "options.mmic.dotSize.tip": "Changes the size of the crosshair if Dot Crosshair\nis enabled.",
+  "options.mmic.dotSize.tip": "Changes the size of the crosshair if Dot Crosshair is enabled.",
   "options.mmic.dynamicDot": "Dynamic Dot",
-  "options.mmic.dynamicDot.tip": "Makes the Dor Crosshair change size depending on\nmovement speed.",
+  "options.mmic.dynamicDot.tip": "Makes the Dor Crosshair change size depending on movement speed.",
 
   "config.mmic.other": "Other",
 
   "options.mmic.migrationDepth": "Migration Search Depth",
-  "options.mmic.migrationDepth.tip": "Changes how far session migration will\nsearch.\n(i.e. the higher this number, the more\nfolders it will search through)"
+  "options.mmic.migrationDepth.tip": "Changes how far session migration will search.\n(i.e. the higher this number, the more folders it will search through)"
 }
