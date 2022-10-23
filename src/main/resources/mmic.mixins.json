@@ -17,7 +17,7 @@
     "SignRendererMixin",
     "WorldRendererMixin",
     "OptionsScreenMixin",
-    "MultiplayerScreenMixin",
+    "ConnectScreenMixin",
     "BiomeAccessAccess",
     "ChatHudMixin"
   ],
