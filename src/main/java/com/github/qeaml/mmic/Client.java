@@ -21,7 +21,7 @@ import net.minecraft.client.toast.SystemToast;
 import net.minecraft.network.Packet;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
+// import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -222,7 +222,7 @@ public class Client {
     zoomMod++;
     applyZoom(false);
   }
-  
+
   public static void zoomOut() {
     if(zoomMod <= -10) return;
     zoomMod--;
@@ -241,7 +241,7 @@ public class Client {
   }
 
   public static void notify(Text message) {
-    sound(SoundEvents.UI_BUTTON_CLICK, .25f, 1f);
+    // sound(SoundEvents.UI_BUTTON_CLICK, .25f, 1f);
     if(mc.currentScreen == null)
       mc.player.sendMessage(message, true);
     else

@@ -1,12 +1,13 @@
 package com.github.qeaml.mmic.config;
 
+import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.text.Text;
 
 public class Option<T> {
   public final Validator<T> validator;
   public final Codec<T> codec;
   public final Text title;
-  public final Text tooltip;
+  public final Tooltip tooltip;
   public final T defaultValue;
   public final T minValue;
   public final T maxValue;
@@ -24,7 +25,7 @@ public class Option<T> {
     this.validator = validator;
     this.codec = codec;
     this.title = Text.translatable(KEY_NAMESPACE+name);
-    this.tooltip = Text.translatable(KEY_NAMESPACE+name+TIP_POSTFIX);
+    this.tooltip = Tooltip.of(Text.translatable(KEY_NAMESPACE+name+TIP_POSTFIX));
     this.display = display;
   }
 

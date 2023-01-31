@@ -54,7 +54,7 @@ public abstract class InteractionManagerMixin {
 
     if(!client.player.getMainHandStack().getItem().canMine(blockState, world, pos, client.player))
       return;
-  
+
     var block = blockState.getBlock();
 
     if(!(block instanceof CropBlock)) return;
@@ -68,10 +68,10 @@ public abstract class InteractionManagerMixin {
     var seedStack = ItemStack.EMPTY;
     var seedIdx = 0;
     var seedFound = false;
-    
+
     for(int i = 0; i < PlayerInventory.getHotbarSize(); i++) {
       seedStack = inv.getStack(i);
-      if(!seedStack.isItemEqualIgnoreDamage(seed)) continue;
+      if(!seedStack.isItemEqual(seed)) continue;
       seedFound = true;
       seedIdx = i;
       break;

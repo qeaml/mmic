@@ -5,20 +5,18 @@ import com.github.qeaml.mmic.config.Option;
 import com.github.qeaml.mmic.gui.ConfigScreen;
 
 import net.minecraft.client.gui.widget.SliderWidget;
-import net.minecraft.client.util.math.MatrixStack;
 
 public class OptionDoubleSliderWidget extends SliderWidget {
   private final Option<Double> option;
-  private final TooltipRenderer tooltip;
 
-  public OptionDoubleSliderWidget(int x, int y, int width, int height, Option<Double> option, TooltipRenderer tooltipRenderer) {
+  public OptionDoubleSliderWidget(int x, int y, int width, int height, Option<Double> option) {
     super(
       x, y,
       width, height,
       ConfigScreen.optionButtonText(option),
       (option.get()-option.minValue)/(option.maxValue-option.minValue));
     this.option = option;
-    this.tooltip = tooltipRenderer;
+    this.setTooltip(option.tooltip);
   }
 
   @Override
@@ -41,14 +39,5 @@ public class OptionDoubleSliderWidget extends SliderWidget {
       return true;
     }
     return super.mouseClicked(mouseX, mouseY, button);
-  }
-
-  @Override
-  public void renderTooltip(MatrixStack matrices, int mouseX, int mouseY) {
-      tooltip.render(matrices,
-        TooltipRenderer.wrapLines(
-          option.tooltip,
-          Client.mc.getWindow().getScaledWidth()/2),
-        mouseX, mouseY);
   }
 }

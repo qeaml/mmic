@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.github.qeaml.mmic.Client;
 
+import net.minecraft.block.AbstractSignBlock;
 import net.minecraft.block.SignBlock;
 import net.minecraft.block.WallSignBlock;
 import net.minecraft.block.entity.SignBlockEntity;
@@ -23,7 +24,7 @@ import net.minecraft.client.render.block.entity.SignBlockEntityRenderer.SignMode
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.OrderedText;
 import net.minecraft.util.SignType;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
 
 @Mixin(SignBlockEntityRenderer.class)
 public abstract class SignRendererMixin {
@@ -48,7 +49,7 @@ public abstract class SignRendererMixin {
   private void renderHijack(SignBlockEntity blockEntity, float _f, MatrixStack matrices, VertexConsumerProvider vex, int light, int overlay, CallbackInfo ci) {
     // get & prep the sign model
     var blockState = blockEntity.getCachedState();
-    var signType = SignBlockEntityRenderer.getSignType(blockState.getBlock());
+    var signType = AbstractSignBlock.getSignType(blockState.getBlock());
     var signModel = typeToModel.get(signType);
 
     matrices.push();
@@ -58,11 +59,11 @@ public abstract class SignRendererMixin {
     float rotation;
     if(blockState.getBlock() instanceof SignBlock) {
       rotation = -(float)(blockState.get(SignBlock.ROTATION) * 360) / 16f;
-      matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(rotation));
+      matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(rotation));
       signModel.stick.visible = true;
     } else {
       rotation = -blockState.get(WallSignBlock.FACING).asRotation();
-      matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(rotation));
+      matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(rotation));
       matrices.translate(0d, -5d/16d, Client.config.perfectSigns.get() ? -0.459d : -7d/16d);
       signModel.stick.visible = false;
     }

@@ -1,19 +1,20 @@
 # MMIC Changelog
 
 ## 1.5.0
-*September, 2022*
+*February, 2023*
 
 * Added Block Outline Color.
 * Added No Chat Indicators.
 * Added 'Teleport' lag type.
 * Added session statistics.
-* Added mod menu accesible via the 'MMIC' button in the options menu.
+* Added mod menu accessible via the 'MMIC' button in the options menu.
 * Added chunk names.
 * Added 'Auto-Replant Old Crops' option
 * Added Hotbar Binds.
 * Major internal configuration rework. Cloth Config and Mod Menu are no longer
   required.
 * Removed pickblock override.
+* Updated to 1.19.3
 
 ## 1.4.0
 *September 12, 2022*

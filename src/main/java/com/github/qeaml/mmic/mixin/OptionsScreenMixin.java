@@ -23,12 +23,13 @@ public abstract class OptionsScreenMixin extends Screen {
     at = @At("HEAD")
   )
   private void init(CallbackInfo ci) {
-    addDrawableChild(new ButtonWidget(
-      10, height - 30,
-      60, 20,
+    addDrawableChild(ButtonWidget.builder(
       Text.translatable("gui.mmic.menu"),
-    (button) -> {
-      client.setScreen(new MenuScreen(this));
-    }));
+      (button) -> {
+        client.setScreen(new MenuScreen(this));
+      })
+      .position(10, height - 30)
+      .width(60)
+      .build());
   }
 }

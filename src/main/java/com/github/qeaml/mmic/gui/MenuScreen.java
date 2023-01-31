@@ -26,34 +26,38 @@ public class MenuScreen extends Screen {
       this.height,
       32, this.height-34,
       2,
-      new ButtonWidget(
-        width / 2 - 100, 40,
-        200, 20,
+      ButtonWidget.builder(
         Text.translatable("gui.mmic.sessions"),
-      (button) -> {
-        client.setScreen(new LoadingScreen<>(
-          Text.translatable("gui.mmic.sessions.loading"),
-          LoadingScreen.Loader.of(
-            () -> new PlaytimeScreen(that),
-            client::setScreen
-          )));
-      }),
-      new ButtonWidget(
-        width / 2 - 100, 60,
-        200, 20,
+        (button) -> {
+          client.setScreen(new LoadingScreen<>(
+            Text.translatable("gui.mmic.sessions.loading"),
+            LoadingScreen.Loader.of(
+              () -> new PlaytimeScreen(that),
+              client::setScreen
+            )));
+        })
+        .width(200)
+        .position(width/2 - 100, 40)
+        .build(),
+      ButtonWidget.builder(
         Text.translatable("gui.mmic.config"),
-      (button) -> {
-        client.setScreen(new CategoryConfigScreen(that));
-      })
+        (button) -> {
+          client.setScreen(new CategoryConfigScreen(that));
+        })
+        .width(200)
+        .position(width/2 - 100, 60)
+        .build()
     ));
 
-    addDrawableChild(new ButtonWidget(
-      width/2 - 100, height-27,
-      200, 20,
+    addDrawableChild(ButtonWidget.builder(
       ScreenTexts.DONE,
-    (button) -> {
-      client.setScreen(parent);
-    }));
+      (button) -> {
+        client.setScreen(parent);
+      })
+      .width(200)
+      .position(width/2 - 100, height-27)
+      .build()
+    );
   }
 
   @Override

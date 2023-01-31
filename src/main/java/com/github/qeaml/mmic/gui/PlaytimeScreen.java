@@ -215,76 +215,86 @@ public class PlaytimeScreen extends Screen {
 
     selectList(game);
 
-    addDrawableChild(new ButtonWidget(
-      width / 2 - 120, height - 52,
-      80, 20,
+    addDrawableChild(ButtonWidget.builder(
       Text.translatable("gui.mmic.sessions.game", Integer.toString(game.count)),
-    (button) -> {
-      selectList(game);
-    }));
-    addDrawableChild(new ButtonWidget(
-      width / 2 - 40, height - 52,
-      80, 20,
+      (button) -> {
+        selectList(game);
+      })
+      .position(width / 2 - 120, height - 52)
+      .width(80)
+      .build());
+    addDrawableChild(ButtonWidget.builder(
       Text.translatable("gui.mmic.sessions.world", Integer.toString(world.count)),
-    (button) -> {
-      selectList(world);
-    }));
-    addDrawableChild(new ButtonWidget(
-      width / 2 + 40, height - 52,
-      80, 20,
+      (button) -> {
+        selectList(world);
+      })
+      .position(width / 2 - 40, height - 52)
+      .width(80)
+      .build());
+    addDrawableChild(ButtonWidget.builder(
       Text.translatable("gui.mmic.sessions.server", Integer.toString(server.count)),
-    (button) -> {
-      selectList(server);
-    }));
+      (button) -> {
+        selectList(server);
+      })
+      .position(width / 2 + 40, height - 52)
+      .width(80)
+      .build());
 
-    addDrawableChild(new ButtonWidget(
-      width - 85, height - 45,
-      80, 20,
+    addDrawableChild(ButtonWidget.builder(
       Text.translatable("gui.mmic.sessions.migrate"),
-    (button) -> {
-      client.setScreen(new ConfirmScreen(
-      (ok) -> {
-        client.setScreen(new LoadingScreen<>(
-          Text.translatable("gui.mmic.sessions.migrate.progress"),
-          LoadingScreen.Loader.of(
-            Sessions::migrate,
-            (success) -> client.setScreen(that)
-          )));
-      },
-      Text.translatable("gui.mmic.sessions.migrate"),
-      Text.translatable("gui.mmic.sessions.migrate.confirm")));
-    }));
-    addDrawableChild(new ButtonWidget(
-      width - 85, height - 25,
-      80, 20,
+      (button) -> {
+        client.setScreen(new ConfirmScreen(
+        (ok) -> {
+          if(!ok) {
+            client.setScreen(that);
+            return;
+          }
+          client.setScreen(new LoadingScreen<>(
+            Text.translatable("gui.mmic.sessions.migrate.progress"),
+            LoadingScreen.Loader.of(
+              Sessions::migrate,
+              (success) -> client.setScreen(that)
+            )));
+        },
+        Text.translatable("gui.mmic.sessions.migrate"),
+        Text.translatable("gui.mmic.sessions.migrate.confirm")));
+      })
+      .position(width - 85, height - 45)
+      .width(80)
+      .build());
+    addDrawableChild(ButtonWidget.builder(
       Text.translatable("gui.mmic.sessions.clear"),
-    (button) -> {
-      client.setScreen(new ConfirmScreen(
-      (ok) -> {
-        client.setScreen(that);
-        if(!ok) return;
-        Sessions.game.clear();
-        Sessions.world.clear();
-        Sessions.server.clear();
-        Sessions.save();
-      },
-      Text.translatable("gui.mmic.sessions.clear"),
-      Text.translatable("gui.mmic.sessions.clear.confirm")));
-    }));
+      (button) -> {
+        client.setScreen(new ConfirmScreen(
+        (ok) -> {
+          client.setScreen(that);
+          if(!ok) return;
+          Sessions.game.clear();
+          Sessions.world.clear();
+          Sessions.server.clear();
+          Sessions.save();
+        },
+        Text.translatable("gui.mmic.sessions.clear"),
+        Text.translatable("gui.mmic.sessions.clear.confirm")));
+      })
+      .position(width - 85, height - 25)
+      .width(80)
+      .build());
 
-    addDrawableChild(new ButtonWidget(
-      width / 2 - 100, height - 28,
-      200, 20,
+    addDrawableChild(ButtonWidget.builder(
       ScreenTexts.DONE,
-    (button) -> {
-      client.setScreen(parent);
-    }));
+      (button) -> {
+        client.setScreen(parent);
+      })
+      .position(width / 2 - 100, height - 28)
+      .width(200)
+      .build());
   }
 
   private void selectList(AlwaysSelectedEntryListWidget<?> l) {
     if(selectedList != null)
       remove(selectedList);
-    
+
     if(l != null) {
       addSelectableChild(l);
       selectedList = l;

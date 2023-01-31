@@ -15,7 +15,7 @@ public class OptionRGBScreen extends Screen {
   private Screen parent;
   private Option<Color> opt;
   private double red, green, blue;
-  
+
   public OptionRGBScreen(Screen parent, Option<Color> opt) {
     super(opt.title);
     this.parent = parent;
@@ -50,24 +50,26 @@ public class OptionRGBScreen extends Screen {
       this::blueText,
       v -> blue = v));
 
-    addDrawableChild(new ButtonWidget(
-      width / 2 - 200, height/6*5+10,
-      200, 20,
+    addDrawableChild(ButtonWidget.builder(
       ScreenTexts.CANCEL,
-    (button) -> {
-      client.setScreen(new ConfirmScreen(
-        ok -> {if(ok) client.setScreen(parent);},
-        ScreenTexts.CANCEL,
-        Text.translatable("gui.mmic.cancel.confirm")));
-    }));
-    addDrawableChild(new ButtonWidget(
-      width / 2, height/6*5+10,
-      200, 20,
+      (button) -> {
+        client.setScreen(new ConfirmScreen(
+          ok -> {if(ok) client.setScreen(parent);},
+          ScreenTexts.CANCEL,
+          Text.translatable("gui.mmic.cancel.confirm")));
+      })
+      .width(200)
+      .position(width/2 - 200, height/6*5 + 10)
+      .build());
+    addDrawableChild(ButtonWidget.builder(
       ScreenTexts.DONE,
-    (button) -> {
-      opt.set(new Color(red, green, blue));
-      client.setScreen(parent);
-    }));
+      (button) -> {
+        opt.set(new Color(red, green, blue));
+        client.setScreen(parent);
+      })
+      .width(200)
+      .position(width/2, height/6*5 + 10)
+      .build());
   }
 
   @Override

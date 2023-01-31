@@ -16,15 +16,15 @@ public class ClickableWidgetPair extends ElementListWidget.Entry<ClickableWidget
 
   public ClickableWidgetPair(ClickableWidget left, int width, int padding) {
     this.left = left;
-    this.left.x = width/2-this.left.getWidth()/2-padding;
+    this.left.setX(width/2-this.left.getWidth()/2-padding);
     this.right = null;
   }
 
   public ClickableWidgetPair(ClickableWidget left, ClickableWidget right, int width, int padding) {
     this.left = left;
-    this.left.x = width/2-this.left.getWidth()-padding;
+    this.left.setX(width/2-this.left.getWidth()-padding);
     this.right = right;
-    this.right.x = width/2+padding;
+    this.right.setX(width/2+padding);
   }
 
   @Override
@@ -45,10 +45,10 @@ public class ClickableWidgetPair extends ElementListWidget.Entry<ClickableWidget
   public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX,
       int mouseY, boolean hovered, float tickDelta)
   {
-    this.left.y = y;
+    this.left.setY(y);
     this.left.render(matrices, mouseX, mouseY, tickDelta);
     if(this.right != null) {
-      this.right.y = y;
+      this.right.setY(y);
       this.right.render(matrices, mouseX, mouseY, tickDelta);
     }
   }

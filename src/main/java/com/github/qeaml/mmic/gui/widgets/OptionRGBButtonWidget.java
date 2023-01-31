@@ -8,14 +8,12 @@ import com.github.qeaml.mmic.gui.OptionRGBScreen;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 public class OptionRGBButtonWidget extends ButtonWidget {
   private Option<Color> option;
-  private final TooltipRenderer tooltip;
 
-  public OptionRGBButtonWidget(int x, int y, int width, int height, Option<Color> option, Screen parent, TooltipRenderer tooltipRenderer) {
+  public OptionRGBButtonWidget(int x, int y, int width, int height, Option<Color> option, Screen parent) {
     super(
       x, y,
       width, height,
@@ -23,8 +21,9 @@ public class OptionRGBButtonWidget extends ButtonWidget {
         option, Text.translatable("gui.mmic.submenu", option.title)),
     (button) -> {
       Client.mc.setScreen(new OptionRGBScreen(parent, option));
-    });
-    this.tooltip = tooltipRenderer;
+    },
+    DEFAULT_NARRATION_SUPPLIER);
+    this.setTooltip(option.tooltip);
     this.option = option;
   }
 
@@ -38,14 +37,5 @@ public class OptionRGBButtonWidget extends ButtonWidget {
       return true;
     }
     return super.mouseClicked(mouseX, mouseY, button);
-  }
-
-  @Override
-  public void renderTooltip(MatrixStack matrices, int mouseX, int mouseY) {
-      tooltip.render(matrices,
-        TooltipRenderer.wrapLines(
-          option.tooltip,
-          Client.mc.getWindow().getScaledWidth()/2),
-        mouseX, mouseY);
   }
 }

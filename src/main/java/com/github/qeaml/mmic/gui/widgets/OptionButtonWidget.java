@@ -12,16 +12,14 @@ public class OptionButtonWidget<T> extends ButtonWidget {
   private Option<T> option;
   private Consumer<Option<T>> action;
 
-  public OptionButtonWidget(int x, int y, int width, int height, Option<T> option, Consumer<Option<T>> action, TooltipRenderer tooltip) {
+  public OptionButtonWidget(int x, int y, int width, int height, Option<T> option, Consumer<Option<T>> action) {
     super(
       x, y,
       width, height,
       ConfigScreen.optionButtonText(option),
-    (button) -> {},
-    (button, matrices, mouseX, mouseY) -> {
-      var lines = TooltipRenderer.wrapLines(option.tooltip, Client.mc.getWindow().getScaledWidth()/2);
-      tooltip.render(matrices, lines, mouseX, mouseY);
-    });
+      (button) -> {},
+      DEFAULT_NARRATION_SUPPLIER);
+    this.setTooltip(option.tooltip);
     this.option = option;
     this.action = action;
   }

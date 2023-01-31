@@ -1,11 +1,11 @@
 package com.github.qeaml.mmic.mixin;
 
+import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.util.math.Matrix4f;
 
 @Mixin(TextRenderer.class)
 public interface TextRendererAccessor {

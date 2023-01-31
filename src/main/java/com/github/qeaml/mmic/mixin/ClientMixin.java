@@ -4,23 +4,18 @@ import com.github.qeaml.mmic.Client;
 import com.github.qeaml.mmic.Sessions;
 
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.resource.ResourcePackManager;
 import net.minecraft.server.SaveLoader;
 import net.minecraft.world.level.storage.LevelStorage;
 
 @Mixin(MinecraftClient.class)
 public abstract class ClientMixin {
-  @Invoker
-  protected abstract ClientPlayNetworkHandler callGetNetworkHandler();
-
   @Inject(
     method = "tick()V",
     at = @At("HEAD")
@@ -50,7 +45,7 @@ public abstract class ClientMixin {
     method = "startIntegratedServer",
     at = @At("HEAD")
   )
-  private void world(String levelName, LevelStorage.Session session, ResourcePackManager dataPackManager, SaveLoader saveLoader, CallbackInfo ci) {
+  private void world(String levelName, LevelStorage.Session session, ResourcePackManager dataPackManager, SaveLoader saveLoader, boolean newWorld, CallbackInfo ci) {
     Sessions.startWorld(levelName);
   }
 
@@ -59,7 +54,7 @@ public abstract class ClientMixin {
     at = @At("HEAD")
   )
   private void disconnect(Screen screen, CallbackInfo ci) {
-    if(callGetNetworkHandler() != null)
+    if(Client.mc.getNetworkHandler() != null)
       Sessions.endSubSession();
   }
 }

@@ -28,8 +28,8 @@ import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.world.LightType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.WorldChunk;
@@ -104,7 +104,7 @@ public class DebugHudMixin extends DrawableHelper {
     var yaw = cam.getYaw() % 360.0f;
     ll.add(String.format("XYZ: %.2f/%.2f/%.2f", cam.getX(), cam.getY(), cam.getZ()));
     ll.add(String.format("Rotation: %.2f/%.2f (%s)", yaw, cam.getPitch(), cam.getHorizontalFacing().getName()));
-    
+
     var pos = client.player.getBlockPos();
     chunkX = pos.getX() >> 4;
     chunkZ = pos.getZ() >> 4;
@@ -114,7 +114,7 @@ public class DebugHudMixin extends DrawableHelper {
       ll.add(String.format("Biome: %s", getBiomeString(client.world.getBiome(cam.getBlockPos()))));
     else
       ll.add("Out of world.");
-    
+
     if(!getClientChunk().isEmpty()) {
       var blockPos = client.player.getBlockPos();
       ll.add(String.format("Light: %d block, %d sky = %d total",
@@ -158,7 +158,7 @@ public class DebugHudMixin extends DrawableHelper {
       var cl = new LinkedList<String>();
       pos = ((BlockHitResult)client.crosshairTarget).getBlockPos();
       var state = client.player.getWorld().getBlockState(pos);
-      cl.add(String.format("%s at %s", Registry.BLOCK.getId(state.getBlock()), pos.toShortString()));
+      cl.add(String.format("%s at %s", Registries.BLOCK.getId(state.getBlock()), pos.toShortString()));
       state.getProperties().forEach(prop -> cl.add(prop.getName()+"="+String.valueOf(state.get(prop))));
       state.streamTags().forEach(tag -> cl.add("#"+tag.id().toString()));
       int cbgw = 0;
@@ -197,7 +197,7 @@ public class DebugHudMixin extends DrawableHelper {
       var cl = new LinkedList<String>();
       var ent = ((EntityHitResult)client.crosshairTarget).getEntity();
       cl.add(String.format("%s at %.2f, %.2f, %.2f",
-        Registry.ENTITY_TYPE.getId(ent.getType()),
+        Registries.ENTITY_TYPE.getId(ent.getType()),
         ent.getPos().x, ent.getPos().y, ent.getPos().z));
       if(ent instanceof LivingEntity lent)
         cl.add(String.format("Health: %.1f/%d",

@@ -53,31 +53,32 @@ public abstract class ConfigScreen extends Screen {
       widgets()));
 
     if(cancellable) {
-      addDrawableChild(new ButtonWidget(
-        width/2 - 154, height-27,
-        150, 20,
+      addDrawableChild(ButtonWidget.builder(
         ScreenTexts.CANCEL,
-      (button) -> {
-        cancel();
-        client.setScreen(parent);
-      }));
-      addDrawableChild(new ButtonWidget(
-        width/2 + 4, height-27,
-        150, 20,
+        (button) -> {
+          cancel();
+          client.setScreen(parent);
+        })
+        .position(width/2 - 154, height-27)
+        .build());
+      addDrawableChild(ButtonWidget.builder(
         ScreenTexts.DONE,
-      (button) -> {
-        done();
-        client.setScreen(parent);
-      }));
+        (button) -> {
+          done();
+          client.setScreen(parent);
+        })
+        .position(width/2 + 4, height-27)
+        .build());
     } else {
-      addDrawableChild(new ButtonWidget(
-        width/2 - 100, height-27,
-        200, 20,
+      addDrawableChild(ButtonWidget.builder(
         ScreenTexts.DONE,
-      (button) -> {
-        done();
-        client.setScreen(parent);
-      }));
+        (button) -> {
+          done();
+          client.setScreen(parent);
+        })
+        .width(200)
+        .position(width/2 - 100, height-27)
+        .build());
     }
 
     prep();
@@ -99,40 +100,35 @@ public abstract class ConfigScreen extends Screen {
       0, 0,
       BUTTON_WIDTH, 20,
       opt,
-      action,
-      this::renderTooltip);
+      action);
   }
 
   protected OptionDoubleSliderWidget optionDoubleSlider(Option<Double> opt) {
     return new OptionDoubleSliderWidget(
       0, 0,
       BUTTON_WIDTH, 20,
-      opt,
-      this::renderTooltip);
+      opt);
   }
 
   protected OptionIntegerSliderWidget optionIntegerSlider(Option<Integer> opt) {
     return new OptionIntegerSliderWidget(
       0, 0,
       BUTTON_WIDTH, 20,
-      opt,
-      this::renderTooltip);
+      opt);
   }
 
   protected ButtonWidget optionColorRGB(Option<Color> opt) {
     return new OptionRGBButtonWidget(
       0, 0,
       BUTTON_WIDTH, 20,
-      opt, this,
-      this::renderTooltip);
+      opt, this);
   }
 
   protected ButtonWidget optionColorARGB(Option<Color> opt) {
     return new OptionRGBAButtonWidget(
       0, 0,
       BUTTON_WIDTH, 20,
-      opt, this,
-      this::renderTooltip);
+      opt, this);
   }
 
   public static <T> Text optionButtonText(Option<T> opt) {

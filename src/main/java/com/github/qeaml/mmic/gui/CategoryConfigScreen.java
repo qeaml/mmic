@@ -17,27 +17,21 @@ public class CategoryConfigScreen extends ConfigScreen {
   @Override
   protected ClickableWidget[] widgets() {
     return new ClickableWidget[] {
-      new ButtonWidget(
-        0, 0,
-        BUTTON_WIDTH, 20,
+      ButtonWidget.builder(
         Text.translatable("config.mmic.game"),
-      (button) -> {
-        client.setScreen(new GameplayConfigScreen(this));
-      }),
-      new ButtonWidget(
-        10, 10,
-        BUTTON_WIDTH, 20,
+        (button) -> {
+          client.setScreen(new GameplayConfigScreen(this));
+        }).build(),
+      ButtonWidget.builder(
         Text.translatable("config.mmic.cosm"),
-      (button) -> {
-        client.setScreen(new CosmeticConfigScreen(this));
-      }),
-      new ButtonWidget(
-        10, 10,
-        BUTTON_WIDTH, 20,
+        (button) -> {
+          client.setScreen(new CosmeticConfigScreen(this));
+        }).build(),
+      ButtonWidget.builder(
         Text.translatable("config.mmic.other"),
-      (button) -> {
-        client.setScreen(new OtherConfigScreen(this));
-      })
+        (button) -> {
+          client.setScreen(new OtherConfigScreen(this));
+        }).build()
     };
   }
 

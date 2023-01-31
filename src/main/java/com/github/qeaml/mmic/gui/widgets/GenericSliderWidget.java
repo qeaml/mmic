@@ -30,7 +30,5 @@ public class GenericSliderWidget extends SliderWidget {
   @Override
   public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
     super.render(matrices, mouseX, mouseY, delta);
-    if(isHovered())
-      renderTooltip(matrices, mouseX, mouseY);
   }
 }

@@ -2,6 +2,22 @@
 
 Small client-side mod. Below is a full list of additions and changes.
 
+## Small Cosmetic Changes
+
+* Block outline color can be changed.
+* The little chat indicators on the left side of the chat can be disabled.
+* Keys bound to the hotbar slots can be shown on top of the hotbar.
+* Chunks can have randomly generated names.
+
+## Sessions
+
+You can now keep track of when you play and what you play.
+
+Three types of sessions exist:
+* **Game Sessions**, which last as long as the game is open.
+* **World Sessions**, which last as long as you are in a singleplayer world.
+* **Server Sessions**, which last as long as you are in a multiplayer server.
+
 ## MiniF3
 
 Replaces the default bloated F3 debug HUD with a smaller, less information-packed

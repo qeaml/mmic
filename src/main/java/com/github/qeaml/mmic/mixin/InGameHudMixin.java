@@ -141,13 +141,13 @@ public abstract class InGameHudMixin {
     // most of this code is the decompiled source of DrawableHelper#fill
     var matrix = matrices.peek().getPositionMatrix();
     var bufferBuilder = Tessellator.getInstance().getBuffer();
-    RenderSystem.setShader(GameRenderer::getPositionColorShader);
+    RenderSystem.setShader(GameRenderer::getPositionColorProgram);
     bufferBuilder.begin(DrawMode.QUADS, VertexFormats.POSITION_COLOR);
     bufferBuilder.vertex(matrix, x1, y2, 0.0F).color(255, 255, 255, 255).next();
     bufferBuilder.vertex(matrix, x2, y2, 0.0F).color(255, 255, 255, 255).next();
     bufferBuilder.vertex(matrix, x2, y1, 0.0F).color(255, 255, 255, 255).next();
     bufferBuilder.vertex(matrix, x1, y1, 0.0F).color(255, 255, 255, 255).next();
-    BufferRenderer.drawWithShader(bufferBuilder.end());
+    BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
   }
 
   @Inject(
