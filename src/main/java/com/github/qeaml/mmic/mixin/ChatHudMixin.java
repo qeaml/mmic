@@ -14,7 +14,7 @@ import net.minecraft.client.gui.hud.MessageIndicator;
 @Mixin(ChatHud.class)
 public class ChatHudMixin {
   @Redirect(
-    method = "render(Lnet/minecraft/client/util/math/MatrixStack;I)V",
+    method = "render(Lnet/minecraft/client/util/math/MatrixStack;III)V",
     at = @At(
       value = "INVOKE",
       target = "Lnet/minecraft/client/gui/hud/ChatHudLine$Visible;indicator()Lnet/minecraft/client/gui/hud/MessageIndicator;"
